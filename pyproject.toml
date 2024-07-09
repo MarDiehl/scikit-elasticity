@@ -1,0 +1,47 @@
+[project]
+name = 'scikit-elasticity'
+description = 'A library for working with anisotropic elasticity in Python.'
+keywords = ['crystal elasticity', 'materials science', 'materials engineering']
+
+authors = [
+    {name = 'Martin Diehl', email = 'martin.diehl@kuleuven.be'}
+]
+
+classifiers = [
+    'Intended Audience :: Science/Research',
+    'Intended Audience :: Manufacturing',
+    'Intended Audience :: Education',
+    'Topic :: Scientific/Engineering',
+    'Development Status :: 4 - Beta',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: 3.13',
+    'Programming Language :: Python :: 3 :: Only',
+]
+
+requires-python = '>=3.10'
+dependencies = [
+    'damask>=3.0',
+    'numpy>=1.21',
+    'scipy>=1.8',
+]
+
+readme = 'README.md'
+dynamic = ['version']
+
+license = 'AGPL-3.0-or-later'
+
+[build-system]
+requires = ['setuptools >= 59.0', 'versioningit']
+build-backend = 'setuptools.build_meta'
+
+[tool.versioningit]
+write = {file = 'VERSION'}
+[tool.versioningit.format]
+distance = '{base_version}.post{distance}+{vcs}{rev}'
+dirty = '{base_version}+d{build_date:%Y%m%d}'
+distance-dirty = '{base_version}.post{distance}+{vcs}{rev}.d{build_date:%Y%m%d}'

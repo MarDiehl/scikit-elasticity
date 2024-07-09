@@ -1,0 +1,49 @@
+name: unit tests
+on: [push]
+
+jobs:
+
+  pip:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11', '3.12', '3.13']
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install scipy numpy damask build pytest pytest-cov
+
+      - name: Build and install
+        run: |
+          python -m build
+          python -m pip install dist/*.whl
+          python -c 'import damask;print(damask.__version__)'
+
+      - name: Install and run unit tests (Unix)
+        if: runner.os != 'Windows'
+        run: |
+          export PYTHONPATH=${PWD}:${PYTHONPATH}
+          COLUMNS=256 pytest -v --cov=skel --cov-report=xml
+          coverage report --fail-under=75 --show-missing
+
+      - name: Install and run unit tests (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          python -m pip install . --no-deps -vv
+          pytest
