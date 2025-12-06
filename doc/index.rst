@@ -27,7 +27,7 @@ Calculation of elastic constants from elastic stiffness and a list of orientatio
   >>>    print(p.C_Hill_S/1e9)
  
 
-.. autoclass:: skel.Polycrystal
+.. autoclass:: skel.VolumeElement
    :members:
 
 ===============================
