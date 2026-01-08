@@ -3,22 +3,46 @@
 # https://dictionary.iucr.org/Lattice_system
 # https://dictionary.iucr.org/Crystal_family
 import numpy as _np
+from . import Voigt as _Voigt
+"""
+Linear elasticity according to the generalization of Hooke's law.
+
+Notes
+-----
+Tensors are given in Voigt form (6x6 with different weights).
+"""
 
 def _ensure_equal(**kwargs):
-    if len(v := list(set(kwargs.values()) - {None})) == 1:
-        return v*len(kwargs)
-    else:
-        raise ValueError
+    """
+    Ensure that all arguments are equal.
 
-def _ensure_zero(**kwargs):
+    Special handling of None.
+    """
     mode = kwargs.pop('mode')
     crystal_system = kwargs.pop('crystal_system')
-    if set(kwargs.values()).union([None,0.0]) != {None,0.0}:
-        raise ValueError
-    return [0.0] * len(kwargs)
+    kwargs = {k:(float(v) if v is not None else v) for k,v in kwargs.items()}
+    if len(v := set(kwargs.values())) == 1:
+        return list(v)*len(kwargs)
+    elif len(v := set(kwargs.values()) - {None}) == 1:
+        return list(v)*len(kwargs)
+    else:
+        invalid = ', '.join([k.replace('X',mode) for k in kwargs.keys()])
+        raise ValueError(f'{invalid} need to have the same value for {crystal_system} crystal system')
 
-def _set_value(value,**kwargs):
-    return [value] * len(kwargs) if len(kwargs) > 1 else value
+def _ensure_zero(**kwargs):
+    """
+    Ensure that all arguments are zero.
+
+    Special handling of None.
+    """
+    mode = kwargs.pop('mode')
+    crystal_system = kwargs.pop('crystal_system')
+    kwargs = {k:(float(v) if v is not None else v) for k,v in kwargs.items()}
+    valid = {None,0.0}
+    if set(kwargs.values()).union(valid) != valid:
+        invalid = ', '.join([k.replace('X',mode) for k,v in kwargs.items() if v not in valid])
+        raise ValueError(f'{invalid} need to be 0.0 for {crystal_system} crystal system')
+    return [0.0] * len(kwargs)
 
 
 def _assemble(crystal_system, mode,
@@ -28,7 +52,7 @@ def _assemble(crystal_system, mode,
                                 X_44, X_45, X_46,
                                       X_55, X_56,
                                             X_66):
-    """
+    r"""
     Assemble stiffness or compliance matrix.
 
     Parameters
@@ -41,12 +65,29 @@ def _assemble(crystal_system, mode,
     -----
     isotropic:
       - X_11 = X_22 = X_33
-      - C_12 = C_13 = C_23
-      - C_44 = C_55 = C_66 = f(X_11,X_12)
+      - X_12 = X_13 = X_23
+      - X_44 = X_55 = X_66 = f×(X_11-X_12)
     cubic:
       - X_11 = X_22 = X_33
-      - C_12 = C_13 = C_23
-      - C_44 = C_55 = C_66
+      - X_12 = X_13 = X_23
+      - X_44 = X_55 = X_66
+    hexagonal:
+      - X_11 = X_22
+      - X_13 = X_23
+      - X_44 = X_55
+      - X_66 = f×(X_11-X_12)
+    trigonal:
+      - X_11 = X_22
+      - X_13 = X_23
+      - X_44 = X_55
+      - X_66 = f×(X_11-X_12)
+      - X_14 = -X_24 = X_56
+      - X_15 = -X_25 = -X_46 (or 0.0)
+    tetragonal:
+      - X_11 = X_22
+      - X_13 = X_23
+      - X_44 = X_55
+      - X_16 = -X_26 (or 0.0)
     """
     match mode:
         case 'C':
@@ -54,9 +95,11 @@ def _assemble(crystal_system, mode,
         case 'S':
             f_1, f_2 = 2.0, 2.0
         case _:
-            raise ValueError
+            raise ValueError(f'invalid mode "{mode}"')
+
 
     match crystal_system:
+
         case 'isotropic':
             X_14,X_15,X_16, X_24,X_25,X_26, X_34,X_35,X_36, X_45,X_46, X_56 = \
                 _ensure_zero(crystal_system=crystal_system, mode=mode,
@@ -65,10 +108,21 @@ def _assemble(crystal_system, mode,
                              X_34=X_34,X_35=X_35,X_36=X_36,
                                        X_45=X_45,X_46=X_46,
                                                  X_56=X_56)
-            #if [X_12,X_13,X_23].count(None) < 3:
-            X_12,X_13,X_23 = _ensure_equal(X_12=X_12, X_13=X_13, X_23=X_23)
-            X_11,X_22,X_33 = _ensure_equal(X_11=X_11, X_22=X_22, X_33=X_33)
-            X_44,X_55,X_66 = _set_value(f_2*(X_11-X_12), X_44=X_44,X_55=X_55,X_66=X_66)
+
+            X_11,X_22,X_33 = _ensure_equal(crystal_system=crystal_system, mode=mode,
+                                           X_11=X_11, X_22=X_22, X_33=X_33)
+            X_12,X_13,X_23 = _ensure_equal(crystal_system=crystal_system, mode=mode,
+                                           X_12=X_12, X_13=X_13, X_23=X_23)
+            X_44,X_55,X_66 = _ensure_equal(crystal_system=crystal_system, mode=mode,
+                                           X_44=X_44, X_55=X_55, X_66=X_66)
+
+            if   X_11 is None and X_12 is not None and X_44 is not None:
+                X_11=X_22=X_33 = X_44/f_2 + X_12
+            elif X_12 is None and X_11 is not None and X_44 is not None:
+                X_12=X_13=X_23 = X_11 - X_44/f_2
+            elif X_44 is None and X_11 is not None and X_12 is not None:
+                X_44=X_55=X_66 = f_2*(X_11-X_12)
+
 
         case 'cubic':
             X_14,X_15,X_16, X_24,X_25,X_26, X_34,X_35,X_36, X_45,X_46, X_56 = \
@@ -78,9 +132,14 @@ def _assemble(crystal_system, mode,
                              X_34=X_34,X_35=X_35,X_36=X_36,
                                        X_45=X_45,X_46=X_46,
                                                  X_56=X_56)
-            X_12,X_13,X_23 = _ensure_equal(X_12=X_12,X_13=X_13,X_23=X_23)
-            X_11,X_22,X_33 = _ensure_equal(X_11=X_11,X_22=X_22,X_33=X_33)
-            X_44,X_55,X_66 = _ensure_equal(X_44=X_44,X_55=X_55,X_66=X_66)
+
+            X_11,X_22,X_33 = _ensure_equal(crystal_system=crystal_system, mode=mode,
+                                           X_11=X_11, X_22=X_22, X_33=X_33)
+            X_12,X_13,X_23 = _ensure_equal(crystal_system=crystal_system, mode=mode,
+                                           X_12=X_12, X_13=X_13, X_23=X_23)
+            X_44,X_55,X_66 = _ensure_equal(crystal_system=crystal_system, mode=mode,
+                                           X_44=X_44, X_55=X_55, X_66=X_66)
+
 
         case 'hexagonal':
             X_14,X_15,X_16, X_24,X_25,X_26, X_34,X_35,X_36, X_45,X_46, X_56 = \
@@ -90,26 +149,49 @@ def _assemble(crystal_system, mode,
                              X_34=X_34,X_35=X_35,X_36=X_36,
                                        X_45=X_45,X_46=X_46,
                                                  X_56=X_56)
-            X_13,X_23 = _ensure_equal(X_13=X_13,X_23=X_23)
-            X_11,X_22 = _ensure_equal(X_11=X_11,X_22=X_22)
-            X_44,X_55 = _ensure_equal(X_44=X_44,X_55=X_55)
-            X_66 = _set_value(f_2*(X_11-X_12), X_66=X_66) # needs more flexibility
+
+            X_11,X_22 = _ensure_equal(crystal_system=crystal_system, mode=mode,
+                                      X_11=X_11,X_22=X_22)
+            X_13,X_23 = _ensure_equal(crystal_system=crystal_system, mode=mode,
+                                      X_13=X_13,X_23=X_23)
+            X_44,X_55 = _ensure_equal(crystal_system=crystal_system, mode=mode,
+                                      X_44=X_44,X_55=X_55)
+
+            if   X_11 is None and [X_12,X_66].count(None) == 0:
+                X_11=X_22 = X_66/f_2 + X_12
+            elif X_12 is None and [X_11,X_66].count(None) == 0:
+                X_12 = X_11 - X_66/f_2
+            elif X_66 is None and [X_11,X_12].count(None) == 0:
+                X_66 = f_2*(X_11-X_12)
+
 
         case 'trigonal':
+            f = f'2×' if mode == 'S' else ''
             X_16,X_26,X_34,X_35,X_36,X_45 = \
                 _ensure_zero(crystal_system=crystal_system, mode=mode,
                                                  X_16=X_16,
                                                  X_26=X_26,
                              X_34=X_34,X_35=X_35,X_36=X_36,
                                        X_45=X_45)
-            X_13,X_23 = _ensure_equal(X_13=X_13,X_23=X_23)
-            X_11,X_22 = _ensure_equal(X_11=X_11,X_22=X_22)
-            X_44,X_55 = _ensure_equal(X_44=X_44,X_55=X_55)
-            X_66 = _set_value(f_2*(X_11-X_12), X_66=X_66) # needs more flexibility
 
+            X_11,X_22 = _ensure_equal(crystal_system=crystal_system, mode=mode,
+                                      X_11=X_11,X_22=X_22)
+            X_13,X_23 = _ensure_equal(crystal_system=crystal_system, mode=mode,
+                                      X_13=X_13,X_23=X_23)
+            X_44,X_55 = _ensure_equal(crystal_system=crystal_system, mode=mode,
+                                      X_44=X_44,X_55=X_55)
+
+            if   X_11 is None and [X_12,X_66].count(None) == 0:
+                X_11=X_22 = X_66/f_2 + X_12
+            elif X_12 is None and [X_11,X_66].count(None) == 0:
+                X_12 = X_11 - X_66/f_2
+            elif X_66 is None and [X_11,X_12].count(None) == 0:
+                X_66 = f_2*(X_11-X_12)
+
+            msg = f'condition {mode}_14 = -{mode}_24 = {f}{mode}_56 for trigonal crystal system violated'
             match [X_14,X_24,X_56].count(None):
                 case 3:
-                    raise ValueError
+                    raise ValueError(msg)
                 case 2:
                     if X_14 is None and X_24 is None:
                         X_14 = X_56/f_1
@@ -123,20 +205,21 @@ def _assemble(crystal_system, mode,
                 case 1:
                     if X_14 is None:
                         X_14 = -X_24
-                        if X_24 != -X_56/f_1: raise ValueError
+                        if X_24 != -X_56/f_1: raise ValueError(msg)
                     elif X_24 is None:
                         X_24 = X_14
-                        if X_14 != X_56/f_1: raise ValueError
+                        if X_14 != X_56/f_1: raise ValueError(msg)
                     else:
                         X_56 = f_1*X_14
-                        if X_14 != -X_24: raise ValueError
+                        if X_14 != -X_24: raise ValueError(msg)
                 case 0:
                     if X_14 != -X_24 or X_14 != f_1*X_56:
-                        raise ValueError
+                        raise ValueError(msg)
 
+            msg = f'condition {mode}_15 = -{mode}_25 = -{f}{mode}_46 for trigonal crystal system violated'
             match [X_15,X_25,X_46].count(None):
                 case 3:
-                    X_15 = X_25 = X_46 = 0.0
+                    X_15=X_25=X_46 = 0.0
                 case 2:
                     if X_15 is None and X_25 is None:
                         X_15 = X_46/f_1
@@ -150,13 +233,16 @@ def _assemble(crystal_system, mode,
                 case 1:
                     if X_15 is None:
                         X_15 = -X_25
-                        if X_25 != -X_46/f_1: raise ValueError
+                        if X_25 != -X_46/f_1: raise ValueError(msg)
                     elif X_25 is None:
                         X_25 = X_15
-                        if X_15 != X_46/f_1: raise ValueError
+                        if X_15 != X_46/f_1: raise ValueError(msg)
                     else:
                         X_46 = f_1*X_15
-                        if X_15 != -X_25: raise ValueError
+                        if X_15 != -X_25: raise ValueError(msg)
+                case 0:
+                    if X_15 != -X_25 or X_15 != -f_1*X_46:
+                        raise ValueError(msg)
 
 
         case 'tetragonal':
@@ -167,17 +253,24 @@ def _assemble(crystal_system, mode,
                              X_34=X_34,X_35=X_35,X_36=X_36,
                                        X_45=X_45,X_46=X_46,
                                                  X_56=X_56)
+
+            X_11,X_22 = _ensure_equal(crystal_system=crystal_system, mode=mode,
+                                      X_11=X_11,X_22=X_22)
+            X_13,X_23 = _ensure_equal(crystal_system=crystal_system, mode=mode,
+                                      X_13=X_13,X_23=X_23)
+            X_44,X_55 = _ensure_equal(crystal_system=crystal_system, mode=mode,
+                                      X_44=X_44,X_55=X_55)
+
             if X_16 is None and X_26 is None:
                 X_16 = X_26 = 0.0
             elif X_16 is None:
-                X_16 = _set_value(-X_26, X_16=X_26)
+                X_16 = -X_26
             elif X_26 is None:
-                X_26 = _set_value(-X_16, X_16=X_16)
+                X_26 = -X_16
             else:
-                if X_16+X_26 != 0.0: raise ValueError
-            X_13,X_23 = _ensure_equal(X_13=X_13,X_23=X_23)
-            X_11,X_22 = _ensure_equal(X_11=X_11,X_22=X_22)
-            X_44,X_55 = _ensure_equal(X_44=X_44,X_55=X_55)
+                if X_16+X_26 != 0.0:
+                    raise ValueError(f'condition {mode}_16 = -{mode}_16 for tetragonal crystal system violated')
+
 
         case 'orthorhombic':
             X_14,X_15,X_16, X_24,X_25,X_26, X_34,X_35,X_36, X_45,X_46, X_56 = \
@@ -201,7 +294,7 @@ def _assemble(crystal_system, mode,
             pass
 
         case _:
-            raise ValueError(f'invalid crystal system "{crystal_system}"')
+            raise ValueError(f'invalid crystal system {crystal_system}')
 
     upper = _np.array([[X_11, X_12, X_13, X_14, X_15, X_16],
                        [ 0,   X_22, X_23, X_24, X_25, X_26],
@@ -212,7 +305,7 @@ def _assemble(crystal_system, mode,
 
     if _np.count_nonzero(idx := (upper == None).nonzero()) > 0:
         c = [f'{mode}_{r+1}{c+1}' for r,c in zip(idx[0],idx[1])]
-        raise ValueError(f'{",".join(c)} undefined for "{crystal_system}" crystal system')
+        raise ValueError(f'{",".join(c)} need to be defined for {crystal_system} crystal system')
 
     return upper + _np.tril(upper.T,-1)
 
@@ -224,7 +317,11 @@ def C(crystal_system,*,
                                        C_44=None, C_45=None, C_46=None,
                                                   C_55=None, C_56=None,
                                                              C_66=None):
+    """
+    Assemble stiffness matrix.
 
+    Entries are from the upper diagonal.
+    """
     C = _assemble(crystal_system,'C', C_11, C_12, C_13, C_14, C_15, C_16,
                                             C_22, C_23, C_24, C_25, C_26,
                                                   C_33, C_34, C_35, C_36,
@@ -244,7 +341,11 @@ def S(crystal_system,*,
                                        S_44=None, S_45=None, S_46=None,
                                                   S_55=None, S_56=None,
                                                              S_66=None):
+    """
+    Assemble compliance matrix.
 
+    Entries are from the upper diagonal.
+    """
     S = _assemble(crystal_system,'S', S_11, S_12, S_13, S_14, S_15, S_16,
                                             S_22, S_23, S_24, S_25, S_26,
                                                   S_33, S_34, S_35, S_36,
@@ -261,13 +362,20 @@ def stable(crystal_system,*,C=None,S=None):
     """
     Determine whether a stiffness or compliance matrix is stable.
 
+    Parameters
+    ----------
+    C: numpy.ndarray, shape (6,6), optional
+       Stiffness matrix in Voigt notation.
+    S: numpy.ndarray, shape (6,6), optional
+       Compliance matrix in Voigt notation.
+
     References
     ----------
     F. Mouhat and F.-X. Coudert, Physical Review B 90:224104, 2014
     https://doi.org/10.1103/PhysRevB.90.224104
     """
     if sum(arg is not None for arg in (C,S)) != 1:
-        raise KeyError('specify either "C" or "S"')
+        raise TypeError('missing keyord argument "C" or "S"')
 
     if C is None: C = _np.linalg.inv(S)
 
@@ -307,27 +415,83 @@ def stable(crystal_system,*,C=None,S=None):
             return ValueError(f'invalid crystal system {crystal_system}')
 
 
-def E(S,x):
-    """Directional Young's modulus."""
-    # https://mtex-toolbox.github.io/stiffnessTensor.YoungsModulus.html
-    return 1/_np.einsum('...ijkl,...i,...j,...k,...l',S,x,x,x,x)
+def E(x,*,C=None,S=None):
+    """
+    Directional Young's modulus.
 
-def G(S,h,u):
-    """Directional shear modulus."""
-    # https://mtex-toolbox.github.io/stiffnessTensor.shearModulus.html
-    return .25/_np.einsum('...ijkl,...i,...j,...k,...l',S,h,u,h,u)
+    Parameters
+    ----------
+    C: numpy.ndarray, shape (...,6,6), optional
+       Stiffness matrix in Voigt notation.
+    S: numpy.ndarray, shape (...,6,6), optional
+       Compliance matrix in Voigt notation.
 
-def nu(S,x,y):
-    """Directional Poisson ratio."""
-    #https://mtex-toolbox.github.io/stiffnessTensor.PoissonRatio.html
-    return -_np.einsum('...ijkl,...i,...j,...k,...l',S,x,x,y,y)/ \
-            _np.einsum('...mnop,...m,...n,...o,...p',S,x,x,x,x)
+    References
+    ----------
+    https://mtex-toolbox.github.io/stiffnessTensor.YoungsModulus.html
+    """
+    if sum(arg is not None for arg in (C,S)) != 1:
+        raise TypeError('missing keyord argument "C" or "S"')
+    if S is None: S = _np.linalg.inv(C)
+
+    return 1/_np.einsum('...ijkl,...i,...j,...k,...l',_Voigt.to_3x3x3x3_compliance(S),x,x,x,x)
+
+def G(h,u,*,C=None,S=None):
+    """
+    Directional shear modulus.
+
+    Parameters
+    ----------
+    C: numpy.ndarray, shape (...,6,6), optional
+       Stiffness matrix in Voigt notation.
+    S: numpy.ndarray, shape (...,6,6), optional
+       Compliance matrix in Voigt notation.
+
+    References
+    ----------
+    https://mtex-toolbox.github.io/stiffnessTensor.shearModulus.html
+    """
+    if sum(arg is not None for arg in (C,S)) != 1:
+        raise TypeError('missing keyord argument "C" or "S"')
+    if S is None: S = _np.linalg.inv(C)
+
+    return .25/_np.einsum('...ijkl,...i,...j,...k,...l',_Voigt.to_3x3x3x3_compliance(S),h,u,h,u)
+
+def nu(x,y,*,C=None,S=None):
+    """
+    Directional Poisson ratio.
+
+    Parameters
+    ----------
+    C: numpy.ndarray, shape (...,6,6), optional
+       Stiffness matrix in Voigt notation.
+    S: numpy.ndarray, shape (...,6,6), optional
+       Compliance matrix in Voigt notation.
+
+    References
+    ----------
+    https://mtex-toolbox.github.io/stiffnessTensor.PoissonRatio.html
+    """
+    if sum(arg is not None for arg in (C,S)) != 1:
+        raise TypeError('missing keyord argument "C" or "S"')
+    if S is None: S = _np.linalg.inv(C)
+
+    S_ = _Voigt.to_3x3x3x3_compliance(S)
+    return -_np.einsum('...ijkl,...i,...j,...k,...l',S_,x,x,y,y)/ \
+            _np.einsum('...mnop,...m,...n,...o,...p',S_,x,x,x,x)
 
 
-def K_V(C):
+def K_V(*,C=None,S=None):
     """
     Equivalent isotropic bulk modulus (isostrain/Voigt assumption).
 
+    Parameters
+    ----------
+    C: numpy.ndarray, shape (...,6,6), optional
+       Stiffness matrix in Voigt notation.
+    S: numpy.ndarray, shape (...,6,6), optional
+       Compliance matrix in Voigt notation.
+
     References
     ----------
     W. Voigt, Abhandlungen der Königlichen Gesellschaft der Wissenschaften in Göttingen: Mathematische Classe 34:3-52, 1887
@@ -336,12 +500,22 @@ def K_V(C):
     R. Hill, Proceedings of the Physical Society. Section A 66:349-354, 1952
     https://doi.org/10.1088/0370-1298/65/5/307
     """
-    return ((C[0,0]+C[1,1]+C[2,2]) +2.*(C[0,1]+C[1,2]+C[2,0]))/9.
+    if sum(arg is not None for arg in (C,S)) != 1:
+        raise TypeError('missing keyord argument "C" or "S"')
+    if C is None: C = _np.linalg.inv(S)
+    return ((C[...,0,0]+C[...,1,1]+C[...,2,2]) +2.*(C[...,0,1]+C[...,1,2]+C[...,2,0]))/9.
 
-def K_R(S):
+def K_R(*,C=None,S=None):
     """
     Equivalent isotropic bulk modulus (isostress/Reuss assumption).
 
+    Parameters
+    ----------
+    C: numpy.ndarray, shape (...,6,6), optional
+       Stiffness matrix in Voigt notation.
+    S: numpy.ndarray, shape (...,6,6), optional
+       Compliance matrix in Voigt notation.
+
     References
     ----------
     A. Reuss, Zeitschrift für Angewandte Mathematik und Mechanik 9(1):49-53, 1929
@@ -350,12 +524,23 @@ def K_R(S):
     R. Hill, Proceedings of the Physical Society. Section A 66:349-354, 1952
     https://doi.org/10.1088/0370-1298/65/5/307
     """
-    return 1./(S[0,0]+S[1,1]+S[2,2] +2.*(S[0,1]+S[1,2]+S[2,0]))
+    if sum(arg is not None for arg in (C,S)) != 1:
+        raise TypeError('missing keyord argument "C" or "S"')
+    if S is None: S = _np.linalg.inv(C)
+
+    return 1./(S[...,0,0]+S[...,1,1]+S[...,2,2] +2.*(S[...,0,1]+S[...,1,2]+S[...,2,0]))
 
 
-def G_V(C):
+def G_V(*,C=None,S=None):
     """
     Equivalent isotropic shear modulus (isostrain/Voigt assumption).
+
+    Parameters
+    ----------
+    C: numpy.ndarray, shape (...,6,6), optional
+       Stiffness matrix in Voigt notation.
+    S: numpy.ndarray, shape (...,6,6), optional
+       Compliance matrix in Voigt notation.
 
     References
     ----------
@@ -365,11 +550,24 @@ def G_V(C):
     R. Hill, Proceedings of the Physical Society. Section A 66:349-354, 1952
     https://doi.org/10.1088/0370-1298/65/5/307
     """
-    return (C[0,0]+C[1,1]+C[2,2] -(C[0,1]+C[1,2]+C[2,0]) +3.*(C[3,3]+C[4,4]+C[5,5]))/15.
+    if sum(arg is not None for arg in (C,S)) != 1:
+        raise TypeError('missing keyord argument "C" or "S"')
+    if C is None: C = _np.linalg.inv(S)
 
-def G_R(S):
+    return (     C[...,0,0]+C[...,1,1]+C[...,2,2]
+               -(C[...,0,1]+C[...,1,2]+C[...,2,0])
+            +3.*(C[...,3,3]+C[...,4,4]+C[...,5,5]))/15.
+
+def G_R(*,C=None,S=None):
     """
     Equivalent isotropic shear modulus (isostress/Reuss assumption).
+
+    Parameters
+    ----------
+    C: numpy.ndarray, shape (...,6,6), optional
+       Stiffness matrix in Voigt notation.
+    S: numpy.ndarray, shape (...,6,6), optional
+       Compliance matrix in Voigt notation.
 
     References
     ----------
@@ -379,16 +577,33 @@ def G_R(S):
     R. Hill, Proceedings of the Physical Society. Section A 66:349-354, 1952
     https://doi.org/10.1088/0370-1298/65/5/307
     """
-    return 15./(4*(S[0,0]+S[1,1]+S[2,2]) -4.*(S[0,1]+S[1,2]+S[2,0]) +3.*(S[3,3]+S[4,4]+S[5,5]))
+    if sum(arg is not None for arg in (C,S)) != 1:
+        raise TypeError('missing keyord argument "C" or "S"')
+    if S is None: S = _np.linalg.inv(C)
+
+    return 15./( 4.*(S[...,0,0]+S[...,1,1]+S[...,2,2])
+                -4.*(S[...,0,1]+S[...,1,2]+S[...,2,0])
+                +3.*(S[...,3,3]+S[...,4,4]+S[...,5,5]))
 
 
-def A_u(*,C,S):
+def A_u(*,C=None,S=None):
     """
     Universal anisotropy index
+
+    Parameters
+    ----------
+    C: numpy.ndarray, shape (...,6,6), optional
+       Stiffness matrix in Voigt notation.
+    S: numpy.ndarray, shape (...,6,6), optional
+       Compliance matrix in Voigt notation.
 
     References
     ----------
     S. I. Ranganathan and M. Ostoja-Starzewski, Physical Review Letters 101:055504, 2008
     https://doi.org/10.1103/PhysRevLett.101.055504
     """
-    return 5*G_V(C)/G_R(S) + K_V(C)/K_R(S) - 6.
+    if sum(arg is not None for arg in (C,S)) != 1:
+        raise TypeError('missing keyord argument "C" or "S"')
+    C_ = C if C is not None else _np.linalg.inv(S)
+    S_ = S if S is not None else _np.linalg.inv(C)
+    return 5.*G_V(C=C_)/G_R(S=S_) + K_V(C=C_)/K_R(S=S_) - 6.
