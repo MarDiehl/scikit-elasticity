@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 from . import _conventions
-"""
+r"""
 Convention according to W. Voigt for the compressed notation of symmetric tensors.
 
 Notes
