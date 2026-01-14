@@ -122,6 +122,8 @@ def _assemble(crystal_system, mode,
                 X_12=X_13=X_23 = X_11 - X_44/f_2
             elif X_44 is None and X_11 is not None and X_12 is not None:
                 X_44=X_55=X_66 = f_2*(X_11-X_12)
+            elif not _np.isclose(X_44,f_2*(X_11-X_12)):
+                raise ValueError(f'condition {mode}_44 = {f_2}×({mode}_11 - {mode}_12) for isotropic crystal system violated')
 
 
         case 'cubic':
@@ -163,6 +165,8 @@ def _assemble(crystal_system, mode,
                 X_12 = X_11 - X_66/f_2
             elif X_66 is None and [X_11,X_12].count(None) == 0:
                 X_66 = f_2*(X_11-X_12)
+            elif not _np.isclose(X_66,f_2*(X_11-X_12)):
+                raise ValueError(f'condition {mode}_66 = {f_2}×({mode}_11 - {mode}_12) for hexagonal crystal system violated')
 
 
         case 'trigonal':
@@ -187,6 +191,8 @@ def _assemble(crystal_system, mode,
                 X_12 = X_11 - X_66/f_2
             elif X_66 is None and [X_11,X_12].count(None) == 0:
                 X_66 = f_2*(X_11-X_12)
+            elif not _np.isclose(X_66,f_2*(X_11-X_12)):
+                raise ValueError(f'condition {mode}_66 = {f_2}×({mode}_11 - {mode}_12) for trigonal crystal system violated')
 
             msg = f'condition {mode}_14 = -{mode}_24 = {f}{mode}_56 for trigonal crystal system violated'
             match [X_14,X_24,X_56].count(None):
