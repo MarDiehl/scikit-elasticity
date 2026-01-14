@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>skel._volumeelement &#8212; scikit-elasticity 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for skel._volumeelement</h1><div class="highlight"><pre>
+<span></span><span class="c1"># SPDX-License-Identifier: AGPL-3.0-or-later</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">linalg</span><span class="p">,</span> <span class="n">optimize</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">Mandel</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">Voigt</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">Eshelby</span>
+
+<div class="viewcode-block" id="VolumeElement">
+<a class="viewcode-back" href="../../index.html#skel.VolumeElement">[docs]</a>
+<span class="k">class</span> <span class="nc">VolumeElement</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">O</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Voigt</span><span class="o">.</span><span class="n">rotate_stiffness</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="n">C</span><span class="p">),(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Voigt</span><span class="o">.</span><span class="n">rotate_compliance</span><span class="p">(</span><span class="n">O</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">C</span><span class="p">)),(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Voigt</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">C_Voigt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Homogenized stiffness according to Voigt.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">C</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">S_Voigt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Homogenized compliance according to Voigt.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">C_Voigt</span><span class="p">)</span>
+
+
+<span class="c1"># Reuss</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">S_Reuss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Homogenized stiffness according to Reuss.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">C_Reuss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Homogenized compliance according to Reuss.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S_Reuss</span><span class="p">)</span>
+
+
+<span class="c1"># Hill</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">C_Hill_C</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Homogenized stiffness according to Hill.</span>
+
+<span class="sd">        Average of C from Voigt and Reuss.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">C_Voigt</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">C_Reuss</span><span class="p">)</span><span class="o">*</span><span class="mf">.5</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">S_Hill_S</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Homogenized compliance according to Hill.</span>
+
+<span class="sd">        Average of S from Voigt and Reuss.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S_Voigt</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">S_Reuss</span><span class="p">)</span><span class="o">*</span><span class="mf">.5</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">C_Hill_S</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Homogenized stiffness according to Hill.</span>
+
+<span class="sd">        Average of S from Voigt and Reuss.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S_Hill_S</span><span class="p">)</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">S_Hill_C</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Homogenized compliance according to Hill.</span>
+
+<span class="sd">        Average of C from Voigt and Reuss.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">C_Hill_C</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">C_Hill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Homogenized stiffness according to Hill.</span>
+
+<span class="sd">        Average of C and S average from Voigt and Reuss.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">C_Hill_C</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">C_Hill_S</span><span class="p">)</span><span class="o">*</span><span class="mf">.5</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">S_Hill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Homogenized compliance according to Hill.</span>
+
+<span class="sd">        Average of S and C average from Voigt and Reuss.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S_Hill_S</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">S_Hill_C</span><span class="p">)</span><span class="o">*</span><span class="mf">.5</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">C_Hill_geometric</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Homogenized stiffness according to Hill.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">linalg</span><span class="o">.</span><span class="n">sqrtm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">C_Voigt</span><span class="nd">@self</span><span class="o">.</span><span class="n">C_Reuss</span><span class="p">)</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">S_Hill_geometric</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Homogenized compliance according to Hill.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">linalg</span><span class="o">.</span><span class="n">sqrtm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S_Voigt</span><span class="nd">@self</span><span class="o">.</span><span class="n">S_Reuss</span><span class="p">)</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">C_sc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># https://dx.doi.org/10.1002/zamm.201100135, eq. (4)</span>
+        <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">xis</span><span class="p">,</span><span class="n">w</span><span class="p">,</span><span class="n">C_II</span><span class="p">):</span>
+            <span class="n">E</span> <span class="o">=</span> <span class="n">Mandel</span><span class="o">.</span><span class="n">to_6x6</span><span class="p">(</span><span class="n">Eshelby</span><span class="o">.</span><span class="n">eshelby</span><span class="p">(</span><span class="n">Mandel</span><span class="o">.</span><span class="n">to_3x3x3x3</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">xi</span><span class="o">=</span><span class="n">xis</span><span class="p">,</span><span class="n">w</span><span class="o">=</span><span class="n">w</span><span class="p">))</span><span class="nd">@np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">C_II</span><span class="nd">@np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">E</span><span class="o">@</span><span class="p">(</span><span class="n">C_II</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">6</span><span class="p">)),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">xis</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">Eshelby</span><span class="o">.</span><span class="n">_xi</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="mi">8</span><span class="p">,</span><span class="mi">64</span><span class="p">)</span>
+        <span class="n">C_II</span> <span class="o">=</span> <span class="n">Mandel</span><span class="o">.</span><span class="n">to_6x6</span><span class="p">(</span><span class="n">Voigt</span><span class="o">.</span><span class="n">to_3x3x3x3_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">C</span><span class="p">))</span>
+        <span class="n">C_I</span> <span class="o">=</span> <span class="n">Mandel</span><span class="o">.</span><span class="n">to_6x6</span><span class="p">(</span><span class="n">Voigt</span><span class="o">.</span><span class="n">to_3x3x3x3_stiffness</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">C_Hill</span><span class="p">))</span>
+
+        <span class="n">C</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">fixed_point</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">C_I</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">xis</span><span class="p">,</span><span class="n">w</span><span class="p">,</span><span class="n">C_II</span><span class="p">),</span><span class="n">xtol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Voigt</span><span class="o">.</span><span class="n">to_6x6_stiffness</span><span class="p">(</span><span class="n">Mandel</span><span class="o">.</span><span class="n">to_3x3x3x3_stiffness</span><span class="p">(</span><span class="n">C</span><span class="p">))</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">scikit-elasticity</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Martin Diehl.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
