@@ -16,6 +16,7 @@ jobs:
       - uses: actions/setup-python@v5
       - name: Install dependencies
         run: |
+          git fetch --unshallow
           pip install sphinx pydata-sphinx-theme
           python -m pip install .
       - name: Sphinx build
