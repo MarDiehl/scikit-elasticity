@@ -256,7 +256,7 @@ def rotate_2nd(O,t_tilde):
 
     Returns
     -------
-    t_tilde' : numpy.ndarray of shape (...,6)
+    t_tilde: numpy.ndarray of shape (...,6)
         Rotated 2nd order tensor in Mandel notation.
 
     Notes
@@ -280,7 +280,7 @@ def rotate_strain(O,epsilon_tilde):
 
     Returns
     -------
-    epsilon_tilde' : numpy.ndarray of shape (...,6)
+    epsilon_tilde: numpy.ndarray of shape (...,6)
         Rotated 2nd order strain tensor in Mandel notation.
 
     """
@@ -299,7 +299,7 @@ def rotate_stress(O,sigma_tilde):
 
     Returns
     -------
-    sigma_tilde' : numpy.ndarray of shape (...,6)
+    sigma_tilde: numpy.ndarray of shape (...,6)
         Rotated 2nd order stress tensor in Mandel notation.
 
     """
@@ -319,7 +319,7 @@ def rotate_4th(O,T_tilde):
 
     Returns
     -------
-    T_tilde' : numpy.ndarray of shape (...,6,6)
+    T_tilde: numpy.ndarray of shape (...,6,6)
         Rotated 4th order tensor in Mandel notation.
 
     Notes
@@ -343,7 +343,7 @@ def rotate_compliance(O,S_tilde):
 
     Returns
     -------
-    S_tilde' : numpy.ndarray of shape (...,6,6)
+    S_tilde: numpy.ndarray of shape (...,6,6)
         Rotated 4th order compliance tensor in Mandel notation.
 
     """
@@ -362,7 +362,7 @@ def rotate_stiffness(O,C_tilde):
 
     Returns
     -------
-    C_tilde' : numpy.ndarray of shape (...,6,6)
+    C_tilde: numpy.ndarray of shape (...,6,6)
         Rotated 4th order stiffness tensor in Mandel notation.
 
     """

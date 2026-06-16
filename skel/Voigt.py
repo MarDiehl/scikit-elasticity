@@ -168,7 +168,7 @@ def rotate_strain(O,epsilon_tilde):
 
     Returns
     -------
-    epsilon_tilde' : numpy.ndarray of shape (...,6)
+    epsilon_tilde: numpy.ndarray of shape (...,6)
         Rotated 2nd order strain tensor in Voigt notation.
 
     """
@@ -187,7 +187,7 @@ def rotate_stress(O,sigma_tilde):
 
     Returns
     -------
-    sigma_tilde' : numpy.ndarray of shape (...,6)
+    sigma_tilde: numpy.ndarray of shape (...,6)
         Rotated 2nd order stress tensor in Voigt notation.
 
     """
@@ -207,7 +207,7 @@ def rotate_compliance(O,S_tilde):
 
     Returns
     -------
-    S_tilde' : numpy.ndarray of shape (...,6,6)
+    S_tilde: numpy.ndarray of shape (...,6,6)
         Rotated 4th order compliance tensor in Voigt notation.
 
     """
@@ -226,7 +226,7 @@ def rotate_stiffness(O,C_tilde):
 
     Returns
     -------
-    C_tilde' : numpy.ndarray of shape (...,6,6)
+    C_tilde: numpy.ndarray of shape (...,6,6)
         Rotated 4th order stiffness tensor in Voigt notation.
 
     """

@@ -140,7 +140,7 @@ def rotate(O,x_tilde,w,order):
 
     Returns
     -------
-    x_tilde' : numpy.ndarray of shape (...,6)
+    x_tilde: numpy.ndarray of shape (...,6)
         Rotated 2nd or 4th order strain tensor in vector notation.
 
     References
