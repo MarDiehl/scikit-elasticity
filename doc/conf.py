@@ -8,7 +8,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'scikit-elasticity'
-copyright = '2025, Martin Diehl'
+copyright = '2025-2026, Martin Diehl'
 author = 'Martin Diehl'
 release = '0.1'
 
@@ -28,5 +28,7 @@ extensions = ['sphinx.ext.autodoc',
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'alabaster'
+html_theme = 'pydata_sphinx_theme'
+html_logo = '_static/logo.svg'
+html_permalinks_icon = '<span>#</span>'
 html_static_path = ['_static']
