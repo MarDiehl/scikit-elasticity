@@ -1,0 +1,1188 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>scikit-elasticity &#8212; scikit-elasticity 0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+
+    <script src="_static/documentation_options.js?v=2709fde1"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.svg" class="logo__image only-light" alt="scikit-elasticity 0.1 documentation - Home"/>
+    <img src="_static/logo.svg" class="logo__image only-dark pst-js-only" alt="scikit-elasticity 0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="scikit-elasticity">
+<h1>scikit-elasticity<a class="headerlink" href="#scikit-elasticity" title="Link to this heading"><span>#</span></a></h1>
+<p>A library for working with anisotropic elasticity in Python.</p>
+<section id="homogenization">
+<h2>Homogenization<a class="headerlink" href="#homogenization" title="Link to this heading"><span>#</span></a></h2>
+<p>Calculation of elastic constants from elastic stiffness and a list of orientations.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">skel</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">damask</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">C_Al</span> <span class="o">=</span> <span class="n">skel</span><span class="o">.</span><span class="n">stiffness</span><span class="p">(</span><span class="s1">&#39;cubic&#39;</span><span class="p">,</span><span class="n">C_11</span><span class="o">=</span><span class="mf">106.9e9</span><span class="p">,</span><span class="n">C_12</span><span class="o">=</span><span class="mf">60.5e9</span><span class="p">,</span><span class="n">C_44</span><span class="o">=</span><span class="mf">28.4e9</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">O</span> <span class="o">=</span> <span class="n">damask</span><span class="o">.</span><span class="n">Rotation</span><span class="o">.</span><span class="n">from_random</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">skel</span><span class="o">.</span><span class="n">Polycrystal</span><span class="p">(</span><span class="n">C_Al</span><span class="p">,</span><span class="n">O</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">C_Reuss</span><span class="o">/</span><span class="mf">1e9</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">C_Voigt</span><span class="o">/</span><span class="mf">1e9</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">C_Hill_C</span><span class="o">/</span><span class="mf">1e9</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">C_Hill_S</span><span class="o">/</span><span class="mf">1e9</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="skel.VolumeElement">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">skel.</span></span><span class="sig-name descname"><span class="pre">VolumeElement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">O</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/_volumeelement.html#VolumeElement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.VolumeElement" title="Link to this definition"><span>#</span></a></dt>
+<dd><dl class="py property">
+<dt class="sig sig-object py" id="skel.VolumeElement.C_Hill">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">C_Hill</span></span><a class="headerlink" href="#skel.VolumeElement.C_Hill" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Homogenized stiffness according to Hill.</p>
+<p>Average of C and S average from Voigt and Reuss.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="skel.VolumeElement.C_Hill_C">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">C_Hill_C</span></span><a class="headerlink" href="#skel.VolumeElement.C_Hill_C" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Homogenized stiffness according to Hill.</p>
+<p>Average of C from Voigt and Reuss.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="skel.VolumeElement.C_Hill_S">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">C_Hill_S</span></span><a class="headerlink" href="#skel.VolumeElement.C_Hill_S" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Homogenized stiffness according to Hill.</p>
+<p>Average of S from Voigt and Reuss.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="skel.VolumeElement.C_Hill_geometric">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">C_Hill_geometric</span></span><a class="headerlink" href="#skel.VolumeElement.C_Hill_geometric" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Homogenized stiffness according to Hill.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="skel.VolumeElement.C_Reuss">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">C_Reuss</span></span><a class="headerlink" href="#skel.VolumeElement.C_Reuss" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Homogenized compliance according to Reuss.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="skel.VolumeElement.C_Voigt">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">C_Voigt</span></span><a class="headerlink" href="#skel.VolumeElement.C_Voigt" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Homogenized stiffness according to Voigt.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="skel.VolumeElement.S_Hill">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">S_Hill</span></span><a class="headerlink" href="#skel.VolumeElement.S_Hill" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Homogenized compliance according to Hill.</p>
+<p>Average of S and C average from Voigt and Reuss.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="skel.VolumeElement.S_Hill_C">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">S_Hill_C</span></span><a class="headerlink" href="#skel.VolumeElement.S_Hill_C" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Homogenized compliance according to Hill.</p>
+<p>Average of C from Voigt and Reuss.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="skel.VolumeElement.S_Hill_S">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">S_Hill_S</span></span><a class="headerlink" href="#skel.VolumeElement.S_Hill_S" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Homogenized compliance according to Hill.</p>
+<p>Average of S from Voigt and Reuss.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="skel.VolumeElement.S_Hill_geometric">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">S_Hill_geometric</span></span><a class="headerlink" href="#skel.VolumeElement.S_Hill_geometric" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Homogenized compliance according to Hill.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="skel.VolumeElement.S_Reuss">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">S_Reuss</span></span><a class="headerlink" href="#skel.VolumeElement.S_Reuss" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Homogenized stiffness according to Reuss.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="skel.VolumeElement.S_Voigt">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">S_Voigt</span></span><a class="headerlink" href="#skel.VolumeElement.S_Voigt" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Homogenized compliance according to Voigt.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-skel.Voigt">
+<span id="conversions-and-representations"></span><h2>Conversions and Representations<a class="headerlink" href="#module-skel.Voigt" title="Link to this heading"><span>#</span></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Voigt.rotate_compliance">
+<span class="sig-prename descclassname"><span class="pre">skel.Voigt.</span></span><span class="sig-name descname"><span class="pre">rotate_compliance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">O</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Voigt.html#rotate_compliance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Voigt.rotate_compliance" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Rotate symmetric 4th order compliance tensor in Voigt notation.</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>O: damask.Orientation of shape (…)</dt><dd><p>Orientations.</p>
+</dd>
+<dt>S_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Symmetric 4th order compliance tensor in Voigt notation.</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>S_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Rotated 4th order compliance tensor in Voigt notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Voigt.rotate_stiffness">
+<span class="sig-prename descclassname"><span class="pre">skel.Voigt.</span></span><span class="sig-name descname"><span class="pre">rotate_stiffness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">O</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Voigt.html#rotate_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Voigt.rotate_stiffness" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Rotate symmetric 4th order stiffness tensor in Voigt notation.</p>
+<section id="id1">
+<h3>Parameters<a class="headerlink" href="#id1" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>O: damask.Orientation of shape (…)</dt><dd><p>Orientations.</p>
+</dd>
+<dt>C_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Symmetric 4th order stiffness tensor in Voigt notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Returns<a class="headerlink" href="#id2" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>C_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Rotated 4th order stiffness tensor in Voigt notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Voigt.rotate_strain">
+<span class="sig-prename descclassname"><span class="pre">skel.Voigt.</span></span><span class="sig-name descname"><span class="pre">rotate_strain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">O</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Voigt.html#rotate_strain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Voigt.rotate_strain" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Rotate symmetric 2nd order strain tensor in Voigt notation.</p>
+<section id="id3">
+<h3>Parameters<a class="headerlink" href="#id3" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>O: damask.Orientation of shape (…)</dt><dd><p>Orientations.</p>
+</dd>
+<dt>epsilon_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Symmetric 2nd order strain tensor in Voigt notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h3>Returns<a class="headerlink" href="#id4" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>epsilon_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Rotated 2nd order strain tensor in Voigt notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Voigt.rotate_stress">
+<span class="sig-prename descclassname"><span class="pre">skel.Voigt.</span></span><span class="sig-name descname"><span class="pre">rotate_stress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">O</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Voigt.html#rotate_stress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Voigt.rotate_stress" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Rotate symmetric 2nd order stress tensor in Voigt notation.</p>
+<section id="id5">
+<h3>Parameters<a class="headerlink" href="#id5" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>O: damask.Orientation of shape (…)</dt><dd><p>Orientations.</p>
+</dd>
+<dt>sigma_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Symmetric 2nd order stress tensor in Voigt notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h3>Returns<a class="headerlink" href="#id6" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>sigma_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Rotated 2nd order stress tensor in Voigt notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Voigt.to_3x3_strain">
+<span class="sig-prename descclassname"><span class="pre">skel.Voigt.</span></span><span class="sig-name descname"><span class="pre">to_3x3_strain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epsilon_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Voigt.html#to_3x3_strain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Voigt.to_3x3_strain" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 2nd order strain tensor in Voigt notation to matrix notation.</p>
+<section id="id7">
+<h3>Parameters<a class="headerlink" href="#id7" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>epsilon_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Symmetric 2nd order strain tensor in Voigt notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id8">
+<h3>Returns<a class="headerlink" href="#id8" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>epsilon<span class="classifier">numpy.ndarray of shape (…,3,3)</span></dt><dd><p>Symmetric 2nd order strain tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Voigt.to_3x3_stress">
+<span class="sig-prename descclassname"><span class="pre">skel.Voigt.</span></span><span class="sig-name descname"><span class="pre">to_3x3_stress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Voigt.html#to_3x3_stress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Voigt.to_3x3_stress" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 2nd order stress tensor in Voigt notation to matrix notation.</p>
+<section id="id9">
+<h3>Parameters<a class="headerlink" href="#id9" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>sigma_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Symmetric 2nd order stress tensor in Voigt notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id10">
+<h3>Returns<a class="headerlink" href="#id10" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>sigma<span class="classifier">numpy.ndarray of shape (…,3,3)</span></dt><dd><p>Symmetric 2nd order stress tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Voigt.to_3x3x3x3_compliance">
+<span class="sig-prename descclassname"><span class="pre">skel.Voigt.</span></span><span class="sig-name descname"><span class="pre">to_3x3x3x3_compliance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">S_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Voigt.html#to_3x3x3x3_compliance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Voigt.to_3x3x3x3_compliance" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 4th order compliance tensor in Voigt notation to matrix notation.</p>
+<section id="id11">
+<h3>Parameters<a class="headerlink" href="#id11" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>S_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Symmetric 4th order tensor in Voigt notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id12">
+<h3>Returns<a class="headerlink" href="#id12" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>S<span class="classifier">numpy.ndarray of shape (…,3,3,3,3)</span></dt><dd><p>Symmetric 4th order compliance tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Voigt.to_3x3x3x3_stiffness">
+<span class="sig-prename descclassname"><span class="pre">skel.Voigt.</span></span><span class="sig-name descname"><span class="pre">to_3x3x3x3_stiffness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Voigt.html#to_3x3x3x3_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Voigt.to_3x3x3x3_stiffness" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 4th order stiffness tensor in Voigt notation to matrix notation.</p>
+<section id="id13">
+<h3>Parameters<a class="headerlink" href="#id13" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>C_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Symmetric 4th order stiffness tensor in Voigt notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id14">
+<h3>Returns<a class="headerlink" href="#id14" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>C<span class="classifier">numpy.ndarray of shape (…,3,3,3,3)</span></dt><dd><p>Symmetric 4th order stiffness tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Voigt.to_6_strain">
+<span class="sig-prename descclassname"><span class="pre">skel.Voigt.</span></span><span class="sig-name descname"><span class="pre">to_6_strain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epsilon</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Voigt.html#to_6_strain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Voigt.to_6_strain" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 2nd order strain tensor in matrix notation to Voigt notation.</p>
+<section id="id15">
+<h3>Parameters<a class="headerlink" href="#id15" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>epsilon<span class="classifier">numpy.ndarray of shape (…,3,3)</span></dt><dd><p>Symmetric 2nd order strain tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id16">
+<h3>Returns<a class="headerlink" href="#id16" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>epsilon_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Symmetric 2nd order strain tensor in Voigt notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Voigt.to_6_stress">
+<span class="sig-prename descclassname"><span class="pre">skel.Voigt.</span></span><span class="sig-name descname"><span class="pre">to_6_stress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Voigt.html#to_6_stress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Voigt.to_6_stress" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 2nd order stress tensor in matrix notation to Voigt notation.</p>
+<section id="id17">
+<h3>Parameters<a class="headerlink" href="#id17" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>sigma<span class="classifier">numpy.ndarray of shape (…,3,3)</span></dt><dd><p>Symmetric 2nd order stress tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id18">
+<h3>Returns<a class="headerlink" href="#id18" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>sigma_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Symmetric 2nd order stress tensor in Voigt notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Voigt.to_6x6_compliance">
+<span class="sig-prename descclassname"><span class="pre">skel.Voigt.</span></span><span class="sig-name descname"><span class="pre">to_6x6_compliance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">S</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Voigt.html#to_6x6_compliance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Voigt.to_6x6_compliance" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 4th order compliance tensor in matrix notation to Voigt notation.</p>
+<section id="id19">
+<h3>Parameters<a class="headerlink" href="#id19" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>S<span class="classifier">numpy.ndarray of shape (…,3,3,3,3)</span></dt><dd><p>Symmetric 4th order compliance tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id20">
+<h3>Returns<a class="headerlink" href="#id20" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>S_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Symmetric 4th order compliance tensor in Voigt notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Voigt.to_6x6_stiffness">
+<span class="sig-prename descclassname"><span class="pre">skel.Voigt.</span></span><span class="sig-name descname"><span class="pre">to_6x6_stiffness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Voigt.html#to_6x6_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Voigt.to_6x6_stiffness" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 4th order stiffness tensor in matrix notation to Voigt notation.</p>
+<section id="id21">
+<h3>Parameters<a class="headerlink" href="#id21" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>C<span class="classifier">numpy.ndarray of shape (…,3,3,3,3)</span></dt><dd><p>Symmetric 4th order stiffness tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id22">
+<h3>Returns<a class="headerlink" href="#id22" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>C_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Symmetric 4th order stiffness tensor in Voigt notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function" id="module-skel.Mandel">
+<dt class="sig sig-object py" id="skel.Mandel.rotate_2nd">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">rotate_2nd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">O</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#rotate_2nd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.rotate_2nd" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Rotate symmetric 2nd order tensor in Mandel notation.</p>
+<section id="id23">
+<h3>Parameters<a class="headerlink" href="#id23" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>O: damask.Orientation of shape (…)</dt><dd><p>Orientations.</p>
+</dd>
+<dt>t_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Symmetric 2nd order tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id24">
+<h3>Returns<a class="headerlink" href="#id24" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>t_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Rotated 2nd order tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+<section id="notes">
+<h3>Notes<a class="headerlink" href="#notes" title="Link to this heading"><span>#</span></a></h3>
+<p>Due to the definition of the Mandel notation, this
+function can be used to rotate strain and stress tensors.</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.rotate_4th">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">rotate_4th</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">O</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#rotate_4th"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.rotate_4th" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Rotate symmetric 4th order tensor in Mandel notation.</p>
+<section id="id25">
+<h3>Parameters<a class="headerlink" href="#id25" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>O: damask.Orientation of shape (…)</dt><dd><p>Orientations.</p>
+</dd>
+<dt>T_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Symmetric 4th order tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id26">
+<h3>Returns<a class="headerlink" href="#id26" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>T_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Rotated 4th order tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id27">
+<h3>Notes<a class="headerlink" href="#id27" title="Link to this heading"><span>#</span></a></h3>
+<p>Due to the definition of the Mandel notation, this
+function can be used to rotate compliance and stiffness tensors.</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.rotate_compliance">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">rotate_compliance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">O</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">S_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#rotate_compliance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.rotate_compliance" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Rotate symmetric 4th order compliance tensor in Mandel notation.</p>
+<section id="id28">
+<h3>Parameters<a class="headerlink" href="#id28" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>O: damask.Orientation of shape (…)</dt><dd><p>Orientations.</p>
+</dd>
+<dt>S_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Symmetric 4th order compliance tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id29">
+<h3>Returns<a class="headerlink" href="#id29" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>S_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Rotated 4th order compliance tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.rotate_stiffness">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">rotate_stiffness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">O</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#rotate_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.rotate_stiffness" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Rotate symmetric 4th order stiffness tensor in Mandel notation.</p>
+<section id="id30">
+<h3>Parameters<a class="headerlink" href="#id30" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>O: damask.Orientation of shape (…)</dt><dd><p>Orientations.</p>
+</dd>
+<dt>C_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Symmetric 4th order stiffness tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id31">
+<h3>Returns<a class="headerlink" href="#id31" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>C_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Rotated 4th order stiffness tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.rotate_strain">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">rotate_strain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">O</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#rotate_strain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.rotate_strain" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Rotate symmetric 2nd order strain tensor in Mandel notation.</p>
+<section id="id32">
+<h3>Parameters<a class="headerlink" href="#id32" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>O: damask.Orientation of shape (…)</dt><dd><p>Orientations.</p>
+</dd>
+<dt>epsilon_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Symmetric 2nd order strain tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id33">
+<h3>Returns<a class="headerlink" href="#id33" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>epsilon_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Rotated 2nd order strain tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.rotate_stress">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">rotate_stress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">O</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#rotate_stress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.rotate_stress" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Rotate symmetric 2nd order stress tensor in Mandel notation.</p>
+<section id="id34">
+<h3>Parameters<a class="headerlink" href="#id34" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>O: damask.Orientation of shape (…)</dt><dd><p>Orientations.</p>
+</dd>
+<dt>sigma_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Symmetric 2nd order stress tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id35">
+<h3>Returns<a class="headerlink" href="#id35" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>sigma_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Rotated 2nd order stress tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.to_3x3">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">to_3x3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#to_3x3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.to_3x3" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 2nd order tensor in Mandel notation to matrix notation.</p>
+<section id="id36">
+<h3>Parameters<a class="headerlink" href="#id36" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>t_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Symmetric 2nd order tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id37">
+<h3>Returns<a class="headerlink" href="#id37" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>t<span class="classifier">numpy.ndarray of shape (…,3,3)</span></dt><dd><p>Symmetric 2nd order tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id38">
+<h3>Notes<a class="headerlink" href="#id38" title="Link to this heading"><span>#</span></a></h3>
+<p>Due to the definition of the Mandel notation, this
+function can be used to convert strain and stress tensors.</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.to_3x3_strain">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">to_3x3_strain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epsilon_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#to_3x3_strain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.to_3x3_strain" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 2nd order strain tensor in Mandel notation to matrix notation.</p>
+<section id="id39">
+<h3>Parameters<a class="headerlink" href="#id39" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>epsilon_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Symmetric 2nd order strain tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id40">
+<h3>Returns<a class="headerlink" href="#id40" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>epsilon<span class="classifier">numpy.ndarray of shape (…,3,3)</span></dt><dd><p>Symmetric 2nd order strain tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.to_3x3_stress">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">to_3x3_stress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#to_3x3_stress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.to_3x3_stress" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 2nd order stress tensor in Mandel notation to matrix notation.</p>
+<section id="id41">
+<h3>Parameters<a class="headerlink" href="#id41" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>sigma_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Symmetric 2nd order stress tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id42">
+<h3>Returns<a class="headerlink" href="#id42" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>sigma<span class="classifier">numpy.ndarray of shape (…,3,3)</span></dt><dd><p>Symmetric 2nd order stress tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.to_3x3x3x3">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">to_3x3x3x3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#to_3x3x3x3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.to_3x3x3x3" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 4th order tensor in Mandel notation to matrix notation.</p>
+<section id="id43">
+<h3>Parameters<a class="headerlink" href="#id43" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>T_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Symmetric 4th order tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id44">
+<h3>Returns<a class="headerlink" href="#id44" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>T<span class="classifier">numpy.ndarray of shape (…,3,3,3,3)</span></dt><dd><p>Symmetric 4th order tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id45">
+<h3>Notes<a class="headerlink" href="#id45" title="Link to this heading"><span>#</span></a></h3>
+<p>Due to the definition of the Mandel notation, this
+function can be used to convert compliance and stiffness tensors.</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.to_3x3x3x3_compliance">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">to_3x3x3x3_compliance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">S_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#to_3x3x3x3_compliance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.to_3x3x3x3_compliance" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 4th order compliance tensor in Mandel notation to matrix notation.</p>
+<section id="id46">
+<h3>Parameters<a class="headerlink" href="#id46" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>S_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Symmetric 4th order tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id47">
+<h3>Returns<a class="headerlink" href="#id47" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>S<span class="classifier">numpy.ndarray of shape (…,3,3,3,3)</span></dt><dd><p>Symmetric 4th order compliance tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.to_3x3x3x3_stiffness">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">to_3x3x3x3_stiffness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C_tilde</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#to_3x3x3x3_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.to_3x3x3x3_stiffness" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 4th order stiffness tensor in Mandel notation to matrix notation.</p>
+<section id="id48">
+<h3>Parameters<a class="headerlink" href="#id48" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>C_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Symmetric 4th order stiffness tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id49">
+<h3>Returns<a class="headerlink" href="#id49" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>C<span class="classifier">numpy.ndarray of shape (…,3,3,3,3)</span></dt><dd><p>Symmetric 4th order stiffness tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.to_6">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">to_6</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#to_6"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.to_6" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 2nd order tensor in matrix notation to Mandel notation.</p>
+<section id="id50">
+<h3>Parameters<a class="headerlink" href="#id50" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>t<span class="classifier">numpy.ndarray of shape (…,3,3)</span></dt><dd><p>Symmetric 2nd order tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id51">
+<h3>Returns<a class="headerlink" href="#id51" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>t_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Symmetric 2nd order tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id52">
+<h3>Notes<a class="headerlink" href="#id52" title="Link to this heading"><span>#</span></a></h3>
+<p>Due to the definition of the Mandel notation, this
+function can be used to convert strain and stress tensors.</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.to_6_strain">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">to_6_strain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epsilon</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#to_6_strain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.to_6_strain" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 2nd order strain tensor in matrix notation to Mandel notation.</p>
+<section id="id53">
+<h3>Parameters<a class="headerlink" href="#id53" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>epsilon<span class="classifier">numpy.ndarray of shape (…,3,3)</span></dt><dd><p>Symmetric 2nd order strain tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id54">
+<h3>Returns<a class="headerlink" href="#id54" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>epsilon_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Symmetric 2nd order strain tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.to_6_stress">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">to_6_stress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#to_6_stress"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.to_6_stress" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 2nd order stress tensor in matrix notation to Mandel notation.</p>
+<section id="id55">
+<h3>Parameters<a class="headerlink" href="#id55" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>sigma<span class="classifier">numpy.ndarray of shape (…,3,3)</span></dt><dd><p>Symmetric 2nd order stress tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id56">
+<h3>Returns<a class="headerlink" href="#id56" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>sigma_tilde: numpy.ndarray of shape (…,6)</dt><dd><p>Symmetric 2nd order stress tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.to_6x6">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">to_6x6</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#to_6x6"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.to_6x6" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 4th order tensor in matrix notation to Mandel notation.</p>
+<section id="id57">
+<h3>Parameters<a class="headerlink" href="#id57" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>T<span class="classifier">numpy.ndarray of shape (…,3,3,3,3)</span></dt><dd><p>Symmetric 4th order tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id58">
+<h3>Returns<a class="headerlink" href="#id58" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>T_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Symmetric 4th order tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id59">
+<h3>Notes<a class="headerlink" href="#id59" title="Link to this heading"><span>#</span></a></h3>
+<p>Due to the definition of the Mandel notation, this
+function can be used to convert compliance and stiffness tensors.</p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.to_6x6_compliance">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">to_6x6_compliance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">S</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#to_6x6_compliance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.to_6x6_compliance" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 4th order compliance tensor in matrix notation to Mandel notation.</p>
+<section id="id60">
+<h3>Parameters<a class="headerlink" href="#id60" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>S<span class="classifier">numpy.ndarray of shape (…,3,3,3,3)</span></dt><dd><p>Symmetric 4th order compliance tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id61">
+<h3>Returns<a class="headerlink" href="#id61" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>S_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Symmetric 4th order compliance tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skel.Mandel.to_6x6_stiffness">
+<span class="sig-prename descclassname"><span class="pre">skel.Mandel.</span></span><span class="sig-name descname"><span class="pre">to_6x6_stiffness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">C</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/skel/Mandel.html#to_6x6_stiffness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skel.Mandel.to_6x6_stiffness" title="Link to this definition"><span>#</span></a></dt>
+<dd><p>Convert symmetric 4th order stiffness tensor in matrix notation to Mandel notation.</p>
+<section id="id62">
+<h3>Parameters<a class="headerlink" href="#id62" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>C<span class="classifier">numpy.ndarray of shape (…,3,3,3,3)</span></dt><dd><p>Symmetric 4th order stiffness tensor in matrix notation.</p>
+</dd>
+</dl>
+</section>
+<section id="id63">
+<h3>Returns<a class="headerlink" href="#id63" title="Link to this heading"><span>#</span></a></h3>
+<dl class="simple">
+<dt>C_tilde: numpy.ndarray of shape (…,6,6)</dt><dd><p>Symmetric 4th order stiffness tensor in Mandel notation.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homogenization">Homogenization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.VolumeElement"><code class="docutils literal notranslate"><span class="pre">VolumeElement</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.VolumeElement.C_Hill"><code class="docutils literal notranslate"><span class="pre">VolumeElement.C_Hill</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.VolumeElement.C_Hill_C"><code class="docutils literal notranslate"><span class="pre">VolumeElement.C_Hill_C</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.VolumeElement.C_Hill_S"><code class="docutils literal notranslate"><span class="pre">VolumeElement.C_Hill_S</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.VolumeElement.C_Hill_geometric"><code class="docutils literal notranslate"><span class="pre">VolumeElement.C_Hill_geometric</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.VolumeElement.C_Reuss"><code class="docutils literal notranslate"><span class="pre">VolumeElement.C_Reuss</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.VolumeElement.C_Voigt"><code class="docutils literal notranslate"><span class="pre">VolumeElement.C_Voigt</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.VolumeElement.S_Hill"><code class="docutils literal notranslate"><span class="pre">VolumeElement.S_Hill</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.VolumeElement.S_Hill_C"><code class="docutils literal notranslate"><span class="pre">VolumeElement.S_Hill_C</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.VolumeElement.S_Hill_S"><code class="docutils literal notranslate"><span class="pre">VolumeElement.S_Hill_S</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.VolumeElement.S_Hill_geometric"><code class="docutils literal notranslate"><span class="pre">VolumeElement.S_Hill_geometric</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.VolumeElement.S_Reuss"><code class="docutils literal notranslate"><span class="pre">VolumeElement.S_Reuss</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.VolumeElement.S_Voigt"><code class="docutils literal notranslate"><span class="pre">VolumeElement.S_Voigt</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-skel.Voigt">Conversions and Representations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Voigt.rotate_compliance"><code class="docutils literal notranslate"><span class="pre">rotate_compliance()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Voigt.rotate_stiffness"><code class="docutils literal notranslate"><span class="pre">rotate_stiffness()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Voigt.rotate_strain"><code class="docutils literal notranslate"><span class="pre">rotate_strain()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Voigt.rotate_stress"><code class="docutils literal notranslate"><span class="pre">rotate_stress()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Voigt.to_3x3_strain"><code class="docutils literal notranslate"><span class="pre">to_3x3_strain()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Voigt.to_3x3_stress"><code class="docutils literal notranslate"><span class="pre">to_3x3_stress()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Voigt.to_3x3x3x3_compliance"><code class="docutils literal notranslate"><span class="pre">to_3x3x3x3_compliance()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Voigt.to_3x3x3x3_stiffness"><code class="docutils literal notranslate"><span class="pre">to_3x3x3x3_stiffness()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Voigt.to_6_strain"><code class="docutils literal notranslate"><span class="pre">to_6_strain()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Voigt.to_6_stress"><code class="docutils literal notranslate"><span class="pre">to_6_stress()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Voigt.to_6x6_compliance"><code class="docutils literal notranslate"><span class="pre">to_6x6_compliance()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Voigt.to_6x6_stiffness"><code class="docutils literal notranslate"><span class="pre">to_6x6_stiffness()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.rotate_2nd"><code class="docutils literal notranslate"><span class="pre">rotate_2nd()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.rotate_4th"><code class="docutils literal notranslate"><span class="pre">rotate_4th()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.rotate_compliance"><code class="docutils literal notranslate"><span class="pre">rotate_compliance()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.rotate_stiffness"><code class="docutils literal notranslate"><span class="pre">rotate_stiffness()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.rotate_strain"><code class="docutils literal notranslate"><span class="pre">rotate_strain()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.rotate_stress"><code class="docutils literal notranslate"><span class="pre">rotate_stress()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.to_3x3"><code class="docutils literal notranslate"><span class="pre">to_3x3()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.to_3x3_strain"><code class="docutils literal notranslate"><span class="pre">to_3x3_strain()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.to_3x3_stress"><code class="docutils literal notranslate"><span class="pre">to_3x3_stress()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.to_3x3x3x3"><code class="docutils literal notranslate"><span class="pre">to_3x3x3x3()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.to_3x3x3x3_compliance"><code class="docutils literal notranslate"><span class="pre">to_3x3x3x3_compliance()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.to_3x3x3x3_stiffness"><code class="docutils literal notranslate"><span class="pre">to_3x3x3x3_stiffness()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.to_6"><code class="docutils literal notranslate"><span class="pre">to_6()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.to_6_strain"><code class="docutils literal notranslate"><span class="pre">to_6_strain()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.to_6_stress"><code class="docutils literal notranslate"><span class="pre">to_6_stress()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.to_6x6"><code class="docutils literal notranslate"><span class="pre">to_6x6()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.to_6x6_compliance"><code class="docutils literal notranslate"><span class="pre">to_6x6_compliance()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skel.Mandel.to_6x6_stiffness"><code class="docutils literal notranslate"><span class="pre">to_6x6_stiffness()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/index.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025-2026, Martin Diehl.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.0.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
