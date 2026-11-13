@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-from . import _conventions
 r"""
-Convention attributed to J. Mandel for the compressed notation of symmetric tensors.
+Compressed notation of symmetric tensors using convention attributed to J. Mandel.
 
 Notes
 -----
@@ -9,11 +8,19 @@ The following order is used to store the unique elements of a
 2nd order tensor (3x3 matrix) as a vector of length 6.
 
 .. math::
-    \vb{t}_\mathrm{Voigt} = (t_{xx}, t_{yy}, t_{zz}, t_{yz}, t_{xz}, t_{xy})
+
+    \vb{t}_\text{Mandel} = (t_{xx}, t_{yy}, t_{zz}, t_{yz}, t_{xz}, t_{xy})
 
 
 The same weight is used for the representation of stress and strain.
+
+References
+----------
+P. Helnwein, Computer methods in applied mechanics and engineering 190:2753-2770, 2001
+https://doi.org/10.1016/s0045-7825(00)00263-2
 """
+
+from . import _conventions
 
 def to_6(t):
     """
@@ -26,7 +33,7 @@ def to_6(t):
 
     Returns
     -------
-    t_tilde: numpy.ndarray of shape (...,6)
+    t_Mandel: numpy.ndarray of shape (...,6)
         Symmetric 2nd order tensor in Mandel notation.
 
     Notes
@@ -48,7 +55,7 @@ def to_6_strain(epsilon):
 
     Returns
     -------
-    epsilon_tilde: numpy.ndarray of shape (...,6)
+    epsilon_Mandel: numpy.ndarray of shape (...,6)
         Symmetric 2nd order strain tensor in Mandel notation.
 
     """
@@ -65,7 +72,7 @@ def to_6_stress(sigma):
 
     Returns
     -------
-    sigma_tilde: numpy.ndarray of shape (...,6)
+    sigma_Mandel: numpy.ndarray of shape (...,6)
         Symmetric 2nd order stress tensor in Mandel notation.
 
     """
@@ -83,7 +90,7 @@ def to_6x6(T):
 
     Returns
     -------
-    T_tilde: numpy.ndarray of shape (...,6,6)
+    T_Mandel: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order tensor in Mandel notation.
 
     Notes
@@ -105,7 +112,7 @@ def to_6x6_compliance(S):
 
     Returns
     -------
-    S_tilde: numpy.ndarray of shape (...,6,6)
+    S_Mandel: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order compliance tensor in Mandel notation.
 
     """
@@ -122,20 +129,20 @@ def to_6x6_stiffness(C):
 
     Returns
     -------
-    C_tilde: numpy.ndarray of shape (...,6,6)
+    C_Mandel: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order stiffness tensor in Mandel notation.
 
     """
     return to_6x6(C)
 
 
-def to_3x3(t_tilde):
+def to_3x3(t_Mandel):
     """
     Convert symmetric 2nd order tensor in Mandel notation to matrix notation.
 
     Parameters
     ----------
-    t_tilde: numpy.ndarray of shape (...,6)
+    t_Mandel: numpy.ndarray of shape (...,6)
         Symmetric 2nd order tensor in Mandel notation.
 
     Returns
@@ -149,15 +156,15 @@ def to_3x3(t_tilde):
     function can be used to convert strain and stress tensors.
 
     """
-    return _conventions.convert_6_to_3x3(t_tilde,2.**(-.5))
+    return _conventions.convert_6_to_3x3(t_Mandel,2.**(-.5))
 
-def to_3x3_strain(epsilon_tilde):
+def to_3x3_strain(epsilon_Mandel):
     """
     Convert symmetric 2nd order strain tensor in Mandel notation to matrix notation.
 
     Parameters
     ----------
-    epsilon_tilde: numpy.ndarray of shape (...,6)
+    epsilon_Mandel: numpy.ndarray of shape (...,6)
         Symmetric 2nd order strain tensor in Mandel notation.
 
     Returns
@@ -166,15 +173,15 @@ def to_3x3_strain(epsilon_tilde):
         Symmetric 2nd order strain tensor in matrix notation.
 
     """
-    return to_3x3(epsilon_tilde)
+    return to_3x3(epsilon_Mandel)
 
-def to_3x3_stress(sigma_tilde):
+def to_3x3_stress(sigma_Mandel):
     """
     Convert symmetric 2nd order stress tensor in Mandel notation to matrix notation.
 
     Parameters
     ----------
-    sigma_tilde: numpy.ndarray of shape (...,6)
+    sigma_Mandel: numpy.ndarray of shape (...,6)
         Symmetric 2nd order stress tensor in Mandel notation.
 
     Returns
@@ -183,16 +190,16 @@ def to_3x3_stress(sigma_tilde):
         Symmetric 2nd order stress tensor in matrix notation.
 
     """
-    return to_3x3(sigma_tilde)
+    return to_3x3(sigma_Mandel)
 
 
-def to_3x3x3x3(T_tilde):
+def to_3x3x3x3(T_Mandel):
     """
     Convert symmetric 4th order tensor in Mandel notation to matrix notation.
 
     Parameters
     ----------
-    T_tilde: numpy.ndarray of shape (...,6,6)
+    T_Mandel: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order tensor in Mandel notation.
 
     Returns
@@ -206,15 +213,15 @@ def to_3x3x3x3(T_tilde):
     function can be used to convert compliance and stiffness tensors.
 
     """
-    return _conventions.convert_6x6_to_3x3x3x3(T_tilde,[2.**(-.5),0.5])
+    return _conventions.convert_6x6_to_3x3x3x3(T_Mandel,[2.**(-.5),0.5])
 
-def to_3x3x3x3_compliance(S_tilde):
+def to_3x3x3x3_compliance(S_Mandel):
     """
     Convert symmetric 4th order compliance tensor in Mandel notation to matrix notation.
 
     Parameters
     ----------
-    S_tilde: numpy.ndarray of shape (...,6,6)
+    S_Mandel: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order tensor in Mandel notation.
 
     Returns
@@ -223,15 +230,15 @@ def to_3x3x3x3_compliance(S_tilde):
         Symmetric 4th order compliance tensor in matrix notation.
 
     """
-    return to_3x3x3x3(S_tilde)
+    return to_3x3x3x3(S_Mandel)
 
-def to_3x3x3x3_stiffness(C_tilde):
+def to_3x3x3x3_stiffness(C_Mandel):
     """
     Convert symmetric 4th order stiffness tensor in Mandel notation to matrix notation.
 
     Parameters
     ----------
-    C_tilde: numpy.ndarray of shape (...,6,6)
+    C_Mandel: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order stiffness tensor in Mandel notation.
 
     Returns
@@ -240,10 +247,10 @@ def to_3x3x3x3_stiffness(C_tilde):
         Symmetric 4th order stiffness tensor in matrix notation.
 
     """
-    return to_3x3x3x3(C_tilde)
+    return to_3x3x3x3(C_Mandel)
 
 
-def rotate_2nd(O,t_tilde):
+def rotate_2nd(O,t_Mandel):
     """
     Rotate symmetric 2nd order tensor in Mandel notation.
 
@@ -251,12 +258,12 @@ def rotate_2nd(O,t_tilde):
     ----------
     O: damask.Orientation of shape (...)
         Orientations.
-    t_tilde: numpy.ndarray of shape (...,6)
+    t_Mandel: numpy.ndarray of shape (...,6)
         Symmetric 2nd order tensor in Mandel notation.
 
     Returns
     -------
-    t_tilde: numpy.ndarray of shape (...,6)
+    t_Mandel : numpy.ndarray of shape (...,6)
         Rotated 2nd order tensor in Mandel notation.
 
     Notes
@@ -265,9 +272,9 @@ def rotate_2nd(O,t_tilde):
     function can be used to rotate strain and stress tensors.
 
     """
-    return _conventions.rotate(O,t_tilde,[2.**.5,2.**.5],2)
+    return _conventions.rotate(O,t_Mandel,[2.**.5,2.**.5],2)
 
-def rotate_strain(O,epsilon_tilde):
+def rotate_strain(O,epsilon_Mandel):
     """
     Rotate symmetric 2nd order strain tensor in Mandel notation.
 
@@ -275,18 +282,18 @@ def rotate_strain(O,epsilon_tilde):
     ----------
     O: damask.Orientation of shape (...)
         Orientations.
-    epsilon_tilde: numpy.ndarray of shape (...,6)
+    epsilon_Mandel: numpy.ndarray of shape (...,6)
         Symmetric 2nd order strain tensor in Mandel notation.
 
     Returns
     -------
-    epsilon_tilde: numpy.ndarray of shape (...,6)
+    epsilon_Mandel : numpy.ndarray of shape (...,6)
         Rotated 2nd order strain tensor in Mandel notation.
 
     """
-    return rotate_2nd(O,epsilon_tilde)
+    return rotate_2nd(O,epsilon_Mandel)
 
-def rotate_stress(O,sigma_tilde):
+def rotate_stress(O,sigma_Mandel):
     """
     Rotate symmetric 2nd order stress tensor in Mandel notation.
 
@@ -294,19 +301,19 @@ def rotate_stress(O,sigma_tilde):
     ----------
     O: damask.Orientation of shape (...)
         Orientations.
-    sigma_tilde: numpy.ndarray of shape (...,6)
+    sigma_Mandel: numpy.ndarray of shape (...,6)
         Symmetric 2nd order stress tensor in Mandel notation.
 
     Returns
     -------
-    sigma_tilde: numpy.ndarray of shape (...,6)
+    sigma_Mandel : numpy.ndarray of shape (...,6)
         Rotated 2nd order stress tensor in Mandel notation.
 
     """
-    return rotate_2nd(O,sigma_tilde)
+    return rotate_2nd(O,sigma_Mandel)
 
 
-def rotate_4th(O,T_tilde):
+def rotate_4th(O,T_Mandel):
     """
     Rotate symmetric 4th order tensor in Mandel notation.
 
@@ -314,12 +321,12 @@ def rotate_4th(O,T_tilde):
     ----------
     O: damask.Orientation of shape (...)
         Orientations.
-    T_tilde: numpy.ndarray of shape (...,6,6)
+    T_Mandel: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order tensor in Mandel notation.
 
     Returns
     -------
-    T_tilde: numpy.ndarray of shape (...,6,6)
+    T_Mandel : numpy.ndarray of shape (...,6,6)
         Rotated 4th order tensor in Mandel notation.
 
     Notes
@@ -328,9 +335,9 @@ def rotate_4th(O,T_tilde):
     function can be used to rotate compliance and stiffness tensors.
 
     """
-    return _conventions.rotate(O,T_tilde,[2.**.5,2.**.5],4)
+    return _conventions.rotate(O,T_Mandel,[2.**.5,2.**.5],4)
 
-def rotate_compliance(O,S_tilde):
+def rotate_compliance(O,S_Mandel):
     """
     Rotate symmetric 4th order compliance tensor in Mandel notation.
 
@@ -338,18 +345,18 @@ def rotate_compliance(O,S_tilde):
     ----------
     O: damask.Orientation of shape (...)
         Orientations.
-    S_tilde: numpy.ndarray of shape (...,6,6)
+    S_Mandel: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order compliance tensor in Mandel notation.
 
     Returns
     -------
-    S_tilde: numpy.ndarray of shape (...,6,6)
+    S_Mandel : numpy.ndarray of shape (...,6,6)
         Rotated 4th order compliance tensor in Mandel notation.
 
     """
-    return rotate_4th(O,S_tilde)
+    return rotate_4th(O,S_Mandel)
 
-def rotate_stiffness(O,C_tilde):
+def rotate_stiffness(O,C_Mandel):
     """
     Rotate symmetric 4th order stiffness tensor in Mandel notation.
 
@@ -357,13 +364,13 @@ def rotate_stiffness(O,C_tilde):
     ----------
     O: damask.Orientation of shape (...)
         Orientations.
-    C_tilde: numpy.ndarray of shape (...,6,6)
+    C_Mandel: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order stiffness tensor in Mandel notation.
 
     Returns
     -------
-    C_tilde: numpy.ndarray of shape (...,6,6)
+    C_Mandel : numpy.ndarray of shape (...,6,6)
         Rotated 4th order stiffness tensor in Mandel notation.
 
     """
-    return rotate_4th(O,C_tilde)
+    return rotate_4th(O,C_Mandel)
