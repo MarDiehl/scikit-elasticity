@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-from . import _conventions
 r"""
-Convention according to W. Voigt for the compressed notation of symmetric tensors.
+Compressed notation of symmetric tensors using convention attributed to W. Voigt.
 
 Notes
 -----
@@ -9,11 +8,20 @@ The following order is used to store the unique elements of a
 2nd order tensor (3x3 matrix) as a vector of length 6.
 
 .. math::
-    \vb{t}_\mathrm{Voigt} = (t_{xx}, t_{yy}, t_{zz}, t_{yz}, t_{xz}, t_{xy})
+
+    \vb{t}_\text{Voigt} = (t_{xx}, t_{yy}, t_{zz}, t_{yz}, t_{xz}, t_{xy})
 
 
 Different weights are used for the representation of stress and strain.
+
+References
+----------
+P. Helnwein, Computer methods in applied mechanics and engineering 190:2753-2770, 2001
+https://doi.org/10.1016/s0045-7825(00)00263-2
 """
+
+from . import _conventions
+
 
 def to_6_strain(epsilon):
     """
@@ -26,7 +34,7 @@ def to_6_strain(epsilon):
 
     Returns
     -------
-    epsilon_tilde: numpy.ndarray of shape (...,6)
+    epsilon_Voigt: numpy.ndarray of shape (...,6)
         Symmetric 2nd order strain tensor in Voigt notation.
 
     """
@@ -43,7 +51,7 @@ def to_6_stress(sigma):
 
     Returns
     -------
-    sigma_tilde: numpy.ndarray of shape (...,6)
+    sigma_Voigt: numpy.ndarray of shape (...,6)
         Symmetric 2nd order stress tensor in Voigt notation.
 
     """
@@ -61,7 +69,7 @@ def to_6x6_compliance(S):
 
     Returns
     -------
-    S_tilde: numpy.ndarray of shape (...,6,6)
+    S_Voigt: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order compliance tensor in Voigt notation.
 
     """
@@ -78,20 +86,20 @@ def to_6x6_stiffness(C):
 
     Returns
     -------
-    C_tilde: numpy.ndarray of shape (...,6,6)
+    C_Voigt: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order stiffness tensor in Voigt notation.
 
     """
     return _conventions.convert_3x3x3x3_to_6x6(C,[1.,1.])
 
 
-def to_3x3_strain(epsilon_tilde):
+def to_3x3_strain(epsilon_Voigt):
     """
     Convert symmetric 2nd order strain tensor in Voigt notation to matrix notation.
 
     Parameters
     ----------
-    epsilon_tilde: numpy.ndarray of shape (...,6)
+    epsilon_Voigt: numpy.ndarray of shape (...,6)
         Symmetric 2nd order strain tensor in Voigt notation.
 
     Returns
@@ -100,15 +108,15 @@ def to_3x3_strain(epsilon_tilde):
         Symmetric 2nd order strain tensor in matrix notation.
 
     """
-    return _conventions.convert_6_to_3x3(epsilon_tilde,.5)
+    return _conventions.convert_6_to_3x3(epsilon_Voigt,.5)
 
-def to_3x3_stress(sigma_tilde):
+def to_3x3_stress(sigma_Voigt):
     """
     Convert symmetric 2nd order stress tensor in Voigt notation to matrix notation.
 
     Parameters
     ----------
-    sigma_tilde: numpy.ndarray of shape (...,6)
+    sigma_Voigt: numpy.ndarray of shape (...,6)
         Symmetric 2nd order stress tensor in Voigt notation.
 
     Returns
@@ -117,16 +125,16 @@ def to_3x3_stress(sigma_tilde):
         Symmetric 2nd order stress tensor in matrix notation.
 
     """
-    return _conventions.convert_6_to_3x3(sigma_tilde,1.)
+    return _conventions.convert_6_to_3x3(sigma_Voigt,1.)
 
 
-def to_3x3x3x3_compliance(S_tilde):
+def to_3x3x3x3_compliance(S_Voigt):
     """
     Convert symmetric 4th order compliance tensor in Voigt notation to matrix notation.
 
     Parameters
     ----------
-    S_tilde: numpy.ndarray of shape (...,6,6)
+    S_Voigt: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order tensor in Voigt notation.
 
     Returns
@@ -135,15 +143,15 @@ def to_3x3x3x3_compliance(S_tilde):
         Symmetric 4th order compliance tensor in matrix notation.
 
     """
-    return _conventions.convert_6x6_to_3x3x3x3(S_tilde,[0.5,0.25])
+    return _conventions.convert_6x6_to_3x3x3x3(S_Voigt,[0.5,0.25])
 
-def to_3x3x3x3_stiffness(C_tilde):
+def to_3x3x3x3_stiffness(C_Voigt):
     """
     Convert symmetric 4th order stiffness tensor in Voigt notation to matrix notation.
 
     Parameters
     ----------
-    C_tilde: numpy.ndarray of shape (...,6,6)
+    C_Voigt: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order stiffness tensor in Voigt notation.
 
     Returns
@@ -152,10 +160,10 @@ def to_3x3x3x3_stiffness(C_tilde):
         Symmetric 4th order stiffness tensor in matrix notation.
 
     """
-    return _conventions.convert_6x6_to_3x3x3x3(C_tilde,[1.,1.])
+    return _conventions.convert_6x6_to_3x3x3x3(C_Voigt,[1.,1.])
 
 
-def rotate_strain(O,epsilon_tilde):
+def rotate_strain(O,epsilon_Voigt):
     """
     Rotate symmetric 2nd order strain tensor in Voigt notation.
 
@@ -163,18 +171,18 @@ def rotate_strain(O,epsilon_tilde):
     ----------
     O: damask.Orientation of shape (...)
         Orientations.
-    epsilon_tilde: numpy.ndarray of shape (...,6)
+    epsilon_Voigt: numpy.ndarray of shape (...,6)
         Symmetric 2nd order strain tensor in Voigt notation.
 
     Returns
     -------
-    epsilon_tilde: numpy.ndarray of shape (...,6)
+    epsilon_Voigt : numpy.ndarray of shape (...,6)
         Rotated 2nd order strain tensor in Voigt notation.
 
     """
-    return _conventions.rotate(O,epsilon_tilde,[1.0,2.0],2)
+    return _conventions.rotate(O,epsilon_Voigt,[1.0,2.0],2)
 
-def rotate_stress(O,sigma_tilde):
+def rotate_stress(O,sigma_Voigt):
     """
     Rotate symmetric 2nd order stress tensor in Voigt notation.
 
@@ -182,19 +190,19 @@ def rotate_stress(O,sigma_tilde):
     ----------
     O: damask.Orientation of shape (...)
         Orientations.
-    sigma_tilde: numpy.ndarray of shape (...,6)
+    sigma_Voigt: numpy.ndarray of shape (...,6)
         Symmetric 2nd order stress tensor in Voigt notation.
 
     Returns
     -------
-    sigma_tilde: numpy.ndarray of shape (...,6)
+    sigma_Voigt : numpy.ndarray of shape (...,6)
         Rotated 2nd order stress tensor in Voigt notation.
 
     """
-    return _conventions.rotate(O,sigma_tilde,[2.0,1.0],2)
+    return _conventions.rotate(O,sigma_Voigt,[2.0,1.0],2)
 
 
-def rotate_compliance(O,S_tilde):
+def rotate_compliance(O,S_Voigt):
     """
     Rotate symmetric 4th order compliance tensor in Voigt notation.
 
@@ -202,18 +210,18 @@ def rotate_compliance(O,S_tilde):
     ----------
     O: damask.Orientation of shape (...)
         Orientations.
-    S_tilde: numpy.ndarray of shape (...,6,6)
+    S_Voigt: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order compliance tensor in Voigt notation.
 
     Returns
     -------
-    S_tilde: numpy.ndarray of shape (...,6,6)
+    S_Voigt : numpy.ndarray of shape (...,6,6)
         Rotated 4th order compliance tensor in Voigt notation.
 
     """
-    return _conventions.rotate(O,S_tilde,[1.0,2.0],4)
+    return _conventions.rotate(O,S_Voigt,[1.0,2.0],4)
 
-def rotate_stiffness(O,C_tilde):
+def rotate_stiffness(O,C_Voigt):
     """
     Rotate symmetric 4th order stiffness tensor in Voigt notation.
 
@@ -221,13 +229,13 @@ def rotate_stiffness(O,C_tilde):
     ----------
     O: damask.Orientation of shape (...)
         Orientations.
-    C_tilde: numpy.ndarray of shape (...,6,6)
+    C_Voigt: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order stiffness tensor in Voigt notation.
 
     Returns
     -------
-    C_tilde: numpy.ndarray of shape (...,6,6)
+    C_Voigt : numpy.ndarray of shape (...,6,6)
         Rotated 4th order stiffness tensor in Voigt notation.
 
     """
-    return _conventions.rotate(O,C_tilde,[2.0,1.0],4)
+    return _conventions.rotate(O,C_Voigt,[2.0,1.0],4)

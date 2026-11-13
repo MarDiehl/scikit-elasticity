@@ -34,8 +34,18 @@ Calculation of elastic constants from elastic stiffness and a list of orientatio
 Conversions and Representations
 ===============================
 
+Voigt
+=====
+.. autosummary::
+
 .. automodule:: skel.Voigt
    :members:
+
+|
+
+Mandel
+======
+.. autosummary::
 
 .. automodule:: skel.Mandel
    :members:
