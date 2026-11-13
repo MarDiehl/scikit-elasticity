@@ -6,9 +6,9 @@ from . import Voigt
 from . import Eshelby
 
 class VolumeElement():
-    def __init__(self,C,O):
-        self.C = np.reshape(Voigt.rotate_stiffness(O,C),(-1,6,6))
-        self.S = np.reshape(Voigt.rotate_compliance(O,np.linalg.inv(C)),(-1,6,6))
+    def __init__(self,C,r):
+        self.C = np.reshape(Voigt.rotate_stiffness(r,C),(-1,6,6))
+        self.S = np.reshape(Voigt.rotate_compliance(r,np.linalg.inv(C)),(-1,6,6))
 
 # Voigt
     @property

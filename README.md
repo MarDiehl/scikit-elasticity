@@ -10,7 +10,7 @@ Hence, despited being a pure Python library (if the dependency on NumPy and SciP
 Calculation of effective stiffness
 
 ### Conversions
-Represent 2nd and 4th order tensors in compressed Voigt or Mandel notation.
+Represent 2nd and 4th order tensors in compressed Voigt or Mandel notation, or in a natural basis that separates hydrostatic and deviatoric contributions.
 Including support for rotations, which is based on the Python implementation of the conventions by Rowenhorst et al.
 
 ### Stiffness or Compliance Matrices
@@ -62,7 +62,7 @@ def texture_Ni(N_grains,rng):
                                     - sum(int(N_grains*_[1]) for _ in Eulers)\
                                     - sum(int(N_grains*_[2]) for _ in directions),rng_seed=rng)
     for eu,v in Eulers:
-        p = damask.Orientation.from_Euler_angles(phi=eu,degrees=True,lattice='cI')
+        p = damask.Rotation.from_Euler_angles(phi=eu,degrees=True)
         O = O.append(damask.Rotation.from_spherical_component(p,50,int(N_grains*v),degrees=True,rng_seed=rng))
     for c,s,v in directions:
         O = O.append(damask.Rotation.from_fiber_component(c,s,np.deg2rad(20),shape=int(N_grains*v),rng_seed=rng))

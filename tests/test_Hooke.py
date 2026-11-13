@@ -59,12 +59,12 @@ def invert_cubic(X_11,X_12,X_44):
             1/X_44)
 
 
-def test_inverse_cubic():
+def test_inverse_cubic(assert_allclose):
     C = Hooke.C(**Fe)
     S_11,S_12,S_44 = invert_cubic(Fe['C_11'],Fe['C_12'],Fe['C_44'])
     S = Hooke.S('cubic',S_11=S_11,S_12=S_12,S_44=S_44)
     f = 1./np.max(np.abs(S))
-    assert np.allclose(np.linalg.inv(C)*f,S*f)
+    assert_allclose(np.linalg.inv(C)*f,S*f)
 
 
 @pytest.mark.parametrize('material',examples)
@@ -85,7 +85,7 @@ def test_enforce_zero(material,np_rng):
         Hooke.C(**material_mut)
 
 @pytest.mark.parametrize('material',examples)
-def test_initialize_S(material):
+def test_initialize_S(material,assert_allclose):
     S = np.linalg.inv(Hooke.C(**material))
     material_mut = material.copy()
     m = {'crystal_system':material_mut.pop('crystal_system')}
@@ -93,10 +93,10 @@ def test_initialize_S(material):
         idx = k.split('_')[1]
         m[f'S_{idx}'] = S[int(idx[0])-1,int(idx[1])-1]
     f = 1./np.max(np.abs(S))
-    assert np.allclose(S*f,Hooke.S(**m)*f)
+    assert_allclose(S*f,Hooke.S(**m)*f)
 
 @pytest.mark.parametrize('material',[iso,Fe,Mg,corundum,Sn_beta])
-def test_initialize_alternatives(material,np_rng):
+def test_initialize_alternatives(material,np_rng,assert_allclose):
     material_mut = material.copy()
     for defined,alt in condition_equal[material_mut['crystal_system']].items():
         val = material_mut[f'C_{defined}']
@@ -106,7 +106,7 @@ def test_initialize_alternatives(material,np_rng):
         if (N_rm := np_rng.integers(N_add+1)) == 0: continue
         for r in np_rng.choice(add.tolist()+[defined],size=N_rm,replace=False):
             del material_mut[f'C_{r}']
-    assert np.allclose(Hooke.C(**material_mut),Hooke.C(**material))
+    assert_allclose(Hooke.C(**material_mut),Hooke.C(**material))
 
 @pytest.mark.parametrize('material',[iso,Fe,Mg,corundum,Sn_beta])
 def test_initialize_invalid(material,np_rng):
@@ -119,40 +119,40 @@ def test_initialize_invalid(material,np_rng):
     with pytest.raises(ValueError):
         Hooke.C(**material_mut)
 
-def test_isotropic_Youngs_modulus(np_rng):
+def test_isotropic_Youngs_modulus(np_rng,assert_allclose):
     N = np_rng.integers(1,11)
     S = np.linalg.inv(Hooke.C(**iso))
-    x = damask.Rotation.from_random(N,rng_seed=np_rng)@np.array([1,0,0])
-    assert np.allclose(1./S[0,0],Hooke.E(x,S=S))
+    x = damask.Rotation.from_random(N,np_rng)@np.array([1,0,0])
+    assert_allclose(1./S[0,0],Hooke.E(x,S=S))
 
-def test_isotropic_shear_modulus(np_rng):
+def test_isotropic_shear_modulus(np_rng,assert_allclose):
     N = np_rng.integers(1,11)
     S = np.linalg.inv(Hooke.C(**iso))
-    h_u = damask.Rotation.from_random(N,rng_seed=np_rng).as_matrix()[:,:2]
-    assert np.allclose(1./S[3,3],Hooke.G(h_u[:,0],h_u[:,1],S=S))
+    h_u = damask.Rotation.from_random(N,np_rng).as_matrix()[:,:2]
+    assert_allclose(1./S[3,3],Hooke.G(h_u[:,0],h_u[:,1],S=S))
 
-def test_isotropic_Poisson_ratio(np_rng):
+def test_isotropic_Poisson_ratio(np_rng,assert_allclose):
     N = np_rng.integers(1,11)
     S = np.linalg.inv(Hooke.C(**iso))
-    x_y = damask.Rotation.from_random(N,rng_seed=np_rng).as_matrix()[:,:2]
-    assert np.allclose(0.5*S[3,3]/S[0,0]-1,Hooke.nu(x_y[:,0],x_y[:,1],S=S))
+    x_y = damask.Rotation.from_random(N,np_rng).as_matrix()[:,:2]
+    assert_allclose(0.5*S[3,3]/S[0,0]-1,Hooke.nu(x_y[:,0],x_y[:,1],S=S))
 
 
-def test_anisotropy_iso(np_rng):
+def test_anisotropy_iso(np_rng,assert_allclose):
     C_11 = np_rng.uniform(50e9,300e9)
     C_12 = np_rng.uniform(-C_11*.45,C_11*.95)
     C = Hooke.C('isotropic',C_11=C_11,C_12=C_12)
-    assert np.allclose(Hooke.A_u(C=C),0.0)
+    assert_allclose(Hooke.A_u(C=C),0.0)
 
-def test_anisotropy_cubic(np_rng):
+def test_anisotropy_cubic(np_rng,assert_allclose):
     C_11 = np_rng.uniform(50e9,300e9)
     C_12 = np_rng.uniform(-C_11*.45,C_11*.95)
     C_44 = np_rng.uniform(0,300e9)
     C = Hooke.C('cubic',C_11=C_11,C_12=C_12,C_44=C_44)
     A = 2*C[3,3]/(C[0,0]-C[0,1])
-    assert np.allclose(Hooke.A_u(C=C),6./5.*(A**.5-A**(-.5))**2)
+    assert_allclose(Hooke.A_u(C=C),6./5.*(A**.5-A**(-.5))**2)
 
 @pytest.mark.parametrize('material',examples)
-def test_anisotropy_rotation(material,np_rng):
+def test_anisotropy_rotation(material,np_rng,assert_allclose):
     C = np.linalg.inv(Hooke.C(**material))
-    assert np.allclose(Hooke.A_u(C=C),Hooke.A_u(C=Voigt.rotate_stiffness(damask.Rotation.from_random(),C)))
+    assert_allclose(Hooke.A_u(C=C),Hooke.A_u(C=Voigt.rotate_stiffness(damask.Rotation.from_random(),C)))
