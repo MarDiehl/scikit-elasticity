@@ -1,17 +1,26 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
-import numpy as np
-import damask
 r"""
 Compressed notation of symmetric tensors.
 
 Notes
 -----
 The following order is used to store the unique elements of a
-2nd order tensor (3x3 matrix) as a vector of length 6.
+2nd order tensor T (3x3 matrix) as a vector t of length 6.
 
 .. math::
-    \vb{t}_\mathrm{Voigt} = (t_{xx}, t_{yy}, t_{zz}, t_{yz}, t_{xz}, t_{xy})
+    \vb{t}' = (T_{xx}, T_{yy}, T_{zz}, w T_{yz}, w T_{xz}, w T_{xy})
+
+References
+----------
+P. Helnwein, Computer methods in applied mechanics and engineering 190:2753-2770, 2001
+https://doi.org/10.1016/s0045-7825(00)00263-2
+
+T. Mánik, European Journal of Mechanics - A/Solids 90:104357, 2021
+https://doi.org/10.1016/j.euromechsol.2021.104357
 """
+
+import numpy as np
+import damask
 
 def convert_3x3_to_6(t,w):
     """
@@ -123,13 +132,13 @@ def convert_6x6_to_3x3x3x3(T_tilde,w):
                      np.stack([v_31,v_32,v_33],-3)],-4)
 
 
-def rotate(O,x_tilde,w,order):
+def rotate(r,x_tilde,w,order):
     """
     Rotate symmetric 2nd or 4th order tensor in vector notation.
 
     Parameters
     ----------
-    O: damask.Orientation of shape (...)
+    r: damask.Rotation of shape (...)
         Orientations.
     x_tilde: numpy.ndarray of shape (...,6) or (...,6,6)
         Symmetric 2nd or 4th order in vector notation.
@@ -150,7 +159,7 @@ def rotate(O,x_tilde,w,order):
 
     """
 
-    R = O.as_matrix()
+    R = r.as_matrix()
 
     A_11 = np.stack([
         np.stack([R[...,0,0]**2, R[...,0,1]**2, R[...,0,2]**2],-1),
@@ -178,8 +187,8 @@ def rotate(O,x_tilde,w,order):
         np.stack([R[...,0,0]*R[...,2,0], R[...,0,1]*R[...,2,1], R[...,0,2]*R[...,2,2]],-1),
         np.stack([R[...,0,0]*R[...,1,0], R[...,0,1]*R[...,1,1], R[...,0,2]*R[...,1,2]],-1)],-2)*w[1]
 
-    blend = damask.util.shapeblender(O.shape,x_tilde.shape[:-order//2])
-    s_op = damask.util.shapeshifter(O.shape,blend,mode='right') + (6,6)
+    blend = damask.util.shapeblender(r.shape,x_tilde.shape[:-order//2])
+    s_op = damask.util.shapeshifter(r.shape,blend,mode='right') + (6,6)
     s_x = damask.util.shapeshifter(x_tilde.shape[:-order//2],blend,mode='left') + ((6,) if order == 2 else (6,6))
 
     op = np.broadcast_to(np.block([[A_11,A_12],

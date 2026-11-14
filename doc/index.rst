@@ -1,10 +1,10 @@
+====================
 scikit-elasticity
 ====================
 
 A library for working with anisotropic elasticity in Python. 
 
 
-==============
 Homogenization
 ==============
 
@@ -30,12 +30,12 @@ Calculation of elastic constants from elastic stiffness and a list of orientatio
 .. autoclass:: skel.VolumeElement
    :members:
 
-===============================
 Conversions and Representations
 ===============================
 
 Voigt
-=====
+-----
+
 .. autosummary::
 
 .. automodule:: skel.Voigt
@@ -44,10 +44,21 @@ Voigt
 |
 
 Mandel
-======
+------
+
 .. autosummary::
 
 .. automodule:: skel.Mandel
+   :members:
+
+|
+
+natural
+-------
+
+.. autosummary::
+
+.. automodule:: skel.natural
    :members:
 
 

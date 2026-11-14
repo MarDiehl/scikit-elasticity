@@ -5,19 +5,23 @@ Compressed notation of symmetric tensors using convention attributed to W. Voigt
 Notes
 -----
 The following order is used to store the unique elements of a
-2nd order tensor (3x3 matrix) as a vector of length 6.
+2nd order tensor T (3x3 matrix) as a vector t of length 6.
 
 .. math::
 
-    \vb{t}_\text{Voigt} = (t_{xx}, t_{yy}, t_{zz}, t_{yz}, t_{xz}, t_{xy})
+    \vb{t}_\text{Voigt} = (T_{xx}, T_{yy}, T_{zz}, w T_{yz}, w T_{xz}, w T_{xy})
 
 
-Different weights are used for the representation of stress and strain.
+Different weights are used for the representation of stress
+(:math:`w = 1`) and strain (:math:`w = 2`).
 
 References
 ----------
 P. Helnwein, Computer methods in applied mechanics and engineering 190:2753-2770, 2001
 https://doi.org/10.1016/s0045-7825(00)00263-2
+
+T. Mánik, European Journal of Mechanics - A/Solids 90:104357, 2021
+https://doi.org/10.1016/j.euromechsol.2021.104357
 """
 
 from . import _conventions
@@ -163,13 +167,13 @@ def to_3x3x3x3_stiffness(C_Voigt):
     return _conventions.convert_6x6_to_3x3x3x3(C_Voigt,[1.,1.])
 
 
-def rotate_strain(O,epsilon_Voigt):
+def rotate_strain(r,epsilon_Voigt):
     """
     Rotate symmetric 2nd order strain tensor in Voigt notation.
 
     Parameters
     ----------
-    O: damask.Orientation of shape (...)
+    r: damask.Rotation of shape (...)
         Orientations.
     epsilon_Voigt: numpy.ndarray of shape (...,6)
         Symmetric 2nd order strain tensor in Voigt notation.
@@ -180,15 +184,15 @@ def rotate_strain(O,epsilon_Voigt):
         Rotated 2nd order strain tensor in Voigt notation.
 
     """
-    return _conventions.rotate(O,epsilon_Voigt,[1.0,2.0],2)
+    return _conventions.rotate(r,epsilon_Voigt,[1.0,2.0],2)
 
-def rotate_stress(O,sigma_Voigt):
+def rotate_stress(r,sigma_Voigt):
     """
     Rotate symmetric 2nd order stress tensor in Voigt notation.
 
     Parameters
     ----------
-    O: damask.Orientation of shape (...)
+    r: damask.Rotation of shape (...)
         Orientations.
     sigma_Voigt: numpy.ndarray of shape (...,6)
         Symmetric 2nd order stress tensor in Voigt notation.
@@ -199,16 +203,16 @@ def rotate_stress(O,sigma_Voigt):
         Rotated 2nd order stress tensor in Voigt notation.
 
     """
-    return _conventions.rotate(O,sigma_Voigt,[2.0,1.0],2)
+    return _conventions.rotate(r,sigma_Voigt,[2.0,1.0],2)
 
 
-def rotate_compliance(O,S_Voigt):
+def rotate_compliance(r,S_Voigt):
     """
     Rotate symmetric 4th order compliance tensor in Voigt notation.
 
     Parameters
     ----------
-    O: damask.Orientation of shape (...)
+    r: damask.Rotation of shape (...)
         Orientations.
     S_Voigt: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order compliance tensor in Voigt notation.
@@ -219,15 +223,15 @@ def rotate_compliance(O,S_Voigt):
         Rotated 4th order compliance tensor in Voigt notation.
 
     """
-    return _conventions.rotate(O,S_Voigt,[1.0,2.0],4)
+    return _conventions.rotate(r,S_Voigt,[1.0,2.0],4)
 
-def rotate_stiffness(O,C_Voigt):
+def rotate_stiffness(r,C_Voigt):
     """
     Rotate symmetric 4th order stiffness tensor in Voigt notation.
 
     Parameters
     ----------
-    O: damask.Orientation of shape (...)
+    r: damask.Rotation of shape (...)
         Orientations.
     C_Voigt: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order stiffness tensor in Voigt notation.
@@ -238,4 +242,4 @@ def rotate_stiffness(O,C_Voigt):
         Rotated 4th order stiffness tensor in Voigt notation.
 
     """
-    return _conventions.rotate(O,C_Voigt,[2.0,1.0],4)
+    return _conventions.rotate(r,C_Voigt,[2.0,1.0],4)

@@ -25,6 +25,11 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.viewcode'
              ]
 
+mathjax3_config = {
+    'loader': {'load': ['[tex]/physics']},
+    'tex': {'packages': {'[+]': ['physics']}},
+}
+
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 

@@ -18,7 +18,7 @@ def eshelby_isotropic_sphere(nu):
     return S
 
 
-def test_isotropic_sphere():
+def test_isotropic_sphere(assert_allclose):
     C_11 = 124.1e9
     C_12 = 93.7e9
     C66 = skel.Hooke.C('isotropic',C_11=C_11,C_12=C_12)
@@ -26,10 +26,10 @@ def test_isotropic_sphere():
     nu = C_12*.5/(C_12+C_44)                                                                        # C_12 = λ, C_44 = G = μ
     C = skel.Voigt.to_3x3x3x3_stiffness(C66)
     S_iso = eshelby_isotropic_sphere(nu)
-    assert np.allclose(S_iso,skel.Eshelby.eshelby(C,a=[1,1,1],N_zeta3=3,N_omega=100))
+    assert_allclose(S_iso,skel.Eshelby.eshelby(C,a=[1,1,1],N_zeta3=3,N_omega=100))
 
 
-def test_xi_vectorization():
+def test_xi_vectorization(assert_allclose):
     n_zeta3 = n_omega = 24
     a = 1.1
     b = 1.5
@@ -44,9 +44,9 @@ def test_xi_vectorization():
             xi = np.array([(1-zeta3**2)**.5*np.cos(omega)/a,
                            (1-zeta3**2)**.5*np.sin(omega)/b,
                            zeta3/c])
-            assert np.allclose(xi,xis[i,j])
+            assert_allclose(xi,xis[i,j])
 
-def test_G_vectorization():
+def test_G_vectorization(assert_allclose):
     C_11 = 124.1e9
     C_12 = 93.7e9
     C_44 = 46.4e9
@@ -60,4 +60,4 @@ def test_G_vectorization():
     Gs = skel.Eshelby._G(C,xis)
     for i in range(n_zeta3):
         for j in range(n_omega):
-             assert np.allclose(skel.Eshelby._G(C,xis[i,j]),Gs[i,j])
+            assert_allclose(skel.Eshelby._G(C,xis[i,j]),Gs[i,j])
