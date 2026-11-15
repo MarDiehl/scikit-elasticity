@@ -30,13 +30,18 @@ Calculation of elastic constants from elastic stiffness and a list of orientatio
 .. autoclass:: skel.VolumeElement
    :members:
 
+Hooke
+=====
+
+.. automodule:: skel.Hooke
+   :members:
+
+
 Conversions and Representations
 ===============================
 
 Voigt
 -----
-
-.. autosummary::
 
 .. automodule:: skel.Voigt
    :members:
@@ -46,8 +51,6 @@ Voigt
 Mandel
 ------
 
-.. autosummary::
-
 .. automodule:: skel.Mandel
    :members:
 
@@ -55,8 +58,6 @@ Mandel
 
 natural
 -------
-
-.. autosummary::
 
 .. automodule:: skel.natural
    :members:

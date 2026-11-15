@@ -18,6 +18,11 @@ corundum = {'crystal_system':'trigonal',
             'C_11':496.9e+9, 'C_33':500.5e+9, 'C_44':146.8e+9, 'C_12':162.e+9, 'C_13':115.5e+9,
             'C_14':-21.9e+9}                                                                        # https://doi.org/10.1016/0022-3697(86)90141-1
 
+trigonal_general = {'crystal_system':'trigonal',
+                    'C_11':270.0e+9, 'C_12':100.0e+9, 'C_13':90.0e+9,
+                    'C_33':280.0e+9, 'C_44':80.0e+9,
+                    'C_14':15.0e+9, 'C_15':-8.0e+9}                                                # Laue class -3
+
 Sn_beta = {'crystal_system':'tetragonal',
            'C_11':72.6e+9, 'C_12':59.4e+9, 'C_44':22.2e+9, 'C_33':88.8e+9, 'C_13':35.8e+9,
            'C_66':24.1e+9}                                                                          # from DAMASK examples
@@ -26,7 +31,7 @@ Al2O2 = {'crystal_system':'orthorhombic',
          'C_11': 283.0e+9, 'C_12':154.4e+9, 'C_13':126.2e+9, 'C_22':273.6e+9, 'C_23':126.8e+9,
          'C_33': 279.8e+9, 'C_44':72.4e+9, 'C_55':47.3e+9, 'C_66':92.0e+9}                          # https://doi.org/10.1088/2053-1591/aab118
 
-examples = [iso,Fe,Mg,corundum,Sn_beta,Al2O2]
+examples = [iso,Fe,Mg,corundum,trigonal_general,Sn_beta,Al2O2]
 
 
 optional_zero = {
@@ -57,6 +62,35 @@ def invert_cubic(X_11,X_12,X_44):
     return ((X_11+X_12)/((X_11-X_12)*(X_11+2*X_12)),
             -X_12/((X_11-X_12)*(X_11+2*X_12)),
             1/X_44)
+
+
+def matrix_kwargs(matrix,mode):
+    kwargs = {'crystal_system':'trigonal'}
+    for i in range(6):
+        for j in range(i,6):
+            if matrix[i,j] != 0.0:
+                kwargs[f'{mode}_{i+1}{j+1}'] = matrix[i,j]
+    return kwargs
+
+
+def trigonal_compliance():
+    S = np.linalg.inv(Hooke.C(**trigonal_general))
+    S_11,S_12,S_13,S_14,S_15 = S[0,0],S[0,1],S[0,2],S[0,3],S[0,4]
+    S_33,S_44 = S[2,2],S[3,3]
+    full = np.zeros((6,6))
+    full[0,0] = full[1,1] = S_11
+    full[0,1] = full[1,0] = S_12
+    full[0,2] = full[2,0] = full[1,2] = full[2,1] = S_13
+    full[2,2] = S_33
+    full[3,3] = full[4,4] = S_44
+    full[5,5] = 2*(S_11-S_12)
+    full[0,3] = full[3,0] = S_14
+    full[1,3] = full[3,1] = -S_14
+    full[4,5] = full[5,4] = 2*S_14
+    full[0,4] = full[4,0] = S_15
+    full[1,4] = full[4,1] = -S_15
+    full[3,5] = full[5,3] = -2*S_15
+    return full
 
 
 def test_inverse_cubic(assert_allclose):
@@ -119,6 +153,57 @@ def test_initialize_invalid(material,np_rng):
     with pytest.raises(ValueError):
         Hooke.C(**material_mut)
 
+
+@pytest.mark.parametrize('omit',[(),
+                                 ('C_14',),('C_24',),('C_56',),('C_14','C_56'),
+                                 ('C_15',),('C_25',),('C_46',),('C_15','C_46')])
+def test_trigonal_general_C(omit,assert_allclose):
+    C = Hooke.C(**trigonal_general)
+    m = matrix_kwargs(C,'C')
+    for k in omit: del m[k]
+    assert_allclose(Hooke.C(**m),C)
+
+
+@pytest.mark.parametrize('omit',[(),
+                                 ('S_14',),('S_24',),('S_56',),('S_14','S_56'),
+                                 ('S_15',),('S_25',),('S_46',),('S_15','S_46')])
+def test_trigonal_general_S(omit,assert_allclose):
+    S = trigonal_compliance()
+    m = matrix_kwargs(S,'S')
+    for k in omit: del m[k]
+    assert_allclose(Hooke.S(**m),S)
+
+
+def test_trigonal_general_invalid():
+    C = Hooke.C(**trigonal_general)
+    for k in ('C_24','C_46'):
+        m = matrix_kwargs(C,'C')
+        m[k] *= -1
+        with pytest.raises(ValueError):
+            Hooke.C(**m)
+
+    S = trigonal_compliance()
+    for k in ('S_56','S_46'):
+        m = matrix_kwargs(S,'S')
+        m[k] *= -1
+        with pytest.raises(ValueError):
+            Hooke.S(**m)
+
+
+def test_monoclinic_invalid_message():
+    with pytest.raises(ValueError, match='C_34'):
+        Hooke.C('monoclinic', C_34=1.0)
+
+
+def test_tetragonal_invalid_message():
+    with pytest.raises(ValueError, match=r'C_16 = -C_26'):
+        Hooke.C('tetragonal', C_16=1.0, C_26=1.0)
+
+
+def test_stable_invalid_system():
+    with pytest.raises(ValueError, match='invalid crystal system'):
+        Hooke.stable('invalid', C=np.eye(6))
+
 def test_isotropic_Youngs_modulus(np_rng,assert_allclose):
     N = np_rng.integers(1,11)
     S = np.linalg.inv(Hooke.C(**iso))
@@ -136,6 +221,31 @@ def test_isotropic_Poisson_ratio(np_rng,assert_allclose):
     S = np.linalg.inv(Hooke.C(**iso))
     x_y = damask.Rotation.from_random(N,np_rng).as_matrix()[:,:2]
     assert_allclose(0.5*S[3,3]/S[0,0]-1,Hooke.nu(x_y[:,0],x_y[:,1],S=S))
+
+
+def test_direction_checks(assert_allclose):
+    C = Hooke.C(**iso)
+
+    with pytest.raises(ValueError, match='unit length'):
+        Hooke.E([2.,0.,0.],C=C)
+    assert_allclose(Hooke.E([2.,0.,0.],C=C,normalize=True),
+                    Hooke.E([1.,0.,0.],C=C))
+    with pytest.raises(ValueError, match='zero'):
+        Hooke.E([0.,0.,0.],C=C,normalize=True)
+
+    with pytest.raises(ValueError, match='unit length'):
+        Hooke.G([2.,0.,0.],[0.,1.,0.],C=C)
+    assert_allclose(Hooke.G([2.,0.,0.],[0.,1.,0.],C=C,normalize=True),
+                    Hooke.G([1.,0.,0.],[0.,1.,0.],C=C))
+    with pytest.raises(ValueError, match='orthogonal'):
+        Hooke.G([1.,0.,0.],[1.,1.,0.],C=C,normalize=True)
+
+    with pytest.raises(ValueError, match='unit length'):
+        Hooke.nu([2.,0.,0.],[0.,1.,0.],C=C)
+    assert_allclose(Hooke.nu([2.,0.,0.],[0.,1.,0.],C=C,normalize=True),
+                    Hooke.nu([1.,0.,0.],[0.,1.,0.],C=C))
+    with pytest.raises(ValueError, match='orthogonal'):
+        Hooke.nu([1.,0.,0.],[1.,1.,0.],C=C,normalize=True)
 
 
 def test_anisotropy_iso(np_rng,assert_allclose):

@@ -15,13 +15,13 @@ release = '0.1'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
-
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.autosectionlabel',
+              'sphinx.ext.mathjax',
+              'sphinx.ext.napoleon',
               'sphinx.ext.viewcode'
              ]
 
