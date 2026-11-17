@@ -5,11 +5,11 @@ Compressed notation of symmetric tensors using convention attributed to W. Voigt
 Notes
 -----
 The following order is used to store the unique elements of a
-2nd order tensor T (3x3 matrix) as a vector t of length 6.
+2nd order tensor t (3x3 matrix) as a vector t' of length 6.
 
 .. math::
 
-    \vb{t}_\text{Voigt} = (T_{xx}, T_{yy}, T_{zz}, w T_{yz}, w T_{xz}, w T_{xy})
+    \vb{t}_\text{Voigt} = (t_{xx}, t_{yy}, t_{zz}, w t_{yz}, w t_{xz}, w t_{xy})
 
 
 Different weights are used for the representation of stress
@@ -191,7 +191,7 @@ def rotate_strain(r,epsilon_Voigt):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     epsilon_Voigt: numpy.ndarray of shape (...,6)
         Symmetric 2nd order strain tensor in Voigt notation.
 
@@ -210,7 +210,7 @@ def rotate_stress(r,sigma_Voigt):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     sigma_Voigt: numpy.ndarray of shape (...,6)
         Symmetric 2nd order stress tensor in Voigt notation.
 
@@ -230,7 +230,7 @@ def rotate_compliance(r,S_Voigt):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     S_Voigt: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order compliance tensor in Voigt notation.
 
@@ -249,7 +249,7 @@ def rotate_stiffness(r,C_Voigt):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     C_Voigt: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order stiffness tensor in Voigt notation.
 

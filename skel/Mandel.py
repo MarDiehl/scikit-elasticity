@@ -5,11 +5,11 @@ Compressed notation of symmetric tensors using convention attributed to J. Mande
 Notes
 -----
 The following order is used to store the unique elements of a
-2nd order tensor T (3x3 matrix) as a vector t of length 6.
+2nd order tensor t (3x3 matrix) as a vector t' of length 6.
 
 .. math::
 
-    \vb{t}_\text{Mandel} = (T_{xx}, T_{yy}, T_{zz}, w T_{yz}, w T_{xz}, w T_{xy})
+    \vb{t}_\text{Mandel} = (t_{xx}, t_{yy}, t_{zz}, w t_{yz}, w t_{xz}, w t_{xy})
 
 
 The same weight (:math:`w = \sqrt{2}`) is used for the representation
@@ -278,7 +278,7 @@ def rotate_2nd(r,t_Mandel):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     t_Mandel: numpy.ndarray of shape (...,6)
         Symmetric 2nd order tensor in Mandel notation.
 
@@ -302,7 +302,7 @@ def rotate_strain(r,epsilon_Mandel):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     epsilon_Mandel: numpy.ndarray of shape (...,6)
         Symmetric 2nd order strain tensor in Mandel notation.
 
@@ -321,7 +321,7 @@ def rotate_stress(r,sigma_Mandel):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     sigma_Mandel: numpy.ndarray of shape (...,6)
         Symmetric 2nd order stress tensor in Mandel notation.
 
@@ -341,7 +341,7 @@ def rotate_4th(r,T_Mandel):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     T_Mandel: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order tensor in Mandel notation.
 
@@ -365,7 +365,7 @@ def rotate_compliance(r,S_Mandel):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     S_Mandel: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order compliance tensor in Mandel notation.
 
@@ -384,7 +384,7 @@ def rotate_stiffness(r,C_Mandel):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     C_Mandel: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order stiffness tensor in Mandel notation.
 

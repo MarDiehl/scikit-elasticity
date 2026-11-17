@@ -5,18 +5,18 @@ Compressed notation of symmetric tensors.
 Notes
 -----
 All conventions store the unique elements of a symmetric 2nd order
-tensor T (3x3 matrix) as a vector t of length 6. The first three
+tensor t (3x3 matrix) as a vector t' of length 6. The first three
 components are associated with the normal components and the last three
 components with the shear components. The precise mapping is encoded by
 a basis :math:`E` of symmetric 2nd order tensors,
 
 .. math::
-    t_a = E_a : T = \sum_{ij} E_{a,ij} T_{ij},
+    t'_a = E_a : t = \sum_{ij} E_{a,ij} t_{ij},
 
 and the inverse conversion uses the dual basis :math:`F`,
 
 .. math::
-    T = \sum_a t_a F_a, \qquad E_a : F_b = \delta_{ab}.
+    t = \sum_a t'_a F_a, \qquad E_a : F_b = \delta_{ab}.
 
 For an orthonormal basis, the dual basis equals the basis itself but
 for non-orthonormal basis the distinction matters.
@@ -125,7 +125,7 @@ def rotate(r,x_tilde,E,F,order):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     x_tilde: numpy.ndarray of shape (...,6) or (...,6,6)
         Symmetric 2nd or 4th order in vector notation.
     E : numpy.ndarray of shape (6,3,3)

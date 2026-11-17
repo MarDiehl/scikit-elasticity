@@ -5,29 +5,29 @@ Compressed notation of symmetric tensors using a natural basis.
 Notes
 -----
 The following order is used to store the unique elements of a
-2nd order tensor T (3x3 matrix) as a vector t of length 6.
+2nd order tensor t (3x3 matrix) as a vector t' of length 6.
 
 .. math::
 
-    \vb{t}_\text{natural} = (t_1, t_2, t_3, t_4, t_5, t_6)
+    \vb{t}_\text{natural} = (t'_1, t'_2, t'_3, t'_4, t'_5, t'_6)
 
 The components are
 
 .. math::
 
-    t_1 &= \frac{T_{xx}+T_{yy}+T_{zz}}{\sqrt{3}} \\
-    t_2 &= \frac{2T_{zz}-T_{xx}-T_{yy}}{\sqrt{6}}\cos\theta
-           + \frac{T_{xx}-T_{yy}}{\sqrt{2}}\sin\theta \\
-    t_3 &= \frac{2T_{zz}-T_{xx}-T_{yy}}{\sqrt{6}}\sin\theta
-           - \frac{T_{xx}-T_{yy}}{\sqrt{2}}\cos\theta \\
-    t_4 &= \sqrt{2}T_{yz} \\
-    t_5 &= \sqrt{2}T_{xz} \\
-    t_6 &= \sqrt{2}T_{xy}
+    t'_1 &= \frac{t_{xx}+t_{yy}+t_{zz}}{\sqrt{3}} \\
+    t'_2 &= \frac{2t_{zz}-t_{xx}-t_{yy}}{\sqrt{6}}\cos\theta
+           + \frac{t_{xx}-t_{yy}}{\sqrt{2}}\sin\theta \\
+    t'_3 &= \frac{2t_{zz}-t_{xx}-t_{yy}}{\sqrt{6}}\sin\theta
+           - \frac{t_{xx}-t_{yy}}{\sqrt{2}}\cos\theta \\
+    t'_4 &= \sqrt{2}t_{yz} \\
+    t'_5 &= \sqrt{2}t_{xz} \\
+    t'_6 &= \sqrt{2}t_{xy}
 
 The first component is the hydrostatic part, the next two components span
 the deviatoric plane, and the last three are the shear components. The
 optional parameter :math:`\theta` rotates the deviatoric plane, i.e. it mixes
-:math:`t_2` and :math:`t_3`.
+:math:`t'_2` and :math:`t'_3`.
 
 Because the underlying basis is orthonormal, the Euclidean norm of the
 vector equals the Frobenius norm of the tensor.
@@ -347,7 +347,7 @@ def _rotate(r,x_natural,order,theta=0.0):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     x_natural: numpy.ndarray of shape (...,6) or (...,6,6)
         Symmetric 2nd or 4th order tensor in natural notation.
     order: integer [2,4]
@@ -372,7 +372,7 @@ def rotate_2nd(r,t_natural,theta=0.0):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     t_natural: numpy.ndarray of shape (...,6)
         Symmetric 2nd order tensor in natural notation.
     theta : float, optional
@@ -399,7 +399,7 @@ def rotate_strain(r,epsilon_natural,theta=0.0):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     epsilon_natural: numpy.ndarray of shape (...,6)
         Symmetric 2nd order strain tensor in natural notation.
     theta : float, optional
@@ -421,7 +421,7 @@ def rotate_stress(r,sigma_natural,theta=0.0):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     sigma_natural: numpy.ndarray of shape (...,6)
         Symmetric 2nd order stress tensor in natural notation.
     theta : float, optional
@@ -443,7 +443,7 @@ def rotate_4th(r,T_natural,theta=0.0):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     T_natural: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order tensor in natural notation.
     theta : float, optional
@@ -470,7 +470,7 @@ def rotate_compliance(r,S_natural,theta=0.0):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     S_natural: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order compliance tensor in natural notation.
     theta : float, optional
@@ -492,7 +492,7 @@ def rotate_stiffness(r,C_natural,theta=0.0):
     Parameters
     ----------
     r: damask.Rotation of shape (...)
-        Orientations.
+        Rotations to apply. Must be broadcastable.
     C_natural: numpy.ndarray of shape (...,6,6)
         Symmetric 4th order stiffness tensor in natural notation.
     theta : float, optional
