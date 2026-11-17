@@ -4,11 +4,22 @@ Compressed notation of symmetric tensors.
 
 Notes
 -----
-The following order is used to store the unique elements of a
-2nd order tensor T (3x3 matrix) as a vector t of length 6.
+All conventions store the unique elements of a symmetric 2nd order
+tensor T (3x3 matrix) as a vector t of length 6. The first three
+components are associated with the normal components and the last three
+components with the shear components. The precise mapping is encoded by
+a basis :math:`E` of symmetric 2nd order tensors,
 
 .. math::
-    \vb{t}' = (T_{xx}, T_{yy}, T_{zz}, w T_{yz}, w T_{xz}, w T_{xy})
+    t_a = E_a : T = \sum_{ij} E_{a,ij} T_{ij},
+
+and the inverse conversion uses the dual basis :math:`F`,
+
+.. math::
+    T = \sum_a t_a F_a, \qquad E_a : F_b = \delta_{ab}.
+
+For an orthonormal basis, the dual basis equals the basis itself but
+for non-orthonormal basis the distinction matters.
 
 References
 ----------
@@ -22,7 +33,8 @@ https://doi.org/10.1016/j.euromechsol.2021.104357
 import numpy as np
 import damask
 
-def convert_3x3_to_6(t,w):
+
+def convert_3x3_to_6(t,E):
     """
     Convert symmetric 2nd order tensor in matrix notation to vector notation.
 
@@ -30,8 +42,8 @@ def convert_3x3_to_6(t,w):
     ----------
     t : numpy.ndarray of shape (...,3,3)
         Symmetric 2nd order tensor in matrix notation.
-    w : float
-        Weighting factor for shear components.
+    E : numpy.ndarray of shape (6,3,3)
+        Basis tensors of the vector notation.
 
     Returns
     -------
@@ -39,14 +51,10 @@ def convert_3x3_to_6(t,w):
         Symmetric 2nd order tensor in vector notation.
 
     """
-    return np.stack([  t[...,0,0],
-                       t[...,1,1],
-                       t[...,2,2],
-                     w*t[...,1,2],
-                     w*t[...,0,2],
-                     w*t[...,0,1]],-1)
+    return t.reshape(t.shape[:-2]+(9,)) @ E.reshape(6,9).T
 
-def convert_6_to_3x3(t_tilde,w):
+
+def convert_6_to_3x3(t_tilde,F):
     """
     Convert symmetric 2nd order tensor in vector notation to matrix notation.
 
@@ -54,8 +62,9 @@ def convert_6_to_3x3(t_tilde,w):
     ----------
     t_tilde : numpy.ndarray of shape (...,6)
         Symmetric 2nd order tensor in vector notation.
-    w : float
-        Weighting factor for shear components.
+    F : numpy.ndarray of shape (6,3,3)
+        Dual basis tensors of the vector notation, i.e. the basis used
+        for reconstruction.
 
     Returns
     -------
@@ -63,12 +72,10 @@ def convert_6_to_3x3(t_tilde,w):
         Symmetric 2nd order tensor in matrix notation.
 
     """
-    return np.stack([np.stack([  t_tilde[...,0], w*t_tilde[...,5], w*t_tilde[...,4]],-1),
-                     np.stack([w*t_tilde[...,5],   t_tilde[...,1], w*t_tilde[...,3]],-1),
-                     np.stack([w*t_tilde[...,4], w*t_tilde[...,3],   t_tilde[...,2]],-1)],-2)
+    return (t_tilde @ F.reshape(6,9)).reshape(t_tilde.shape[:-1]+(3,3))
 
 
-def convert_3x3x3x3_to_6x6(T,w):
+def convert_3x3x3x3_to_6x6(T,E):
     """
     Convert symmetric 4th order tensor in matrix notation to vector notation.
 
@@ -76,38 +83,30 @@ def convert_3x3x3x3_to_6x6(T,w):
     ----------
     T : numpy.ndarray of shape (...,3,3,3,3)
         Symmetric 4th order tensor in matrix notation.
-    w : float
-        Weighting factor for shear components.
+    E : numpy.ndarray of shape (6,3,3)
+        Basis tensors of the vector notation.
 
     Returns
     -------
     T_tilde: numpy.ndarray of shape (...,6,6)
-        Symmetric 2nd order tensor in vector notation.
+        Symmetric 4th order tensor in vector notation.
 
     """
-    def assemble(t,idx):
-        return np.stack([np.stack([t[...,idx[0][0],idx[1][0],i,j] for i,j in zip(idx[2],idx[3])],-1),
-                         np.stack([t[...,idx[0][1],idx[1][1],i,j] for i,j in zip(idx[2],idx[3])],-1),
-                         np.stack([t[...,idx[0][2],idx[1][2],i,j] for i,j in zip(idx[2],idx[3])],-1)],-2)
+    E_ = E.reshape(6,9)
+    return (E_ @ T.reshape(T.shape[:-4]+(9,9))) @ E_.T
 
-    a_11 = assemble(T, [[0,1,2],[0,1,2],[0,1,2],[0,1,2]])
-    a_12 = assemble(T, [[0,1,2],[0,1,2],[1,0,0],[2,2,1]])*w[0]
-    a_21 = assemble(T, [[1,0,0],[2,2,1],[0,1,2],[0,1,2]])*w[0]
-    a_22 = assemble(T, [[1,0,0],[2,2,1],[1,0,0],[2,2,1]])*w[1]
 
-    return np.block([[a_11, a_12],
-                     [a_21, a_22]])
-
-def convert_6x6_to_3x3x3x3(T_tilde,w):
+def convert_6x6_to_3x3x3x3(T_tilde,F):
     """
     Convert symmetric 4th order tensor in vector notation to matrix notation.
 
     Parameters
     ----------
     T_tilde : numpy.ndarray of shape (...,6,6)
-        Symmetric 2nd order tensor in vector notation.
-    w : float
-        Weighting factor for shear components.
+        Symmetric 4th order tensor in vector notation.
+    F : numpy.ndarray of shape (6,3,3)
+        Dual basis tensors of the vector notation, i.e. the basis used
+        for reconstruction.
 
     Returns
     -------
@@ -115,24 +114,11 @@ def convert_6x6_to_3x3x3x3(T_tilde,w):
         Symmetric 4th order tensor in matrix notation.
 
     """
-    def assemble(t,w_,i):
-        return np.stack([np.stack([w_[0]*t[...,i,0],w_[1]*t[...,i,5],w_[1]*t[...,i,4]],-1),
-                         np.stack([w_[1]*t[...,i,5],w_[0]*t[...,i,1],w_[1]*t[...,i,3]],-1),
-                         np.stack([w_[1]*t[...,i,4],w_[1]*t[...,i,3],w_[0]*t[...,i,2]],-1)],-2)
-
-    v_11 = assemble(T_tilde, [1.,w[0]],0)
-    v_22 = assemble(T_tilde, [1.,w[0]],1)
-    v_33 = assemble(T_tilde, [1.,w[0]],2)
-    v_23 = v_32 = assemble(T_tilde,w,3)
-    v_13 = v_31 = assemble(T_tilde,w,4)
-    v_12 = v_21 = assemble(T_tilde,w,5)
-
-    return np.stack([np.stack([v_11,v_12,v_13],-3),
-                     np.stack([v_21,v_22,v_23],-3),
-                     np.stack([v_31,v_32,v_33],-3)],-4)
+    F_ = F.reshape(6,9)
+    return (F_.T @ T_tilde @ F_).reshape(T_tilde.shape[:-2]+(3,3,3,3))
 
 
-def rotate(r,x_tilde,w,order):
+def rotate(r,x_tilde,E,F,order):
     """
     Rotate symmetric 2nd or 4th order tensor in vector notation.
 
@@ -142,15 +128,17 @@ def rotate(r,x_tilde,w,order):
         Orientations.
     x_tilde: numpy.ndarray of shape (...,6) or (...,6,6)
         Symmetric 2nd or 4th order in vector notation.
-    w: list of floats of shape (2)
-        Weights
+    E : numpy.ndarray of shape (6,3,3)
+        Basis tensors of the vector notation.
+    F : numpy.ndarray of shape (6,3,3)
+        Dual basis tensors of the vector notation.
     order: integer [2,4]
         Order of the tensor to rotate.
 
     Returns
     -------
-    x_tilde: numpy.ndarray of shape (...,6)
-        Rotated 2nd or 4th order strain tensor in vector notation.
+    x_tilde: numpy.ndarray of shape (...,6) or (...,6,6)
+        Rotated 2nd or 4th order tensor in vector notation.
 
     References
     ----------
@@ -158,41 +146,18 @@ def rotate(r,x_tilde,w,order):
     | https://doi.org/10.1093/gji/ggy445
 
     """
-
     R = r.as_matrix()
 
-    A_11 = np.stack([
-        np.stack([R[...,0,0]**2, R[...,0,1]**2, R[...,0,2]**2],-1),
-        np.stack([R[...,1,0]**2, R[...,1,1]**2, R[...,1,2]**2],-1),
-        np.stack([R[...,2,0]**2, R[...,2,1]**2, R[...,2,2]**2],-1)],-2)
-
-    A_22 = np.stack([
-        np.stack([R[...,1,1]*R[...,2,2]+R[...,1,2]*R[...,2,1],
-                  R[...,1,0]*R[...,2,2]+R[...,1,2]*R[...,2,0],
-                  R[...,1,0]*R[...,2,1]+R[...,1,1]*R[...,2,0]],-1),
-        np.stack([R[...,0,1]*R[...,2,2]+R[...,0,2]*R[...,2,1],
-                  R[...,0,0]*R[...,2,2]+R[...,0,2]*R[...,2,0],
-                  R[...,0,0]*R[...,2,1]+R[...,0,1]*R[...,2,0]],-1),
-        np.stack([R[...,0,1]*R[...,1,2]+R[...,0,2]*R[...,1,1],
-                  R[...,0,0]*R[...,1,2]+R[...,0,2]*R[...,1,0],
-                  R[...,0,0]*R[...,1,1]+R[...,0,1]*R[...,1,0]],-1)],-2)
-
-    A_12 = np.stack([
-        np.stack([R[...,0,1]*R[...,0,2], R[...,0,0]*R[...,0,2], R[...,0,0]*R[...,0,1]],-1),
-        np.stack([R[...,1,1]*R[...,1,2], R[...,1,0]*R[...,1,2], R[...,1,0]*R[...,1,1]],-1),
-        np.stack([R[...,2,1]*R[...,2,2], R[...,2,0]*R[...,2,2], R[...,2,0]*R[...,2,1]],-1)],-2)*w[0]
-
-    A_21 = np.stack([
-        np.stack([R[...,1,0]*R[...,2,0], R[...,1,1]*R[...,2,1], R[...,1,2]*R[...,2,2]],-1),
-        np.stack([R[...,0,0]*R[...,2,0], R[...,0,1]*R[...,2,1], R[...,0,2]*R[...,2,2]],-1),
-        np.stack([R[...,0,0]*R[...,1,0], R[...,0,1]*R[...,1,1], R[...,0,2]*R[...,1,2]],-1)],-2)*w[1]
+    # rotation matrix in the vector notation: Q_ab = E_a : (R F_b R^T)
+    # with (R F_b R^T)_ij = R_ik F_b,kl R_jl
+    S = np.einsum('...ik,...jl->...ijkl',R,R).reshape(R.shape[:-2]+(9,9))
+    Q = E.reshape(6,9) @ S @ F.reshape(6,9).T
 
     blend = damask.util.shapeblender(r.shape,x_tilde.shape[:-order//2])
     s_op = damask.util.shapeshifter(r.shape,blend,mode='right') + (6,6)
     s_x = damask.util.shapeshifter(x_tilde.shape[:-order//2],blend,mode='left') + ((6,) if order == 2 else (6,6))
 
-    op = np.broadcast_to(np.block([[A_11,A_12],
-                                   [A_21,A_22]]).reshape(s_op),blend+(6,6))
+    op = np.broadcast_to(Q.reshape(s_op),blend+(6,6))
 
     return np.einsum('...ij,...j',op,np.broadcast_to(x_tilde.reshape(s_x),blend+(6,))) if order == 2 else \
            np.einsum('...ij,...jk,...lk',op,np.broadcast_to(x_tilde.reshape(s_x),blend+(6,6)),op)

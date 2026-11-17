@@ -37,14 +37,10 @@ References
 T. Mánik, European Journal of Mechanics - A/Solids 90:104357, 2021
 https://doi.org/10.1016/j.euromechsol.2021.104357
 
-U.F. Kocks et al.,
-Texture and Anisotropy: Preferred Orientations in Polycrystals
-and their Effect on Materials Properties.
+U.F. Kocks et al., Texture and Anisotropy: Preferred Orientations in Polycrystals and their Effect on Materials Properties.
 Cambridge University Press 1998, page 287
 
-P. Lequeu,
-Comparison of crystallographic and continuum yield surfaces for
-textured polycrystals.
+P. Lequeu, Comparison of crystallographic and continuum yield surfaces for textured polycrystals.
 PhD thesis, McGill University, Montreal, Canada, 1986
 https://escholarship.mcgill.ca/concern/theses/nk322f063
 
@@ -53,7 +49,8 @@ https://doi.org/10.1155/TSM.8-9.313
 """
 
 import numpy as _np
-import damask as _damask
+
+from . import _conventions
 
 
 def _basis(theta):
@@ -105,7 +102,7 @@ def to_6(t,theta=0.0):
     function can be used to convert strain and stress tensors.
 
     """
-    return _np.einsum('aij,...ij',_basis(theta),t)
+    return _conventions.convert_3x3_to_6(t,_basis(theta))
 
 
 def to_6_strain(epsilon,theta=0.0):
@@ -170,8 +167,7 @@ def to_6x6(T,theta=0.0):
     function can be used to convert compliance and stiffness tensors.
 
     """
-    E = _basis(theta).reshape(6,9)
-    return _np.einsum('ai,...ij,bj',E,_np.reshape(T,T.shape[:-4]+(9,9)),E)
+    return _conventions.convert_3x3x3x3_to_6x6(T,_basis(theta))
 
 
 def to_6x6_compliance(S,theta=0.0):
@@ -236,7 +232,7 @@ def to_3x3(t_natural,theta=0.0):
     function can be used to convert strain and stress tensors.
 
     """
-    return _np.einsum('...a,aij',t_natural,_basis(theta))
+    return _conventions.convert_6_to_3x3(t_natural,_basis(theta))
 
 
 def to_3x3_strain(epsilon_natural,theta=0.0):
@@ -301,8 +297,7 @@ def to_3x3x3x3(T_natural,theta=0.0):
     function can be used to convert compliance and stiffness tensors.
 
     """
-    E = _basis(theta).reshape(6,9)
-    return _np.reshape(_np.einsum('...ab,ai,bj',T_natural,E,E),T_natural.shape[:-2]+(3,3,3,3))
+    return _conventions.convert_6x6_to_3x3x3x3(T_natural,_basis(theta))
 
 
 def to_3x3x3x3_compliance(S_natural,theta=0.0):
@@ -366,20 +361,8 @@ def _rotate(r,x_natural,order,theta=0.0):
         Rotated 2nd or 4th order tensor in natural notation.
 
     """
-    R = r.as_matrix()
     E = _basis(theta)
-
-    # rotation matrix in the natural basis: Q_ab = E_a : (R E_b R^T)
-    Q = _np.einsum('aij,...ik,bkl,...jl',E,R,E,R)
-
-    blend = _damask.util.shapeblender(r.shape,x_natural.shape[:-order//2])
-    s_op = _damask.util.shapeshifter(r.shape,blend,mode='right') + (6,6)
-    s_x = _damask.util.shapeshifter(x_natural.shape[:-order//2],blend,mode='left') + ((6,) if order == 2 else (6,6))
-
-    op = _np.broadcast_to(Q.reshape(s_op),blend+(6,6))
-
-    return _np.einsum('...ij,...j',op,_np.broadcast_to(x_natural.reshape(s_x),blend+(6,))) if order == 2 else \
-           _np.einsum('...ij,...jk,...lk',op,_np.broadcast_to(x_natural.reshape(s_x),blend+(6,6)),op)
+    return _conventions.rotate(r,x_natural,E,E,order)
 
 
 def rotate_2nd(r,t_natural,theta=0.0):

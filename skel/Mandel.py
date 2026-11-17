@@ -22,9 +22,26 @@ https://doi.org/10.1016/s0045-7825(00)00263-2
 
 T. Mánik, European Journal of Mechanics - A/Solids 90:104357, 2021
 https://doi.org/10.1016/j.euromechsol.2021.104357
+
+J. Mandel, International Journal of Solids and Structures 1(3):273-295, 1965
+https://doi.org/10.1016/0020-7683(65)90034-X
+
+W. Voigt, Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen. Mathematisch-Physikalische Klasse (2):117–176, 1900
+https://gdz.sub.uni-goettingen.de/id/PPN252457811_1900
 """
 
+import numpy as _np
+
 from . import _conventions
+
+
+# Orthonormal basis of the Mandel notation.
+BASIS = _np.zeros((6,3,3))
+BASIS[0,0,0] = BASIS[1,1,1] = BASIS[2,2,2] = 1.0
+BASIS[3,1,2] = BASIS[3,2,1] = 1.0/_np.sqrt(2.0)
+BASIS[4,0,2] = BASIS[4,2,0] = 1.0/_np.sqrt(2.0)
+BASIS[5,0,1] = BASIS[5,1,0] = 1.0/_np.sqrt(2.0)
+
 
 def to_6(t):
     """
@@ -46,7 +63,7 @@ def to_6(t):
     function can be used to convert strain and stress tensors.
 
     """
-    return _conventions.convert_3x3_to_6(t,2.**.5)
+    return _conventions.convert_3x3_to_6(t,BASIS)
 
 def to_6_strain(epsilon):
     """
@@ -103,7 +120,7 @@ def to_6x6(T):
     function can be used to convert compliance and stiffness tensors.
 
     """
-    return _conventions.convert_3x3x3x3_to_6x6(T,[2.**.5,2.])
+    return _conventions.convert_3x3x3x3_to_6x6(T,BASIS)
 
 def to_6x6_compliance(S):
     """
@@ -160,7 +177,7 @@ def to_3x3(t_Mandel):
     function can be used to convert strain and stress tensors.
 
     """
-    return _conventions.convert_6_to_3x3(t_Mandel,2.**(-.5))
+    return _conventions.convert_6_to_3x3(t_Mandel,BASIS)
 
 def to_3x3_strain(epsilon_Mandel):
     """
@@ -217,7 +234,7 @@ def to_3x3x3x3(T_Mandel):
     function can be used to convert compliance and stiffness tensors.
 
     """
-    return _conventions.convert_6x6_to_3x3x3x3(T_Mandel,[2.**(-.5),0.5])
+    return _conventions.convert_6x6_to_3x3x3x3(T_Mandel,BASIS)
 
 def to_3x3x3x3_compliance(S_Mandel):
     """
@@ -276,7 +293,7 @@ def rotate_2nd(r,t_Mandel):
     function can be used to rotate strain and stress tensors.
 
     """
-    return _conventions.rotate(r,t_Mandel,[2.**.5,2.**.5],2)
+    return _conventions.rotate(r,t_Mandel,BASIS,BASIS,2)
 
 def rotate_strain(r,epsilon_Mandel):
     """
@@ -339,7 +356,7 @@ def rotate_4th(r,T_Mandel):
     function can be used to rotate compliance and stiffness tensors.
 
     """
-    return _conventions.rotate(r,T_Mandel,[2.**.5,2.**.5],4)
+    return _conventions.rotate(r,T_Mandel,BASIS,BASIS,4)
 
 def rotate_compliance(r,S_Mandel):
     """

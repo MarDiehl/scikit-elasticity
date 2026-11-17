@@ -8,6 +8,14 @@ from skel import Mandel
 from skel import natural
 
 
+def test_mandel_basis_orthonormal(assert_allclose):
+    assert_allclose(np.einsum('aij,bij->ab',Mandel.BASIS,Mandel.BASIS),np.eye(6))
+
+
+def test_voigt_basis_dual(assert_allclose):
+    assert_allclose(np.einsum('aij,bij->ab',Voigt.BASIS_STRESS,Voigt.BASIS_STRAIN),np.eye(6))
+
+
 @pytest.mark.parametrize('forward,backward',[(Voigt.to_3x3_strain, Voigt.to_6_strain),
                                              (Voigt.to_3x3_stress, Voigt.to_6_stress),
                                              (Mandel.to_3x3_strain, Mandel.to_6_strain),
@@ -73,7 +81,7 @@ def test_squeeze_6x6_to_3x3x3x3(to_3x3x3x3,symmetric_6x6,assert_allclose):
                                    natural.to_6x6_compliance,
                                    natural.to_6x6_stiffness])
 def test_squeeze_3x3x3x3_to_6x6(to_6x6,symmetric_6x6,assert_allclose):
-    t = _conventions.convert_6x6_to_3x3x3x3(symmetric_6x6(),[1,1])
+    t = _conventions.convert_6x6_to_3x3x3x3(symmetric_6x6(),Mandel.BASIS)
     assert_allclose(to_6x6(t),to_6x6(t.reshape(1,1,1,3,3,3,3)).squeeze())
 
 
@@ -104,7 +112,7 @@ def test_rotation_2nd(symmetric_2nd,random_rotation,random_shape,forward,backwar
 @pytest.mark.parametrize('ndim',[0,1,3])
 def test_rotation_4th(symmetric_6x6,random_rotation,random_shape,forward,backward,rotate,ndim,assert_allclose):
     shape = random_shape(ndim)
-    t = _conventions.convert_6x6_to_3x3x3x3(symmetric_6x6(shape),[1,1])
+    t = _conventions.convert_6x6_to_3x3x3x3(symmetric_6x6(shape),Mandel.BASIS)
     O = random_rotation(shape)
     t_6x6 = forward(t)
     t_6x6_rotated = rotate(O,t_6x6)
@@ -152,8 +160,8 @@ def test_strain_calculation(random_6,symmetric_6x6,random_shape,
 def test_broadcast_2nd(random_6,random_rotation,random_shape,ndim_t,ndim_O):
     t_tilde = random_6(random_shape(ndim_t))
     O = random_rotation(random_shape(ndim_O))
-    t_tilde_ = _conventions.rotate(O,t_tilde,[1.]*2,2)
-    t_ = O@_conventions.convert_6_to_3x3(t_tilde,1.)
+    t_tilde_ = _conventions.rotate(O,t_tilde,Mandel.BASIS,Mandel.BASIS,2)
+    t_ = O@_conventions.convert_6_to_3x3(t_tilde,Mandel.BASIS)
     assert t_tilde_.shape[:-1] == t_.shape[:-2]
 
 @pytest.mark.parametrize('ndim_T',[0,1,3])
@@ -161,6 +169,6 @@ def test_broadcast_2nd(random_6,random_rotation,random_shape,ndim_t,ndim_O):
 def test_broadcast_4th(symmetric_6x6,random_rotation,random_shape,ndim_T,ndim_O):
     T_tilde = symmetric_6x6(random_shape(ndim_T))
     O = random_rotation(random_shape(ndim_O))
-    T_tilde_ = _conventions.rotate(O,T_tilde,[1.]*2,4)
-    T_ = O@_conventions.convert_6x6_to_3x3x3x3(T_tilde,[1.]*2)
+    T_tilde_ = _conventions.rotate(O,T_tilde,Mandel.BASIS,Mandel.BASIS,4)
+    T_ = O@_conventions.convert_6x6_to_3x3x3x3(T_tilde,Mandel.BASIS)
     assert T_tilde_.shape[:-2] == T_.shape[:-4]
