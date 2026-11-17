@@ -4,12 +4,12 @@ Compressed notation of symmetric tensors using convention attributed to W. Voigt
 
 Notes
 -----
-The following order is used to store the unique elements of a
+The following convention is used to store the unique elements of a
 2nd order tensor t (3x3 matrix) as a vector t' of length 6.
 
 .. math::
 
-    \vb{t}_\text{Voigt} = (t_{xx}, t_{yy}, t_{zz}, w t_{yz}, w t_{xz}, w t_{xy})
+    \vb{t}'_\text{Voigt} = (t_{xx}, t_{yy}, t_{zz}, w t_{yz}, w t_{xz}, w t_{xy})
 
 
 Different weights are used for the representation of stress
@@ -29,7 +29,7 @@ https://gdz.sub.uni-goettingen.de/id/PPN252457811_1900
 
 import numpy as _np
 
-from . import _conventions
+from . import _transforms
 
 
 # Basis of the Voigt notation for stress/stiffness (w=1) and strain/compliance (w=2).
@@ -59,7 +59,7 @@ def to_6_strain(epsilon):
         Symmetric 2nd order strain tensor in Voigt notation.
 
     """
-    return _conventions.convert_3x3_to_6(epsilon,BASIS_STRAIN)
+    return _transforms.to_6(epsilon,BASIS_STRAIN)
 
 def to_6_stress(sigma):
     """
@@ -76,7 +76,7 @@ def to_6_stress(sigma):
         Symmetric 2nd order stress tensor in Voigt notation.
 
     """
-    return _conventions.convert_3x3_to_6(sigma,BASIS_STRESS)
+    return _transforms.to_6(sigma,BASIS_STRESS)
 
 
 def to_6x6_compliance(S):
@@ -94,7 +94,7 @@ def to_6x6_compliance(S):
         Symmetric 4th order compliance tensor in Voigt notation.
 
     """
-    return _conventions.convert_3x3x3x3_to_6x6(S,BASIS_STRAIN)
+    return _transforms.to_6x6(S,BASIS_STRAIN)
 
 def to_6x6_stiffness(C):
     """
@@ -111,7 +111,7 @@ def to_6x6_stiffness(C):
         Symmetric 4th order stiffness tensor in Voigt notation.
 
     """
-    return _conventions.convert_3x3x3x3_to_6x6(C,BASIS_STRESS)
+    return _transforms.to_6x6(C,BASIS_STRESS)
 
 
 def to_3x3_strain(epsilon_Voigt):
@@ -129,7 +129,7 @@ def to_3x3_strain(epsilon_Voigt):
         Symmetric 2nd order strain tensor in matrix notation.
 
     """
-    return _conventions.convert_6_to_3x3(epsilon_Voigt,BASIS_STRESS)
+    return _transforms.to_3x3(epsilon_Voigt,BASIS_STRESS)
 
 def to_3x3_stress(sigma_Voigt):
     """
@@ -146,7 +146,7 @@ def to_3x3_stress(sigma_Voigt):
         Symmetric 2nd order stress tensor in matrix notation.
 
     """
-    return _conventions.convert_6_to_3x3(sigma_Voigt,BASIS_STRAIN)
+    return _transforms.to_3x3(sigma_Voigt,BASIS_STRAIN)
 
 
 def to_3x3x3x3_compliance(S_Voigt):
@@ -164,7 +164,7 @@ def to_3x3x3x3_compliance(S_Voigt):
         Symmetric 4th order compliance tensor in matrix notation.
 
     """
-    return _conventions.convert_6x6_to_3x3x3x3(S_Voigt,BASIS_STRESS)
+    return _transforms.to_3x3x3x3(S_Voigt,BASIS_STRESS)
 
 def to_3x3x3x3_stiffness(C_Voigt):
     """
@@ -181,7 +181,7 @@ def to_3x3x3x3_stiffness(C_Voigt):
         Symmetric 4th order stiffness tensor in matrix notation.
 
     """
-    return _conventions.convert_6x6_to_3x3x3x3(C_Voigt,BASIS_STRAIN)
+    return _transforms.to_3x3x3x3(C_Voigt,BASIS_STRAIN)
 
 
 def rotate_strain(r,epsilon_Voigt):
@@ -201,7 +201,7 @@ def rotate_strain(r,epsilon_Voigt):
         Rotated 2nd order strain tensor in Voigt notation.
 
     """
-    return _conventions.rotate(r,epsilon_Voigt,BASIS_STRAIN,BASIS_STRESS,2)
+    return _transforms.rotate(r,epsilon_Voigt,BASIS_STRAIN,BASIS_STRESS,2)
 
 def rotate_stress(r,sigma_Voigt):
     """
@@ -220,7 +220,7 @@ def rotate_stress(r,sigma_Voigt):
         Rotated 2nd order stress tensor in Voigt notation.
 
     """
-    return _conventions.rotate(r,sigma_Voigt,BASIS_STRESS,BASIS_STRAIN,2)
+    return _transforms.rotate(r,sigma_Voigt,BASIS_STRESS,BASIS_STRAIN,2)
 
 
 def rotate_compliance(r,S_Voigt):
@@ -240,7 +240,7 @@ def rotate_compliance(r,S_Voigt):
         Rotated 4th order compliance tensor in Voigt notation.
 
     """
-    return _conventions.rotate(r,S_Voigt,BASIS_STRAIN,BASIS_STRESS,4)
+    return _transforms.rotate(r,S_Voigt,BASIS_STRAIN,BASIS_STRESS,4)
 
 def rotate_stiffness(r,C_Voigt):
     """
@@ -259,4 +259,4 @@ def rotate_stiffness(r,C_Voigt):
         Rotated 4th order stiffness tensor in Voigt notation.
 
     """
-    return _conventions.rotate(r,C_Voigt,BASIS_STRESS,BASIS_STRAIN,4)
+    return _transforms.rotate(r,C_Voigt,BASIS_STRESS,BASIS_STRAIN,4)

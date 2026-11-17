@@ -4,12 +4,12 @@ Compressed notation of symmetric tensors using a natural basis.
 
 Notes
 -----
-The following order is used to store the unique elements of a
+The following convention is used to store the unique elements of a
 2nd order tensor t (3x3 matrix) as a vector t' of length 6.
 
 .. math::
 
-    \vb{t}_\text{natural} = (t'_1, t'_2, t'_3, t'_4, t'_5, t'_6)
+    \vb{t}'_\text{natural} = (t'_1, t'_2, t'_3, t'_4, t'_5, t'_6)
 
 The components are
 
@@ -50,7 +50,7 @@ https://doi.org/10.1155/TSM.8-9.313
 
 import numpy as _np
 
-from . import _conventions
+from . import _transforms
 
 
 def _basis(theta):
@@ -102,7 +102,7 @@ def to_6(t,theta=0.0):
     function can be used to convert strain and stress tensors.
 
     """
-    return _conventions.convert_3x3_to_6(t,_basis(theta))
+    return _transforms.to_6(t,_basis(theta))
 
 
 def to_6_strain(epsilon,theta=0.0):
@@ -167,7 +167,7 @@ def to_6x6(T,theta=0.0):
     function can be used to convert compliance and stiffness tensors.
 
     """
-    return _conventions.convert_3x3x3x3_to_6x6(T,_basis(theta))
+    return _transforms.to_6x6(T,_basis(theta))
 
 
 def to_6x6_compliance(S,theta=0.0):
@@ -232,7 +232,7 @@ def to_3x3(t_natural,theta=0.0):
     function can be used to convert strain and stress tensors.
 
     """
-    return _conventions.convert_6_to_3x3(t_natural,_basis(theta))
+    return _transforms.to_3x3(t_natural,_basis(theta))
 
 
 def to_3x3_strain(epsilon_natural,theta=0.0):
@@ -297,7 +297,7 @@ def to_3x3x3x3(T_natural,theta=0.0):
     function can be used to convert compliance and stiffness tensors.
 
     """
-    return _conventions.convert_6x6_to_3x3x3x3(T_natural,_basis(theta))
+    return _transforms.to_3x3x3x3(T_natural,_basis(theta))
 
 
 def to_3x3x3x3_compliance(S_natural,theta=0.0):
@@ -362,7 +362,7 @@ def _rotate(r,x_natural,order,theta=0.0):
 
     """
     E = _basis(theta)
-    return _conventions.rotate(r,x_natural,E,E,order)
+    return _transforms.rotate(r,x_natural,E,E,order)
 
 
 def rotate_2nd(r,t_natural,theta=0.0):

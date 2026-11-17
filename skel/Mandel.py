@@ -4,12 +4,12 @@ Compressed notation of symmetric tensors using convention attributed to J. Mande
 
 Notes
 -----
-The following order is used to store the unique elements of a
+The following convention is used to store the unique elements of a
 2nd order tensor t (3x3 matrix) as a vector t' of length 6.
 
 .. math::
 
-    \vb{t}_\text{Mandel} = (t_{xx}, t_{yy}, t_{zz}, w t_{yz}, w t_{xz}, w t_{xy})
+    \vb{t}'_\text{Mandel} = (t_{xx}, t_{yy}, t_{zz}, w t_{yz}, w t_{xz}, w t_{xy})
 
 
 The same weight (:math:`w = \sqrt{2}`) is used for the representation
@@ -32,7 +32,7 @@ https://gdz.sub.uni-goettingen.de/id/PPN252457811_1900
 
 import numpy as _np
 
-from . import _conventions
+from . import _transforms
 
 
 # Orthonormal basis of the Mandel notation.
@@ -63,7 +63,7 @@ def to_6(t):
     function can be used to convert strain and stress tensors.
 
     """
-    return _conventions.convert_3x3_to_6(t,BASIS)
+    return _transforms.to_6(t,BASIS)
 
 def to_6_strain(epsilon):
     """
@@ -120,7 +120,7 @@ def to_6x6(T):
     function can be used to convert compliance and stiffness tensors.
 
     """
-    return _conventions.convert_3x3x3x3_to_6x6(T,BASIS)
+    return _transforms.to_6x6(T,BASIS)
 
 def to_6x6_compliance(S):
     """
@@ -177,7 +177,7 @@ def to_3x3(t_Mandel):
     function can be used to convert strain and stress tensors.
 
     """
-    return _conventions.convert_6_to_3x3(t_Mandel,BASIS)
+    return _transforms.to_3x3(t_Mandel,BASIS)
 
 def to_3x3_strain(epsilon_Mandel):
     """
@@ -234,7 +234,7 @@ def to_3x3x3x3(T_Mandel):
     function can be used to convert compliance and stiffness tensors.
 
     """
-    return _conventions.convert_6x6_to_3x3x3x3(T_Mandel,BASIS)
+    return _transforms.to_3x3x3x3(T_Mandel,BASIS)
 
 def to_3x3x3x3_compliance(S_Mandel):
     """
@@ -293,7 +293,7 @@ def rotate_2nd(r,t_Mandel):
     function can be used to rotate strain and stress tensors.
 
     """
-    return _conventions.rotate(r,t_Mandel,BASIS,BASIS,2)
+    return _transforms.rotate(r,t_Mandel,BASIS,BASIS,2)
 
 def rotate_strain(r,epsilon_Mandel):
     """
@@ -356,7 +356,7 @@ def rotate_4th(r,T_Mandel):
     function can be used to rotate compliance and stiffness tensors.
 
     """
-    return _conventions.rotate(r,T_Mandel,BASIS,BASIS,4)
+    return _transforms.rotate(r,T_Mandel,BASIS,BASIS,4)
 
 def rotate_compliance(r,S_Mandel):
     """

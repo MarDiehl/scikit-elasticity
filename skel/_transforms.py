@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 r"""
-Compressed notation of symmetric tensors.
+Transforms for compressed notation of symmetric tensors.
 
 Notes
 -----
@@ -34,7 +34,7 @@ import numpy as np
 import damask
 
 
-def convert_3x3_to_6(t,E):
+def to_6(t,E):
     """
     Convert symmetric 2nd order tensor in matrix notation to vector notation.
 
@@ -54,7 +54,7 @@ def convert_3x3_to_6(t,E):
     return t.reshape(t.shape[:-2]+(9,)) @ E.reshape(6,9).T
 
 
-def convert_6_to_3x3(t_tilde,F):
+def to_3x3(t_tilde,F):
     """
     Convert symmetric 2nd order tensor in vector notation to matrix notation.
 
@@ -75,7 +75,7 @@ def convert_6_to_3x3(t_tilde,F):
     return (t_tilde @ F.reshape(6,9)).reshape(t_tilde.shape[:-1]+(3,3))
 
 
-def convert_3x3x3x3_to_6x6(T,E):
+def to_6x6(T,E):
     """
     Convert symmetric 4th order tensor in matrix notation to vector notation.
 
@@ -96,7 +96,7 @@ def convert_3x3x3x3_to_6x6(T,E):
     return (E_ @ T.reshape(T.shape[:-4]+(9,9))) @ E_.T
 
 
-def convert_6x6_to_3x3x3x3(T_tilde,F):
+def to_3x3x3x3(T_tilde,F):
     """
     Convert symmetric 4th order tensor in vector notation to matrix notation.
 
