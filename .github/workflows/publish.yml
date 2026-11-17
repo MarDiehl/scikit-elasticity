@@ -13,12 +13,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
       - uses: actions/setup-python@v5
       - name: Install dependencies
         run: |
-          git fetch --unshallow
-          pip install sphinx pydata-sphinx-theme
-          python -m pip install .
+          python -m pip install --upgrade pip
+          pip install sphinx pydata-sphinx-theme versioningit
+      - name: Generate version file
+        run: versioningit -w
+      - name: Install package
+        run: python -m pip install .
       - name: Sphinx build
         run: sphinx-build doc _build
       - name: Deploy to GitHub Pages

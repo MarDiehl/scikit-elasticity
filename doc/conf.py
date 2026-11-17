@@ -7,10 +7,18 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+from pathlib import Path
+
 project = 'scikit-elasticity'
 copyright = '2025-2026, Martin Diehl'
 author = 'Martin Diehl'
-release = '0.1'
+
+try:
+    release = (Path(__file__).resolve().parents[1] / 'VERSION').read_text().strip()
+except FileNotFoundError:
+    from importlib.metadata import version as _version
+    release = _version('scikit-elasticity')
+version = release
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
