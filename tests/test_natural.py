@@ -14,6 +14,23 @@ def deviatoric(t):
     return tensor.traceless(t) if hasattr(tensor,'traceless') else tensor.deviatoric(t)
 
 
+def cubic_stiffness(rng):
+    """Random stable cubic stiffness matrix in Voigt notation."""
+    return Hooke.C('cubic',
+                   C_11=rng.uniform(200e9,300e9),
+                   C_12=rng.uniform(100e9,150e9),
+                   C_44=rng.uniform(50e9,150e9))
+
+
+def isotropic_stiffness(rng):
+    """Random stable isotropic stiffness tensor and its bulk/shear moduli."""
+    K = rng.uniform(80e9,200e9)
+    G = rng.uniform(30e9,100e9)
+    return K,G,Voigt.to_3x3x3x3_stiffness(Hooke.C('isotropic',
+                                                  C_11=K+4*G/3,
+                                                  C_12=K-2*G/3))
+
+
 def test_basis_orthonormal(assert_allclose):
     E = natural._basis(0.0)
     assert_allclose(np.einsum('aij,bij',E,E),np.eye(6))
@@ -69,7 +86,7 @@ def test_deviatoric_norm(np_rng,symmetric_2nd,assert_allclose):
     t_6 = natural.to_6(t_dev,theta)
     assert_allclose(t_6[...,0],0.0)
     assert_allclose(np.linalg.norm(t_6[...,1:],axis=-1),
-                       np.linalg.norm(t_dev,axis=(-2,-1)))
+                    np.linalg.norm(t_dev,axis=(-2,-1)))
 
 
 def test_hydrostatic_deviatoric_decomposition(np_rng,symmetric_2nd,assert_allclose):
@@ -82,10 +99,10 @@ def test_hydrostatic_deviatoric_decomposition(np_rng,symmetric_2nd,assert_allclo
     assert_allclose(t_h+t_d,t)
     assert_allclose(np.einsum('...ij,...ij',t_h,t_d),0.0)
     assert_allclose(natural.to_6(t,theta),
-                       natural.to_6(t_h,theta)+natural.to_6(t_d,theta))
+                    natural.to_6(t_h,theta)+natural.to_6(t_d,theta))
 
 
-def test_shear_components_match_mandel(np_rng,symmetric_2nd,assert_allclose):
+def test_shear_components_match_Mandel(np_rng,symmetric_2nd,assert_allclose):
     theta = np_rng.uniform(-4*np.pi,4*np.pi)
     t = symmetric_2nd((4,))
     assert_allclose(natural.to_6(t,theta)[...,3:],Mandel.to_6(t)[...,3:])
@@ -93,35 +110,29 @@ def test_shear_components_match_mandel(np_rng,symmetric_2nd,assert_allclose):
 
 def test_stiffness_and_compliance_inverse(np_rng,assert_allclose):
     theta = np_rng.uniform(-4*np.pi,4*np.pi)
-    C66 = Hooke.C('cubic',C_11=232.2e9,C_12=136.4e9,C_44=117.0e9)
+    C66 = cubic_stiffness(np_rng)
     C = Voigt.to_3x3x3x3_stiffness(C66)
     S = Voigt.to_3x3x3x3_compliance(np.linalg.inv(C66))
     assert_allclose(natural.to_6x6_stiffness(C,theta)@natural.to_6x6_compliance(S,theta),
-                       np.eye(6))
+                    np.eye(6))
 
 
-def test_eigenvalues_match_mandel(np_rng,assert_allclose):
+def test_eigenvalues_match_Mandel(np_rng,assert_allclose):
     theta = np_rng.uniform(-4*np.pi,4*np.pi)
-    C = Voigt.to_3x3x3x3_stiffness(Hooke.C('cubic',C_11=232.2e9,C_12=136.4e9,C_44=117.0e9))
+    C = Voigt.to_3x3x3x3_stiffness(cubic_stiffness(np_rng))
     assert_allclose(np.linalg.eigvalsh(natural.to_6x6_stiffness(C,theta)),
-                       np.linalg.eigvalsh(Mandel.to_6x6_stiffness(C)))
+                    np.linalg.eigvalsh(Mandel.to_6x6_stiffness(C)))
 
 
 def test_isotropic_stiffness(np_rng,assert_allclose):
     theta = np_rng.uniform(-4*np.pi,4*np.pi)
-    K,G = 120e9,80e9
-    C = Voigt.to_3x3x3x3_stiffness(Hooke.C('isotropic',
-                                          C_11=K+4*G/3,
-                                          C_12=K-2*G/3))
+    K,G,C = isotropic_stiffness(np_rng)
     assert_allclose(natural.to_6x6_stiffness(C,theta)/1e9,np.diag([3*K]+[2*G]*5)/1e9)
 
 
 def test_isotropic_response(np_rng,symmetric_2nd,assert_allclose):
     theta = np_rng.uniform(-4*np.pi,4*np.pi)
-    K,G = 120e9,80e9
-    C = Voigt.to_3x3x3x3_stiffness(Hooke.C('isotropic',
-                                          C_11=K+4*G/3,
-                                          C_12=K-2*G/3))
+    K,G,C = isotropic_stiffness(np_rng)
 
     epsilon = symmetric_2nd((4,))
     sigma = np.einsum('...ijkl,...kl',C,epsilon)
@@ -133,7 +144,7 @@ def test_isotropic_response(np_rng,symmetric_2nd,assert_allclose):
     assert_allclose(sigma_6[...,1:],2*G*epsilon_6[...,1:])
 
 
-def test_stress_calculation(np_rng,symmetric_4th,symmetric_2nd,assert_allclose):
+def test_theta_stress_calculation(np_rng,symmetric_4th,symmetric_2nd,assert_allclose):
     theta = np_rng.uniform(-4*np.pi,4*np.pi)
     C = symmetric_4th((4,))
     epsilon = symmetric_2nd((4,))
@@ -145,7 +156,7 @@ def test_stress_calculation(np_rng,symmetric_4th,symmetric_2nd,assert_allclose):
     assert_allclose(natural.to_6_stress(sigma,theta),sigma_natural)
 
 
-def test_strain_calculation(np_rng,symmetric_4th,symmetric_2nd,assert_allclose):
+def test_theta_strain_calculation(np_rng,symmetric_4th,symmetric_2nd,assert_allclose):
     theta = np_rng.uniform(-4*np.pi,4*np.pi)
     S = symmetric_4th((4,))
     sigma = symmetric_2nd((4,))
@@ -157,31 +168,17 @@ def test_strain_calculation(np_rng,symmetric_4th,symmetric_2nd,assert_allclose):
     assert_allclose(natural.to_6_strain(epsilon,theta),epsilon_natural)
 
 
-def test_rotation_2nd(np_rng,symmetric_2nd,assert_allclose):
+def test_theta_rotation_2nd(np_rng,symmetric_2nd,assert_allclose):
     theta = np_rng.uniform(-4*np.pi,4*np.pi)
     t = symmetric_2nd((4,))
     O = damask.Rotation.from_random(t.shape[:-2],np_rng)
     assert_allclose(natural.rotate_strain(O,natural.to_6(t,theta),theta),
-                       natural.to_6(O@t,theta))
+                    natural.to_6(O@t,theta))
 
 
-def test_rotation_4th(np_rng,symmetric_4th,assert_allclose):
+def test_theta_rotation_4th(np_rng,symmetric_4th,assert_allclose):
     theta = np_rng.uniform(-4*np.pi,4*np.pi)
     T = symmetric_4th((4,))
     O = damask.Rotation.from_random(T.shape[:-4],np_rng)
     assert_allclose(natural.rotate_stiffness(O,natural.to_6x6(T,theta),theta),
-                       natural.to_6x6(O@T,theta))
-
-
-def test_rotation_broadcast_2nd(np_rng,symmetric_2nd):
-    theta = np_rng.uniform(-4*np.pi,4*np.pi)
-    t = symmetric_2nd((3,4))
-    O = damask.Rotation.from_random(3,np_rng)
-    assert natural.rotate_stress(O,natural.to_6(t,theta),theta).shape == (3,4,6)
-
-
-def test_rotation_broadcast_4th(np_rng,symmetric_4th):
-    theta = np_rng.uniform(-4*np.pi,4*np.pi)
-    T = symmetric_4th((3,4))
-    O = damask.Rotation.from_random(3,np_rng)
-    assert natural.rotate_compliance(O,natural.to_6x6(T,theta),theta).shape == (3,4,6,6)
+                    natural.to_6x6(O@T,theta))

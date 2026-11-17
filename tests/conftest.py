@@ -5,6 +5,7 @@ import damask
 from damask import tensor
 
 from skel import _conventions
+from skel import Mandel
 
 def pytest_addoption(parser):
     parser.addoption('--rng-entropy',
@@ -49,7 +50,7 @@ def symmetric_6x6(np_rng):
 def symmetric_4th(np_rng):
     """Factory for random symmetric 4th order tensors."""
     def _symmetric_4th(shape=()):
-        return _conventions.convert_6x6_to_3x3x3x3(tensor.symmetric(np_rng.random(shape+(6,6))),[1.,1.])
+        return _conventions.convert_6x6_to_3x3x3x3(tensor.symmetric(np_rng.random(shape+(6,6))),Mandel.BASIS)
     return _symmetric_4th
 
 @pytest.fixture

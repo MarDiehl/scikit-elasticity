@@ -2,7 +2,6 @@
 import numpy as np
 import pytest
 
-from skel import _conventions
 from skel import Voigt
 from skel import Mandel
 from skel import natural
@@ -72,8 +71,8 @@ def test_squeeze_6x6_to_3x3x3x3(to_3x3x3x3,symmetric_6x6,assert_allclose):
                                    Mandel.to_6x6_stiffness,
                                    natural.to_6x6_compliance,
                                    natural.to_6x6_stiffness])
-def test_squeeze_3x3x3x3_to_6x6(to_6x6,symmetric_6x6,assert_allclose):
-    t = _conventions.convert_6x6_to_3x3x3x3(symmetric_6x6(),[1,1])
+def test_squeeze_3x3x3x3_to_6x6(to_6x6,symmetric_4th,assert_allclose):
+    t = symmetric_4th()
     assert_allclose(to_6x6(t),to_6x6(t.reshape(1,1,1,3,3,3,3)).squeeze())
 
 
@@ -102,9 +101,9 @@ def test_rotation_2nd(symmetric_2nd,random_rotation,random_shape,forward,backwar
                           (natural.to_6x6_compliance, natural.to_3x3x3x3_compliance, natural.rotate_compliance),
                           (natural.to_6x6_stiffness, natural.to_3x3x3x3_stiffness, natural.rotate_stiffness)])
 @pytest.mark.parametrize('ndim',[0,1,3])
-def test_rotation_4th(symmetric_6x6,random_rotation,random_shape,forward,backward,rotate,ndim,assert_allclose):
+def test_rotation_4th(symmetric_4th,random_rotation,random_shape,forward,backward,rotate,ndim,assert_allclose):
     shape = random_shape(ndim)
-    t = _conventions.convert_6x6_to_3x3x3x3(symmetric_6x6(shape),[1,1])
+    t = symmetric_4th(shape)
     O = random_rotation(shape)
     t_6x6 = forward(t)
     t_6x6_rotated = rotate(O,t_6x6)
@@ -147,20 +146,34 @@ def test_strain_calculation(random_6,symmetric_6x6,random_shape,
     assert_allclose(strain_3x3_to_6(epsilon),epsilon_tilde)
 
 
+@pytest.mark.parametrize('to_3x3,rotate',
+                         [(Voigt.to_3x3_strain,Voigt.rotate_strain),
+                          (Voigt.to_3x3_stress,Voigt.rotate_stress),
+                          (Mandel.to_3x3_strain,Mandel.rotate_strain),
+                          (Mandel.to_3x3_stress,Mandel.rotate_stress),
+                          (natural.to_3x3_strain,natural.rotate_strain),
+                          (natural.to_3x3_stress,natural.rotate_stress)])
 @pytest.mark.parametrize('ndim_t',[0,1,3])
 @pytest.mark.parametrize('ndim_O',[0,1,3])
-def test_broadcast_2nd(random_6,random_rotation,random_shape,ndim_t,ndim_O):
+def test_broadcast_2nd(random_6,random_rotation,random_shape,to_3x3,rotate,ndim_t,ndim_O):
     t_tilde = random_6(random_shape(ndim_t))
     O = random_rotation(random_shape(ndim_O))
-    t_tilde_ = _conventions.rotate(O,t_tilde,[1.]*2,2)
-    t_ = O@_conventions.convert_6_to_3x3(t_tilde,1.)
+    t_tilde_ = rotate(O,t_tilde)
+    t_ = O@to_3x3(t_tilde)
     assert t_tilde_.shape[:-1] == t_.shape[:-2]
 
+@pytest.mark.parametrize('to_3x3x3x3,rotate',
+                         [(Voigt.to_3x3x3x3_compliance,Voigt.rotate_compliance),
+                          (Voigt.to_3x3x3x3_stiffness,Voigt.rotate_stiffness),
+                          (Mandel.to_3x3x3x3_compliance,Mandel.rotate_compliance),
+                          (Mandel.to_3x3x3x3_stiffness,Mandel.rotate_stiffness),
+                          (natural.to_3x3x3x3_compliance,natural.rotate_compliance),
+                          (natural.to_3x3x3x3_stiffness,natural.rotate_stiffness)])
 @pytest.mark.parametrize('ndim_T',[0,1,3])
 @pytest.mark.parametrize('ndim_O',[0,1,3])
-def test_broadcast_4th(symmetric_6x6,random_rotation,random_shape,ndim_T,ndim_O):
+def test_broadcast_4th(symmetric_6x6,random_rotation,random_shape,to_3x3x3x3,rotate,ndim_T,ndim_O):
     T_tilde = symmetric_6x6(random_shape(ndim_T))
     O = random_rotation(random_shape(ndim_O))
-    T_tilde_ = _conventions.rotate(O,T_tilde,[1.]*2,4)
-    T_ = O@_conventions.convert_6x6_to_3x3x3x3(T_tilde,[1.]*2)
+    T_tilde_ = rotate(O,T_tilde)
+    T_ = O@to_3x3x3x3(T_tilde)
     assert T_tilde_.shape[:-2] == T_.shape[:-4]
