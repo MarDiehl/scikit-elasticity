@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>skel.Hooke &#8212; scikit-elasticity 0.0.3.post2+g36d781a documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="../../_static/documentation_options.js?v=0d987188"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/skel/Hooke';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.3.post2+g36d781a" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.svg" class="logo__image only-light" alt="scikit-elasticity 0.0.3.post2+g36d781a documentation - Home"/>
+    <img src="../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="scikit-elasticity 0.0.3.post2+g36d781a documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-house"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">skel.Hooke</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for skel.Hooke</h1><div class="highlight"><pre>
+<span></span><span class="c1"># SPDX-License-Identifier: AGPL-3.0-or-later</span>
+<span class="c1"># https://dictionary.iucr.org/Crystal_system</span>
+<span class="c1"># https://dictionary.iucr.org/Lattice_system</span>
+<span class="c1"># https://dictionary.iucr.org/Crystal_family</span>
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Linear elasticity according to the generalized Hooke&#39;s law.</span>
+
+<span class="sd">This module assembles stiffness and compliance matrices in Voigt</span>
+<span class="sd">notation and provides directional and isotropic elastic properties.</span>
+
+<span class="sd">Symmetry</span>
+<span class="sd">--------</span>
+<span class="sd">The form of the elastic tensor is determined by the point group of the</span>
+<span class="sd">crystal. Elasticity is a centrosymmetric fourth-rank tensor, so the</span>
+<span class="sd">relevant symmetry is the Laue class, i.e. the point group including</span>
+<span class="sd">inversion.</span>
+
+<span class="sd">The ``crystal_system`` argument is a user-facing shorthand for the most</span>
+<span class="sd">general Laue-class form of a crystal system. The higher-symmetry class</span>
+<span class="sd">is obtained by omitting the optional constants or setting them to zero.</span>
+
+<span class="sd">The relation between crystal systems, Laue classes, and the independent</span>
+<span class="sd">constants used here is:</span>
+
+<span class="sd">``triclinic``</span>
+<span class="sd">    Laue class :math:`\bar{1}`; 21 independent constants.</span>
+<span class="sd">``monoclinic``</span>
+<span class="sd">    Laue class :math:`2/m`; 13 independent constants. The twofold axis</span>
+<span class="sd">    is parallel to :math:`x_2` (Nye&#39;s standard orientation).</span>
+<span class="sd">``orthorhombic``</span>
+<span class="sd">    Laue class :math:`mmm`; 9 independent constants.</span>
+<span class="sd">``tetragonal``</span>
+<span class="sd">    Laue classes :math:`4/m` and :math:`4/mmm`. The general form has 7</span>
+<span class="sd">    constants with :math:`C_{16}=-C_{26}`. For :math:`4/mmm`, set</span>
+<span class="sd">    :math:`C_{16}=C_{26}=0`, giving 6 constants.</span>
+<span class="sd">``trigonal``</span>
+<span class="sd">    Laue classes :math:`\bar{3}` and :math:`\bar{3}m`. The general form</span>
+<span class="sd">    has 7 constants with :math:`C_{14}=-C_{24}=C_{56}` and</span>
+<span class="sd">    :math:`C_{15}=-C_{25}=-C_{46}`. For :math:`\bar{3}m`, set</span>
+<span class="sd">    :math:`C_{15}=C_{25}=C_{46}=0`, giving 6 constants.</span>
+<span class="sd">``hexagonal``</span>
+<span class="sd">    Laue classes :math:`6/m` and :math:`6/mmm`; 5 independent constants</span>
+<span class="sd">    with :math:`C_{66}=(C_{11}-C_{12})/2`.</span>
+<span class="sd">``cubic``</span>
+<span class="sd">    Laue classes :math:`m\bar{3}` and :math:`m\bar{3}m`; 3 independent</span>
+<span class="sd">    constants.</span>
+<span class="sd">``isotropic``</span>
+<span class="sd">    Not a crystal system; 2 independent constants with</span>
+<span class="sd">    :math:`C_{44}=(C_{11}-C_{12})/2`.</span>
+
+<span class="sd">All entries not listed as independent are either zero or related by the</span>
+<span class="sd">corresponding symmetry.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">_np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">Voigt</span> <span class="k">as</span> <span class="n">_Voigt</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_ensure_equal</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ensure that all arguments are equal.</span>
+
+<span class="sd">    Special handling of None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;mode&#39;</span><span class="p">)</span>
+    <span class="n">crystal_system</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;crystal_system&#39;</span><span class="p">)</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:(</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span> <span class="o">:=</span> <span class="nb">set</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span> <span class="o">:=</span> <span class="nb">set</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">-</span> <span class="p">{</span><span class="kc">None</span><span class="p">})</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">invalid</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">k</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="n">mode</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">invalid</span><span class="si">}</span><span class="s1"> need to have the same value for </span><span class="si">{</span><span class="n">crystal_system</span><span class="si">}</span><span class="s1"> crystal system&#39;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_ensure_zero</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Ensure that all arguments are zero.</span>
+
+<span class="sd">    Special handling of None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;mode&#39;</span><span class="p">)</span>
+    <span class="n">crystal_system</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;crystal_system&#39;</span><span class="p">)</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:(</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="n">valid</span> <span class="o">=</span> <span class="p">{</span><span class="kc">None</span><span class="p">,</span><span class="mf">0.0</span><span class="p">}</span>
+    <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">valid</span><span class="p">)</span> <span class="o">!=</span> <span class="n">valid</span><span class="p">:</span>
+        <span class="n">invalid</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">k</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="n">mode</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">valid</span><span class="p">])</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">invalid</span><span class="si">}</span><span class="s1"> need to be 0.0 for </span><span class="si">{</span><span class="n">crystal_system</span><span class="si">}</span><span class="s1"> crystal system&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_assemble</span><span class="p">(</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span>
+              <span class="n">X_11</span><span class="p">,</span> <span class="n">X_12</span><span class="p">,</span> <span class="n">X_13</span><span class="p">,</span> <span class="n">X_14</span><span class="p">,</span> <span class="n">X_15</span><span class="p">,</span> <span class="n">X_16</span><span class="p">,</span>
+                    <span class="n">X_22</span><span class="p">,</span> <span class="n">X_23</span><span class="p">,</span> <span class="n">X_24</span><span class="p">,</span> <span class="n">X_25</span><span class="p">,</span> <span class="n">X_26</span><span class="p">,</span>
+                          <span class="n">X_33</span><span class="p">,</span> <span class="n">X_34</span><span class="p">,</span> <span class="n">X_35</span><span class="p">,</span> <span class="n">X_36</span><span class="p">,</span>
+                                <span class="n">X_44</span><span class="p">,</span> <span class="n">X_45</span><span class="p">,</span> <span class="n">X_46</span><span class="p">,</span>
+                                      <span class="n">X_55</span><span class="p">,</span> <span class="n">X_56</span><span class="p">,</span>
+                                            <span class="n">X_66</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Assemble stiffness or compliance matrix.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    crystal_system : str</span>
+<span class="sd">        Crystal system.</span>
+<span class="sd">    mode : {&#39;C&#39;, &#39;S&#39;}</span>
+<span class="sd">        Assemble a stiffness or compliance matrix.</span>
+<span class="sd">    X_11, X_12, ..., X_66 : float</span>
+<span class="sd">        Upper-triangle entries.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    isotropic:</span>
+<span class="sd">      - X_11 = X_22 = X_33</span>
+<span class="sd">      - X_12 = X_13 = X_23</span>
+<span class="sd">      - X_44 = X_55 = X_66 = f×(X_11-X_12)</span>
+<span class="sd">    cubic:</span>
+<span class="sd">      - X_11 = X_22 = X_33</span>
+<span class="sd">      - X_12 = X_13 = X_23</span>
+<span class="sd">      - X_44 = X_55 = X_66</span>
+<span class="sd">    hexagonal:</span>
+<span class="sd">      - X_11 = X_22</span>
+<span class="sd">      - X_13 = X_23</span>
+<span class="sd">      - X_44 = X_55</span>
+<span class="sd">      - X_66 = f×(X_11-X_12)</span>
+<span class="sd">    trigonal:</span>
+<span class="sd">      - X_11 = X_22</span>
+<span class="sd">      - X_13 = X_23</span>
+<span class="sd">      - X_44 = X_55</span>
+<span class="sd">      - X_66 = f×(X_11-X_12)</span>
+<span class="sd">      - X_14 = -X_24 = X_56/d</span>
+<span class="sd">      - X_15 = -X_25 = -X_46/d (or 0.0)</span>
+<span class="sd">    tetragonal:</span>
+<span class="sd">      - X_11 = X_22</span>
+<span class="sd">      - X_13 = X_23</span>
+<span class="sd">      - X_44 = X_55</span>
+<span class="sd">      - X_16 = -X_26 (or 0.0)</span>
+
+<span class="sd">    f = 0.5 for C, 2.0 for S</span>
+<span class="sd">    d = 1.0 for C, 2.0 for S</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    J. F. Nye, *Physical Properties of Crystals*, Oxford University Press,</span>
+<span class="sd">    1985, Table 9, p. 140.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">match</span> <span class="n">mode</span><span class="p">:</span>
+        <span class="k">case</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span>
+            <span class="n">f</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span>
+        <span class="k">case</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
+            <span class="n">f</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;invalid mode &quot;</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
+
+
+    <span class="k">match</span> <span class="n">crystal_system</span><span class="p">:</span>
+
+        <span class="k">case</span> <span class="s1">&#39;isotropic&#39;</span><span class="p">:</span>
+            <span class="n">X_14</span><span class="p">,</span><span class="n">X_15</span><span class="p">,</span><span class="n">X_16</span><span class="p">,</span> <span class="n">X_24</span><span class="p">,</span><span class="n">X_25</span><span class="p">,</span><span class="n">X_26</span><span class="p">,</span> <span class="n">X_34</span><span class="p">,</span><span class="n">X_35</span><span class="p">,</span><span class="n">X_36</span><span class="p">,</span> <span class="n">X_45</span><span class="p">,</span><span class="n">X_46</span><span class="p">,</span> <span class="n">X_56</span> <span class="o">=</span> \
+                <span class="n">_ensure_zero</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                             <span class="n">X_14</span><span class="o">=</span><span class="n">X_14</span><span class="p">,</span><span class="n">X_15</span><span class="o">=</span><span class="n">X_15</span><span class="p">,</span><span class="n">X_16</span><span class="o">=</span><span class="n">X_16</span><span class="p">,</span>
+                             <span class="n">X_24</span><span class="o">=</span><span class="n">X_24</span><span class="p">,</span><span class="n">X_25</span><span class="o">=</span><span class="n">X_25</span><span class="p">,</span><span class="n">X_26</span><span class="o">=</span><span class="n">X_26</span><span class="p">,</span>
+                             <span class="n">X_34</span><span class="o">=</span><span class="n">X_34</span><span class="p">,</span><span class="n">X_35</span><span class="o">=</span><span class="n">X_35</span><span class="p">,</span><span class="n">X_36</span><span class="o">=</span><span class="n">X_36</span><span class="p">,</span>
+                                       <span class="n">X_45</span><span class="o">=</span><span class="n">X_45</span><span class="p">,</span><span class="n">X_46</span><span class="o">=</span><span class="n">X_46</span><span class="p">,</span>
+                                                 <span class="n">X_56</span><span class="o">=</span><span class="n">X_56</span><span class="p">)</span>
+
+            <span class="n">X_11</span><span class="p">,</span><span class="n">X_22</span><span class="p">,</span><span class="n">X_33</span> <span class="o">=</span> <span class="n">_ensure_equal</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                                           <span class="n">X_11</span><span class="o">=</span><span class="n">X_11</span><span class="p">,</span> <span class="n">X_22</span><span class="o">=</span><span class="n">X_22</span><span class="p">,</span> <span class="n">X_33</span><span class="o">=</span><span class="n">X_33</span><span class="p">)</span>
+            <span class="n">X_12</span><span class="p">,</span><span class="n">X_13</span><span class="p">,</span><span class="n">X_23</span> <span class="o">=</span> <span class="n">_ensure_equal</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                                           <span class="n">X_12</span><span class="o">=</span><span class="n">X_12</span><span class="p">,</span> <span class="n">X_13</span><span class="o">=</span><span class="n">X_13</span><span class="p">,</span> <span class="n">X_23</span><span class="o">=</span><span class="n">X_23</span><span class="p">)</span>
+            <span class="n">X_44</span><span class="p">,</span><span class="n">X_55</span><span class="p">,</span><span class="n">X_66</span> <span class="o">=</span> <span class="n">_ensure_equal</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                                           <span class="n">X_44</span><span class="o">=</span><span class="n">X_44</span><span class="p">,</span> <span class="n">X_55</span><span class="o">=</span><span class="n">X_55</span><span class="p">,</span> <span class="n">X_66</span><span class="o">=</span><span class="n">X_66</span><span class="p">)</span>
+
+            <span class="k">if</span>   <span class="n">X_11</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">X_12</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">X_44</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">X_11</span><span class="o">=</span><span class="n">X_22</span><span class="o">=</span><span class="n">X_33</span> <span class="o">=</span> <span class="n">X_44</span><span class="o">/</span><span class="n">f</span> <span class="o">+</span> <span class="n">X_12</span>
+            <span class="k">elif</span> <span class="n">X_12</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">X_11</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">X_44</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">X_12</span><span class="o">=</span><span class="n">X_13</span><span class="o">=</span><span class="n">X_23</span> <span class="o">=</span> <span class="n">X_11</span> <span class="o">-</span> <span class="n">X_44</span><span class="o">/</span><span class="n">f</span>
+            <span class="k">elif</span> <span class="n">X_44</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">X_11</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">X_12</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">X_44</span><span class="o">=</span><span class="n">X_55</span><span class="o">=</span><span class="n">X_66</span> <span class="o">=</span> <span class="n">f</span><span class="o">*</span><span class="p">(</span><span class="n">X_11</span><span class="o">-</span><span class="n">X_12</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">_np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">X_44</span><span class="p">,</span><span class="n">f</span><span class="o">*</span><span class="p">(</span><span class="n">X_11</span><span class="o">-</span><span class="n">X_12</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;condition </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_44 = </span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s1">×(</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_11 - </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_12) for isotropic crystal system violated&#39;</span><span class="p">)</span>
+
+
+        <span class="k">case</span> <span class="s1">&#39;cubic&#39;</span><span class="p">:</span>
+            <span class="n">X_14</span><span class="p">,</span><span class="n">X_15</span><span class="p">,</span><span class="n">X_16</span><span class="p">,</span> <span class="n">X_24</span><span class="p">,</span><span class="n">X_25</span><span class="p">,</span><span class="n">X_26</span><span class="p">,</span> <span class="n">X_34</span><span class="p">,</span><span class="n">X_35</span><span class="p">,</span><span class="n">X_36</span><span class="p">,</span> <span class="n">X_45</span><span class="p">,</span><span class="n">X_46</span><span class="p">,</span> <span class="n">X_56</span> <span class="o">=</span> \
+                <span class="n">_ensure_zero</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                             <span class="n">X_14</span><span class="o">=</span><span class="n">X_14</span><span class="p">,</span><span class="n">X_15</span><span class="o">=</span><span class="n">X_15</span><span class="p">,</span><span class="n">X_16</span><span class="o">=</span><span class="n">X_16</span><span class="p">,</span>
+                             <span class="n">X_24</span><span class="o">=</span><span class="n">X_24</span><span class="p">,</span><span class="n">X_25</span><span class="o">=</span><span class="n">X_25</span><span class="p">,</span><span class="n">X_26</span><span class="o">=</span><span class="n">X_26</span><span class="p">,</span>
+                             <span class="n">X_34</span><span class="o">=</span><span class="n">X_34</span><span class="p">,</span><span class="n">X_35</span><span class="o">=</span><span class="n">X_35</span><span class="p">,</span><span class="n">X_36</span><span class="o">=</span><span class="n">X_36</span><span class="p">,</span>
+                                       <span class="n">X_45</span><span class="o">=</span><span class="n">X_45</span><span class="p">,</span><span class="n">X_46</span><span class="o">=</span><span class="n">X_46</span><span class="p">,</span>
+                                                 <span class="n">X_56</span><span class="o">=</span><span class="n">X_56</span><span class="p">)</span>
+
+            <span class="n">X_11</span><span class="p">,</span><span class="n">X_22</span><span class="p">,</span><span class="n">X_33</span> <span class="o">=</span> <span class="n">_ensure_equal</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                                           <span class="n">X_11</span><span class="o">=</span><span class="n">X_11</span><span class="p">,</span> <span class="n">X_22</span><span class="o">=</span><span class="n">X_22</span><span class="p">,</span> <span class="n">X_33</span><span class="o">=</span><span class="n">X_33</span><span class="p">)</span>
+            <span class="n">X_12</span><span class="p">,</span><span class="n">X_13</span><span class="p">,</span><span class="n">X_23</span> <span class="o">=</span> <span class="n">_ensure_equal</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                                           <span class="n">X_12</span><span class="o">=</span><span class="n">X_12</span><span class="p">,</span> <span class="n">X_13</span><span class="o">=</span><span class="n">X_13</span><span class="p">,</span> <span class="n">X_23</span><span class="o">=</span><span class="n">X_23</span><span class="p">)</span>
+            <span class="n">X_44</span><span class="p">,</span><span class="n">X_55</span><span class="p">,</span><span class="n">X_66</span> <span class="o">=</span> <span class="n">_ensure_equal</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                                           <span class="n">X_44</span><span class="o">=</span><span class="n">X_44</span><span class="p">,</span> <span class="n">X_55</span><span class="o">=</span><span class="n">X_55</span><span class="p">,</span> <span class="n">X_66</span><span class="o">=</span><span class="n">X_66</span><span class="p">)</span>
+
+
+        <span class="k">case</span> <span class="s1">&#39;hexagonal&#39;</span><span class="p">:</span>
+            <span class="n">X_14</span><span class="p">,</span><span class="n">X_15</span><span class="p">,</span><span class="n">X_16</span><span class="p">,</span> <span class="n">X_24</span><span class="p">,</span><span class="n">X_25</span><span class="p">,</span><span class="n">X_26</span><span class="p">,</span> <span class="n">X_34</span><span class="p">,</span><span class="n">X_35</span><span class="p">,</span><span class="n">X_36</span><span class="p">,</span> <span class="n">X_45</span><span class="p">,</span><span class="n">X_46</span><span class="p">,</span> <span class="n">X_56</span> <span class="o">=</span> \
+                <span class="n">_ensure_zero</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                             <span class="n">X_14</span><span class="o">=</span><span class="n">X_14</span><span class="p">,</span><span class="n">X_15</span><span class="o">=</span><span class="n">X_15</span><span class="p">,</span><span class="n">X_16</span><span class="o">=</span><span class="n">X_16</span><span class="p">,</span>
+                             <span class="n">X_24</span><span class="o">=</span><span class="n">X_24</span><span class="p">,</span><span class="n">X_25</span><span class="o">=</span><span class="n">X_25</span><span class="p">,</span><span class="n">X_26</span><span class="o">=</span><span class="n">X_26</span><span class="p">,</span>
+                             <span class="n">X_34</span><span class="o">=</span><span class="n">X_34</span><span class="p">,</span><span class="n">X_35</span><span class="o">=</span><span class="n">X_35</span><span class="p">,</span><span class="n">X_36</span><span class="o">=</span><span class="n">X_36</span><span class="p">,</span>
+                                       <span class="n">X_45</span><span class="o">=</span><span class="n">X_45</span><span class="p">,</span><span class="n">X_46</span><span class="o">=</span><span class="n">X_46</span><span class="p">,</span>
+                                                 <span class="n">X_56</span><span class="o">=</span><span class="n">X_56</span><span class="p">)</span>
+
+            <span class="n">X_11</span><span class="p">,</span><span class="n">X_22</span> <span class="o">=</span> <span class="n">_ensure_equal</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                                      <span class="n">X_11</span><span class="o">=</span><span class="n">X_11</span><span class="p">,</span><span class="n">X_22</span><span class="o">=</span><span class="n">X_22</span><span class="p">)</span>
+            <span class="n">X_13</span><span class="p">,</span><span class="n">X_23</span> <span class="o">=</span> <span class="n">_ensure_equal</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                                      <span class="n">X_13</span><span class="o">=</span><span class="n">X_13</span><span class="p">,</span><span class="n">X_23</span><span class="o">=</span><span class="n">X_23</span><span class="p">)</span>
+            <span class="n">X_44</span><span class="p">,</span><span class="n">X_55</span> <span class="o">=</span> <span class="n">_ensure_equal</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                                      <span class="n">X_44</span><span class="o">=</span><span class="n">X_44</span><span class="p">,</span><span class="n">X_55</span><span class="o">=</span><span class="n">X_55</span><span class="p">)</span>
+
+            <span class="k">if</span>   <span class="n">X_11</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">[</span><span class="n">X_12</span><span class="p">,</span><span class="n">X_66</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">X_11</span><span class="o">=</span><span class="n">X_22</span> <span class="o">=</span> <span class="n">X_66</span><span class="o">/</span><span class="n">f</span> <span class="o">+</span> <span class="n">X_12</span>
+            <span class="k">elif</span> <span class="n">X_12</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">[</span><span class="n">X_11</span><span class="p">,</span><span class="n">X_66</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">X_12</span> <span class="o">=</span> <span class="n">X_11</span> <span class="o">-</span> <span class="n">X_66</span><span class="o">/</span><span class="n">f</span>
+            <span class="k">elif</span> <span class="n">X_66</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">[</span><span class="n">X_11</span><span class="p">,</span><span class="n">X_12</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">X_66</span> <span class="o">=</span> <span class="n">f</span><span class="o">*</span><span class="p">(</span><span class="n">X_11</span><span class="o">-</span><span class="n">X_12</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">_np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">X_66</span><span class="p">,</span><span class="n">f</span><span class="o">*</span><span class="p">(</span><span class="n">X_11</span><span class="o">-</span><span class="n">X_12</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;condition </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_66 = </span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s1">×(</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_11 - </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_12) for hexagonal crystal system violated&#39;</span><span class="p">)</span>
+
+
+        <span class="k">case</span> <span class="s1">&#39;trigonal&#39;</span><span class="p">:</span>
+            <span class="n">d_</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="k">if</span> <span class="n">d</span> <span class="o">==</span> <span class="mf">1.0</span> <span class="k">else</span> <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="n">d</span><span class="si">:</span><span class="s1">g</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="n">X_16</span><span class="p">,</span><span class="n">X_26</span><span class="p">,</span><span class="n">X_34</span><span class="p">,</span><span class="n">X_35</span><span class="p">,</span><span class="n">X_36</span><span class="p">,</span><span class="n">X_45</span> <span class="o">=</span> \
+                <span class="n">_ensure_zero</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                                                 <span class="n">X_16</span><span class="o">=</span><span class="n">X_16</span><span class="p">,</span>
+                                                 <span class="n">X_26</span><span class="o">=</span><span class="n">X_26</span><span class="p">,</span>
+                             <span class="n">X_34</span><span class="o">=</span><span class="n">X_34</span><span class="p">,</span><span class="n">X_35</span><span class="o">=</span><span class="n">X_35</span><span class="p">,</span><span class="n">X_36</span><span class="o">=</span><span class="n">X_36</span><span class="p">,</span>
+                                       <span class="n">X_45</span><span class="o">=</span><span class="n">X_45</span><span class="p">)</span>
+
+            <span class="n">X_11</span><span class="p">,</span><span class="n">X_22</span> <span class="o">=</span> <span class="n">_ensure_equal</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                                      <span class="n">X_11</span><span class="o">=</span><span class="n">X_11</span><span class="p">,</span><span class="n">X_22</span><span class="o">=</span><span class="n">X_22</span><span class="p">)</span>
+            <span class="n">X_13</span><span class="p">,</span><span class="n">X_23</span> <span class="o">=</span> <span class="n">_ensure_equal</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                                      <span class="n">X_13</span><span class="o">=</span><span class="n">X_13</span><span class="p">,</span><span class="n">X_23</span><span class="o">=</span><span class="n">X_23</span><span class="p">)</span>
+            <span class="n">X_44</span><span class="p">,</span><span class="n">X_55</span> <span class="o">=</span> <span class="n">_ensure_equal</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                                      <span class="n">X_44</span><span class="o">=</span><span class="n">X_44</span><span class="p">,</span><span class="n">X_55</span><span class="o">=</span><span class="n">X_55</span><span class="p">)</span>
+
+            <span class="k">if</span>   <span class="n">X_11</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">[</span><span class="n">X_12</span><span class="p">,</span><span class="n">X_66</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">X_11</span><span class="o">=</span><span class="n">X_22</span> <span class="o">=</span> <span class="n">X_66</span><span class="o">/</span><span class="n">f</span> <span class="o">+</span> <span class="n">X_12</span>
+            <span class="k">elif</span> <span class="n">X_12</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">[</span><span class="n">X_11</span><span class="p">,</span><span class="n">X_66</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">X_12</span> <span class="o">=</span> <span class="n">X_11</span> <span class="o">-</span> <span class="n">X_66</span><span class="o">/</span><span class="n">f</span>
+            <span class="k">elif</span> <span class="n">X_66</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">[</span><span class="n">X_11</span><span class="p">,</span><span class="n">X_12</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">X_66</span> <span class="o">=</span> <span class="n">f</span><span class="o">*</span><span class="p">(</span><span class="n">X_11</span><span class="o">-</span><span class="n">X_12</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">_np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">X_66</span><span class="p">,</span><span class="n">f</span><span class="o">*</span><span class="p">(</span><span class="n">X_11</span><span class="o">-</span><span class="n">X_12</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;condition </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_66 = </span><span class="si">{</span><span class="n">f</span><span class="si">}</span><span class="s1">×(</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_11 - </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_12) for trigonal crystal system violated&#39;</span><span class="p">)</span>
+
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;condition </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_14 = -</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_24 = </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_56</span><span class="si">{</span><span class="n">d_</span><span class="si">}</span><span class="s1"> for trigonal crystal system violated&#39;</span>
+            <span class="k">match</span> <span class="p">[</span><span class="n">X_14</span><span class="p">,</span><span class="n">X_24</span><span class="p">,</span><span class="n">X_56</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">None</span><span class="p">):</span>
+                <span class="k">case</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">X_14</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">X_24</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">X_14</span> <span class="o">=</span> <span class="n">X_56</span><span class="o">/</span><span class="n">d</span>
+                        <span class="n">X_24</span> <span class="o">=</span> <span class="o">-</span><span class="n">X_56</span><span class="o">/</span><span class="n">d</span>
+                    <span class="k">elif</span> <span class="n">X_14</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">X_56</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">X_14</span> <span class="o">=</span> <span class="o">-</span><span class="n">X_24</span>
+                        <span class="n">X_56</span> <span class="o">=</span> <span class="o">-</span><span class="n">d</span><span class="o">*</span><span class="n">X_24</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">X_24</span> <span class="o">=</span> <span class="o">-</span><span class="n">X_14</span>
+                        <span class="n">X_56</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">X_14</span>
+                <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">X_14</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">X_14</span> <span class="o">=</span> <span class="o">-</span><span class="n">X_24</span>
+                        <span class="k">if</span> <span class="n">X_24</span> <span class="o">!=</span> <span class="o">-</span><span class="n">X_56</span><span class="o">/</span><span class="n">d</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">X_24</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">X_24</span> <span class="o">=</span> <span class="o">-</span><span class="n">X_14</span>
+                        <span class="k">if</span> <span class="n">X_14</span> <span class="o">!=</span> <span class="n">X_56</span><span class="o">/</span><span class="n">d</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">X_56</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">X_14</span>
+                        <span class="k">if</span> <span class="n">X_14</span> <span class="o">!=</span> <span class="o">-</span><span class="n">X_24</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">case</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">X_14</span> <span class="o">!=</span> <span class="o">-</span><span class="n">X_24</span> <span class="ow">or</span> <span class="n">X_14</span> <span class="o">!=</span> <span class="n">X_56</span><span class="o">/</span><span class="n">d</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+            <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;condition </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_15 = -</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_25 = -</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_46</span><span class="si">{</span><span class="n">d_</span><span class="si">}</span><span class="s1"> for trigonal crystal system violated&#39;</span>
+            <span class="k">match</span> <span class="p">[</span><span class="n">X_15</span><span class="p">,</span><span class="n">X_25</span><span class="p">,</span><span class="n">X_46</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="kc">None</span><span class="p">):</span>
+                <span class="k">case</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="n">X_15</span><span class="o">=</span><span class="n">X_25</span><span class="o">=</span><span class="n">X_46</span> <span class="o">=</span> <span class="mf">0.0</span>
+                <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">X_15</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">X_25</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">X_15</span> <span class="o">=</span> <span class="o">-</span><span class="n">X_46</span><span class="o">/</span><span class="n">d</span>
+                        <span class="n">X_25</span> <span class="o">=</span> <span class="n">X_46</span><span class="o">/</span><span class="n">d</span>
+                    <span class="k">elif</span> <span class="n">X_15</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">X_46</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">X_15</span> <span class="o">=</span> <span class="o">-</span><span class="n">X_25</span>
+                        <span class="n">X_46</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="n">X_25</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">X_25</span> <span class="o">=</span> <span class="o">-</span><span class="n">X_15</span>
+                        <span class="n">X_46</span> <span class="o">=</span> <span class="o">-</span><span class="n">d</span><span class="o">*</span><span class="n">X_15</span>
+                <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">X_15</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">X_15</span> <span class="o">=</span> <span class="o">-</span><span class="n">X_25</span>
+                        <span class="k">if</span> <span class="n">X_25</span> <span class="o">!=</span> <span class="n">X_46</span><span class="o">/</span><span class="n">d</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">X_25</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">X_25</span> <span class="o">=</span> <span class="o">-</span><span class="n">X_15</span>
+                        <span class="k">if</span> <span class="n">X_15</span> <span class="o">!=</span> <span class="o">-</span><span class="n">X_46</span><span class="o">/</span><span class="n">d</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">X_46</span> <span class="o">=</span> <span class="o">-</span><span class="n">d</span><span class="o">*</span><span class="n">X_15</span>
+                        <span class="k">if</span> <span class="n">X_15</span> <span class="o">!=</span> <span class="o">-</span><span class="n">X_25</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                <span class="k">case</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">X_15</span> <span class="o">!=</span> <span class="o">-</span><span class="n">X_25</span> <span class="ow">or</span> <span class="n">X_15</span> <span class="o">!=</span> <span class="o">-</span><span class="n">X_46</span><span class="o">/</span><span class="n">d</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+
+        <span class="k">case</span> <span class="s1">&#39;tetragonal&#39;</span><span class="p">:</span>
+            <span class="n">X_14</span><span class="p">,</span><span class="n">X_15</span><span class="p">,</span> <span class="n">X_24</span><span class="p">,</span><span class="n">X_25</span><span class="p">,</span> <span class="n">X_34</span><span class="p">,</span><span class="n">X_35</span><span class="p">,</span><span class="n">X_36</span><span class="p">,</span> <span class="n">X_45</span><span class="p">,</span><span class="n">X_46</span><span class="p">,</span> <span class="n">X_56</span> <span class="o">=</span> \
+                <span class="n">_ensure_zero</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                             <span class="n">X_14</span><span class="o">=</span><span class="n">X_14</span><span class="p">,</span><span class="n">X_15</span><span class="o">=</span><span class="n">X_15</span><span class="p">,</span>
+                             <span class="n">X_24</span><span class="o">=</span><span class="n">X_24</span><span class="p">,</span><span class="n">X_25</span><span class="o">=</span><span class="n">X_25</span><span class="p">,</span>
+                             <span class="n">X_34</span><span class="o">=</span><span class="n">X_34</span><span class="p">,</span><span class="n">X_35</span><span class="o">=</span><span class="n">X_35</span><span class="p">,</span><span class="n">X_36</span><span class="o">=</span><span class="n">X_36</span><span class="p">,</span>
+                                       <span class="n">X_45</span><span class="o">=</span><span class="n">X_45</span><span class="p">,</span><span class="n">X_46</span><span class="o">=</span><span class="n">X_46</span><span class="p">,</span>
+                                                 <span class="n">X_56</span><span class="o">=</span><span class="n">X_56</span><span class="p">)</span>
+
+            <span class="n">X_11</span><span class="p">,</span><span class="n">X_22</span> <span class="o">=</span> <span class="n">_ensure_equal</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                                      <span class="n">X_11</span><span class="o">=</span><span class="n">X_11</span><span class="p">,</span><span class="n">X_22</span><span class="o">=</span><span class="n">X_22</span><span class="p">)</span>
+            <span class="n">X_13</span><span class="p">,</span><span class="n">X_23</span> <span class="o">=</span> <span class="n">_ensure_equal</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                                      <span class="n">X_13</span><span class="o">=</span><span class="n">X_13</span><span class="p">,</span><span class="n">X_23</span><span class="o">=</span><span class="n">X_23</span><span class="p">)</span>
+            <span class="n">X_44</span><span class="p">,</span><span class="n">X_55</span> <span class="o">=</span> <span class="n">_ensure_equal</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                                      <span class="n">X_44</span><span class="o">=</span><span class="n">X_44</span><span class="p">,</span><span class="n">X_55</span><span class="o">=</span><span class="n">X_55</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">X_16</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">X_26</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">X_16</span> <span class="o">=</span> <span class="n">X_26</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="k">elif</span> <span class="n">X_16</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">X_16</span> <span class="o">=</span> <span class="o">-</span><span class="n">X_26</span>
+            <span class="k">elif</span> <span class="n">X_26</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">X_26</span> <span class="o">=</span> <span class="o">-</span><span class="n">X_16</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">X_16</span><span class="o">+</span><span class="n">X_26</span> <span class="o">!=</span> <span class="mf">0.0</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;condition </span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_16 = -</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_26 for tetragonal crystal system violated&#39;</span><span class="p">)</span>
+
+
+        <span class="k">case</span> <span class="s1">&#39;orthorhombic&#39;</span><span class="p">:</span>
+            <span class="n">X_14</span><span class="p">,</span><span class="n">X_15</span><span class="p">,</span><span class="n">X_16</span><span class="p">,</span> <span class="n">X_24</span><span class="p">,</span><span class="n">X_25</span><span class="p">,</span><span class="n">X_26</span><span class="p">,</span> <span class="n">X_34</span><span class="p">,</span><span class="n">X_35</span><span class="p">,</span><span class="n">X_36</span><span class="p">,</span> <span class="n">X_45</span><span class="p">,</span><span class="n">X_46</span><span class="p">,</span> <span class="n">X_56</span> <span class="o">=</span> \
+                <span class="n">_ensure_zero</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                             <span class="n">X_14</span><span class="o">=</span><span class="n">X_14</span><span class="p">,</span><span class="n">X_15</span><span class="o">=</span><span class="n">X_15</span><span class="p">,</span><span class="n">X_16</span><span class="o">=</span><span class="n">X_16</span><span class="p">,</span>
+                             <span class="n">X_24</span><span class="o">=</span><span class="n">X_24</span><span class="p">,</span><span class="n">X_25</span><span class="o">=</span><span class="n">X_25</span><span class="p">,</span><span class="n">X_26</span><span class="o">=</span><span class="n">X_26</span><span class="p">,</span>
+                             <span class="n">X_34</span><span class="o">=</span><span class="n">X_34</span><span class="p">,</span><span class="n">X_35</span><span class="o">=</span><span class="n">X_35</span><span class="p">,</span><span class="n">X_36</span><span class="o">=</span><span class="n">X_36</span><span class="p">,</span>
+                                       <span class="n">X_45</span><span class="o">=</span><span class="n">X_45</span><span class="p">,</span><span class="n">X_46</span><span class="o">=</span><span class="n">X_46</span><span class="p">,</span>
+                                                 <span class="n">X_56</span><span class="o">=</span><span class="n">X_56</span><span class="p">)</span>
+
+        <span class="k">case</span> <span class="s1">&#39;monoclinic&#39;</span><span class="p">:</span>
+            <span class="n">X_14</span><span class="p">,</span><span class="n">X_16</span><span class="p">,</span> <span class="n">X_24</span><span class="p">,</span><span class="n">X_26</span><span class="p">,</span> <span class="n">X_34</span><span class="p">,</span><span class="n">X_36</span><span class="p">,</span> <span class="n">X_45</span><span class="p">,</span> <span class="n">X_56</span> <span class="o">=</span> \
+                <span class="n">_ensure_zero</span><span class="p">(</span><span class="n">crystal_system</span><span class="o">=</span><span class="n">crystal_system</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span>
+                             <span class="n">X_14</span><span class="o">=</span><span class="n">X_14</span><span class="p">,</span>          <span class="n">X_16</span><span class="o">=</span><span class="n">X_16</span><span class="p">,</span>
+                             <span class="n">X_24</span><span class="o">=</span><span class="n">X_24</span><span class="p">,</span>          <span class="n">X_26</span><span class="o">=</span><span class="n">X_26</span><span class="p">,</span>
+                             <span class="n">X_34</span><span class="o">=</span><span class="n">X_34</span><span class="p">,</span>          <span class="n">X_36</span><span class="o">=</span><span class="n">X_36</span><span class="p">,</span>
+                                       <span class="n">X_45</span><span class="o">=</span><span class="n">X_45</span><span class="p">,</span>
+                                                 <span class="n">X_56</span><span class="o">=</span><span class="n">X_56</span><span class="p">)</span>
+
+        <span class="k">case</span> <span class="s1">&#39;triclinic&#39;</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;invalid crystal system </span><span class="si">{</span><span class="n">crystal_system</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">upper</span> <span class="o">=</span> <span class="n">_np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">X_11</span><span class="p">,</span> <span class="n">X_12</span><span class="p">,</span> <span class="n">X_13</span><span class="p">,</span> <span class="n">X_14</span><span class="p">,</span> <span class="n">X_15</span><span class="p">,</span> <span class="n">X_16</span><span class="p">],</span>
+                       <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>   <span class="n">X_22</span><span class="p">,</span> <span class="n">X_23</span><span class="p">,</span> <span class="n">X_24</span><span class="p">,</span> <span class="n">X_25</span><span class="p">,</span> <span class="n">X_26</span><span class="p">],</span>
+                       <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>    <span class="n">X_33</span><span class="p">,</span> <span class="n">X_34</span><span class="p">,</span> <span class="n">X_35</span><span class="p">,</span> <span class="n">X_36</span><span class="p">],</span>
+                       <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>    <span class="n">X_44</span><span class="p">,</span> <span class="n">X_45</span><span class="p">,</span> <span class="n">X_46</span><span class="p">],</span>
+                       <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>    <span class="n">X_55</span><span class="p">,</span> <span class="n">X_56</span><span class="p">],</span>
+                       <span class="p">[</span> <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>    <span class="mi">0</span><span class="p">,</span>    <span class="n">X_66</span><span class="p">]])</span>
+
+    <span class="k">if</span> <span class="n">_np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">idx</span> <span class="o">:=</span> <span class="p">(</span><span class="n">upper</span> <span class="o">==</span> <span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">nonzero</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">r</span><span class="o">+</span><span class="mi">1</span><span class="si">}{</span><span class="n">c</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">r</span><span class="p">,</span><span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">idx</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="si">}</span><span class="s1"> need to be defined for </span><span class="si">{</span><span class="n">crystal_system</span><span class="si">}</span><span class="s1"> crystal system&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">upper</span> <span class="o">+</span> <span class="n">_np</span><span class="o">.</span><span class="n">tril</span><span class="p">(</span><span class="n">upper</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="C">
+<a class="viewcode-back" href="../../index.html#skel.Hooke.C">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">C</span><span class="p">(</span><span class="n">crystal_system</span><span class="p">,</span><span class="o">*</span><span class="p">,</span>
+      <span class="n">C_11</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_12</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_13</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_14</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_15</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_16</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">C_22</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_23</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_24</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_25</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_26</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">C_33</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_34</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_35</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_36</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                       <span class="n">C_44</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_45</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_46</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                  <span class="n">C_55</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">C_56</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                             <span class="n">C_66</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Assemble a stiffness matrix.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    crystal_system : {&#39;isotropic&#39;, &#39;cubic&#39;, &#39;hexagonal&#39;, &#39;trigonal&#39;, &#39;tetragonal&#39;, &#39;orthorhombic&#39;, &#39;monoclinic&#39;, &#39;triclinic&#39;}</span>
+<span class="sd">        Crystal system. The assembled matrix uses the most general</span>
+<span class="sd">        Laue-class form of this system; see the module documentation</span>
+<span class="sd">        for the corresponding symmetry relations.</span>
+<span class="sd">    C_11, C_12, ..., C_66 : float, optional</span>
+<span class="sd">        Upper-triangle entries in Voigt notation. Only the independent</span>
+<span class="sd">        entries for the selected crystal system need to be given.</span>
+<span class="sd">        Dependent entries are inferred from the symmetry relations.</span>
+<span class="sd">        If a dependent entry is supplied, it must be consistent with</span>
+<span class="sd">        the inferred value.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    C : numpy.ndarray of shape (6,6)</span>
+<span class="sd">        Stiffness matrix in Voigt notation.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If the supplied entries violate the symmetry relations or the</span>
+<span class="sd">        resulting matrix is not stable.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Only the upper triangle is given; the lower triangle is filled by</span>
+<span class="sd">    symmetry. The following optional relations are used when entries are</span>
+<span class="sd">    omitted:</span>
+
+<span class="sd">    - tetragonal: :math:`C_{16}=-C_{26}`. If both are omitted, both are</span>
+<span class="sd">      set to zero (:math:`4/mmm`).</span>
+<span class="sd">    - trigonal: :math:`C_{14}=-C_{24}=C_{56}` and</span>
+<span class="sd">      :math:`C_{15}=-C_{25}=-C_{46}`. At least one of</span>
+<span class="sd">      :math:`C_{14},C_{24},C_{56}` must be given. If</span>
+<span class="sd">      :math:`C_{15},C_{25},C_{46}` are all omitted, they are set to</span>
+<span class="sd">      zero (:math:`\bar{3}m`).</span>
+<span class="sd">    - hexagonal: :math:`C_{66}=(C_{11}-C_{12})/2`.</span>
+<span class="sd">    - isotropic: :math:`C_{44}=(C_{11}-C_{12})/2`.</span>
+
+<span class="sd">    The resulting matrix is checked with :func:`stable`.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import skel</span>
+<span class="sd">    &gt;&gt;&gt; C_Fe = skel.Hooke.C(&#39;cubic&#39;,C_11=232.2e9,C_12=136.4e9,C_44=117.0e9)</span>
+<span class="sd">    &gt;&gt;&gt; C_Mg = skel.Hooke.C(&#39;hexagonal&#39;,C_11=59.5e9,C_12=25.6e9,</span>
+<span class="sd">    ...                     C_44=16.5e9,C_33=61.7e9,C_13=21.5e9)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">_assemble</span><span class="p">(</span><span class="n">crystal_system</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="n">C_11</span><span class="p">,</span> <span class="n">C_12</span><span class="p">,</span> <span class="n">C_13</span><span class="p">,</span> <span class="n">C_14</span><span class="p">,</span> <span class="n">C_15</span><span class="p">,</span> <span class="n">C_16</span><span class="p">,</span>
+                                            <span class="n">C_22</span><span class="p">,</span> <span class="n">C_23</span><span class="p">,</span> <span class="n">C_24</span><span class="p">,</span> <span class="n">C_25</span><span class="p">,</span> <span class="n">C_26</span><span class="p">,</span>
+                                                  <span class="n">C_33</span><span class="p">,</span> <span class="n">C_34</span><span class="p">,</span> <span class="n">C_35</span><span class="p">,</span> <span class="n">C_36</span><span class="p">,</span>
+                                                        <span class="n">C_44</span><span class="p">,</span> <span class="n">C_45</span><span class="p">,</span> <span class="n">C_46</span><span class="p">,</span>
+                                                              <span class="n">C_55</span><span class="p">,</span> <span class="n">C_56</span><span class="p">,</span>
+                                                                    <span class="n">C_66</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">stable</span><span class="p">(</span><span class="n">crystal_system</span><span class="p">,</span><span class="n">C</span><span class="o">=</span><span class="n">C</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;unstable crystal&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">C</span></div>
+
+
+
+<div class="viewcode-block" id="S">
+<a class="viewcode-back" href="../../index.html#skel.Hooke.S">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">S</span><span class="p">(</span><span class="n">crystal_system</span><span class="p">,</span><span class="o">*</span><span class="p">,</span>
+      <span class="n">S_11</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_12</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_13</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_14</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_15</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_16</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">S_22</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_23</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_24</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_25</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_26</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">S_33</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_34</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_35</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_36</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                       <span class="n">S_44</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_45</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_46</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                  <span class="n">S_55</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">S_56</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                                             <span class="n">S_66</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Assemble a compliance matrix.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    crystal_system : {&#39;isotropic&#39;, &#39;cubic&#39;, &#39;hexagonal&#39;, &#39;trigonal&#39;, &#39;tetragonal&#39;, &#39;orthorhombic&#39;, &#39;monoclinic&#39;, &#39;triclinic&#39;}</span>
+<span class="sd">        Crystal system. The assembled matrix uses the most general</span>
+<span class="sd">        Laue-class form of this system; see the module documentation</span>
+<span class="sd">        for the corresponding symmetry relations.</span>
+<span class="sd">    S_11, S_12, ..., S_66 : float, optional</span>
+<span class="sd">        Upper-triangle entries in Voigt notation. Only the independent</span>
+<span class="sd">        entries for the selected crystal system need to be given.</span>
+<span class="sd">        Dependent entries are inferred from the symmetry relations.</span>
+<span class="sd">        If a dependent entry is supplied, it must be consistent with</span>
+<span class="sd">        the inferred value.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    S : numpy.ndarray of shape (6,6)</span>
+<span class="sd">        Compliance matrix in Voigt notation.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If the supplied entries violate the symmetry relations or the</span>
+<span class="sd">        resulting matrix is not stable.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Only the upper triangle is given; the lower triangle is filled by</span>
+<span class="sd">    symmetry. The compliance relations differ from the stiffness</span>
+<span class="sd">    relations because of the Voigt weights:</span>
+
+<span class="sd">    - tetragonal: :math:`S_{16}=-S_{26}`. If both are omitted, both are</span>
+<span class="sd">      set to zero (:math:`4/mmm`).</span>
+<span class="sd">    - trigonal: :math:`S_{14}=-S_{24}=S_{56}/2` and</span>
+<span class="sd">      :math:`S_{15}=-S_{25}=-S_{46}/2`. At least one of</span>
+<span class="sd">      :math:`S_{14},S_{24},S_{56}` must be given. If</span>
+<span class="sd">      :math:`S_{15},S_{25},S_{46}` are all omitted, they are set to</span>
+<span class="sd">      zero (:math:`\bar{3}m`).</span>
+<span class="sd">    - hexagonal: :math:`S_{66}=2(S_{11}-S_{12})`.</span>
+<span class="sd">    - isotropic: :math:`S_{44}=2(S_{11}-S_{12})`.</span>
+
+<span class="sd">    The resulting matrix is checked with :func:`stable`.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; import skel</span>
+<span class="sd">    &gt;&gt;&gt; C_Fe = skel.Hooke.C(&#39;cubic&#39;,C_11=232.2e9,C_12=136.4e9,C_44=117.0e9)</span>
+<span class="sd">    &gt;&gt;&gt; S_Fe = np.linalg.inv(C_Fe)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">_assemble</span><span class="p">(</span><span class="n">crystal_system</span><span class="p">,</span><span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="n">S_11</span><span class="p">,</span> <span class="n">S_12</span><span class="p">,</span> <span class="n">S_13</span><span class="p">,</span> <span class="n">S_14</span><span class="p">,</span> <span class="n">S_15</span><span class="p">,</span> <span class="n">S_16</span><span class="p">,</span>
+                                            <span class="n">S_22</span><span class="p">,</span> <span class="n">S_23</span><span class="p">,</span> <span class="n">S_24</span><span class="p">,</span> <span class="n">S_25</span><span class="p">,</span> <span class="n">S_26</span><span class="p">,</span>
+                                                  <span class="n">S_33</span><span class="p">,</span> <span class="n">S_34</span><span class="p">,</span> <span class="n">S_35</span><span class="p">,</span> <span class="n">S_36</span><span class="p">,</span>
+                                                        <span class="n">S_44</span><span class="p">,</span> <span class="n">S_45</span><span class="p">,</span> <span class="n">S_46</span><span class="p">,</span>
+                                                              <span class="n">S_55</span><span class="p">,</span> <span class="n">S_56</span><span class="p">,</span>
+                                                                    <span class="n">S_66</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">stable</span><span class="p">(</span><span class="n">crystal_system</span><span class="p">,</span><span class="n">S</span><span class="o">=</span><span class="n">S</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;unstable crystal&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">S</span></div>
+
+
+
+<div class="viewcode-block" id="stable">
+<a class="viewcode-back" href="../../index.html#skel.Hooke.stable">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">stable</span><span class="p">(</span><span class="n">crystal_system</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="n">C</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">S</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determine whether a stiffness or compliance matrix is stable.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    crystal_system : {&#39;isotropic&#39;, &#39;cubic&#39;, &#39;hexagonal&#39;, &#39;trigonal&#39;, &#39;tetragonal&#39;, &#39;orthorhombic&#39;, &#39;monoclinic&#39;, &#39;triclinic&#39;}</span>
+<span class="sd">        Crystal system of the matrix. The stability criteria depend on</span>
+<span class="sd">        the corresponding Laue class.</span>
+<span class="sd">    C : numpy.ndarray of shape (6,6), optional</span>
+<span class="sd">        Stiffness matrix in Voigt notation.</span>
+<span class="sd">    S : numpy.ndarray of shape (6,6), optional</span>
+<span class="sd">        Compliance matrix in Voigt notation.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bool</span>
+<span class="sd">        ``True`` if the matrix satisfies the Born stability criteria.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    TypeError</span>
+<span class="sd">        If neither or both of ``C`` and ``S`` are given.</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        If ``crystal_system`` is not a valid crystal system.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The criteria are necessary and sufficient for elastic stability in</span>
+<span class="sd">    the harmonic approximation and in the absence of external stress.</span>
+<span class="sd">    They are taken from Mouhat and Coudert, who give them per Laue</span>
+<span class="sd">    class.</span>
+
+<span class="sd">    For tetragonal and trigonal systems, the implementation uses the</span>
+<span class="sd">    more general :math:`4/m` and :math:`\bar{3}` conditions. The</span>
+<span class="sd">    higher-symmetry :math:`4/mmm` and :math:`\bar{3}m` cases are</span>
+<span class="sd">    obtained by setting :math:`C_{16}=C_{26}=0` and</span>
+<span class="sd">    :math:`C_{15}=C_{25}=C_{46}=0`, respectively.</span>
+
+<span class="sd">    The matrix must have the symmetry of the selected crystal system.</span>
+<span class="sd">    These criteria are not a general positive-definiteness test for an</span>
+<span class="sd">    arbitrary 6x6 matrix.</span>
+
+<span class="sd">    If ``S`` is given, it is inverted to obtain ``C`` for the</span>
+<span class="sd">    stability check.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    F. Mouhat and F.-X. Coudert, Physical Review B 90:224104, 2014.</span>
+<span class="sd">    https://doi.org/10.1103/PhysRevB.90.224104</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">arg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">S</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;missing keyord argument &quot;C&quot; or &quot;S&quot;&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">C</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">_np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+
+    <span class="k">match</span> <span class="n">crystal_system</span><span class="p">:</span>
+        <span class="k">case</span> <span class="s1">&#39;isotropic&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nb">abs</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span> \
+                   <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">case</span> <span class="s1">&#39;cubic&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nb">abs</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span> \
+                   <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> \
+                   <span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">case</span> <span class="s1">&#39;hexagonal&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nb">abs</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span> \
+                   <span class="mi">2</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">&lt;</span> <span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span> \
+                   <span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">case</span> <span class="s1">&#39;trigonal&#39;</span><span class="p">:</span>
+            <span class="c1"># Mouhat and Coudert call this rhombohedral; Nye uses trigonal.</span>
+            <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nb">abs</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span> \
+                   <span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> \
+                   <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span> \
+                   <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">case</span> <span class="s1">&#39;tetragonal&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nb">abs</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span> \
+                   <span class="mi">2</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">&lt;</span> <span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="ow">and</span> \
+                   <span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> \
+                   <span class="mi">2</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">&lt;</span> <span class="n">C</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">case</span> <span class="s1">&#39;orthorhombic&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> \
+                   <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="ow">and</span> \
+                   <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> \
+                   <span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> \
+                   <span class="n">C</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> \
+                   <span class="n">C</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">case</span> <span class="s1">&#39;monoclinic&#39;</span> <span class="o">|</span> <span class="s1">&#39;triclinic&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">_np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">_np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">))</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;invalid crystal system </span><span class="si">{</span><span class="n">crystal_system</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_prepare_directions</span><span class="p">(</span><span class="o">*</span><span class="n">vectors</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">orthogonal</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Validate and optionally normalize direction vectors.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    *vectors : numpy.ndarray of shape (...,3)</span>
+<span class="sd">        Direction vectors.</span>
+<span class="sd">    normalize : bool, optional</span>
+<span class="sd">        Normalize the vectors to unit length before checking. Defaults</span>
+<span class="sd">        to False.</span>
+<span class="sd">    orthogonal : bool, optional</span>
+<span class="sd">        Require the first two vectors to be orthogonal. Defaults to</span>
+<span class="sd">        False.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple of numpy.ndarray</span>
+<span class="sd">        Prepared vectors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vectors</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">_np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vectors</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+        <span class="n">norms</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">_np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span><span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vectors</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">_np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">norm</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">)</span> <span class="k">for</span> <span class="n">norm</span> <span class="ow">in</span> <span class="n">norms</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;direction vectors must not be zero&#39;</span><span class="p">)</span>
+        <span class="n">vectors</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">v</span><span class="o">/</span><span class="n">norm</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span><span class="n">norm</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span><span class="n">norms</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vectors</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">_np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">_np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span><span class="mf">1.0</span><span class="p">,</span><span class="n">rtol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span><span class="n">atol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;direction vectors must have unit length; use normalize=True&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">orthogonal</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">_np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">_np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;...i,...i&#39;</span><span class="p">,</span><span class="n">vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">vectors</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="mf">0.0</span><span class="p">,</span><span class="n">atol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;direction vectors must be orthogonal&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">vectors</span>
+
+
+<div class="viewcode-block" id="E">
+<a class="viewcode-back" href="../../index.html#skel.Hooke.E">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">E</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="n">C</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">S</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Directional Young&#39;s modulus.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : numpy.ndarray of shape (...,3)</span>
+<span class="sd">        Unit vector(s) along the loading direction.</span>
+<span class="sd">    C : numpy.ndarray of shape (...,6,6), optional</span>
+<span class="sd">        Stiffness matrix in Voigt notation.</span>
+<span class="sd">    S : numpy.ndarray of shape (...,6,6), optional</span>
+<span class="sd">        Compliance matrix in Voigt notation.</span>
+<span class="sd">    normalize : bool, optional</span>
+<span class="sd">        Normalize ``x`` to unit length before evaluation. Defaults to</span>
+<span class="sd">        False, in which case non-unit vectors raise ``ValueError``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    E : numpy.ndarray</span>
+<span class="sd">        Young&#39;s modulus along ``x``.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    .. math::</span>
+
+<span class="sd">        E(\mathbf{x}) = \frac{1}{S_{ijkl} x_i x_j x_k x_l}</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    https://mtex-toolbox.github.io/stiffnessTensor.YoungsModulus.html</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">arg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">S</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;missing keyord argument &quot;C&quot; or &quot;S&quot;&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">S</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">S</span> <span class="o">=</span> <span class="n">_np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+    <span class="n">x</span><span class="p">,</span> <span class="o">=</span> <span class="n">_prepare_directions</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="n">_np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;...ijkl,...i,...j,...k,...l&#39;</span><span class="p">,</span><span class="n">_Voigt</span><span class="o">.</span><span class="n">to_3x3x3x3_compliance</span><span class="p">(</span><span class="n">S</span><span class="p">),</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="G">
+<a class="viewcode-back" href="../../index.html#skel.Hooke.G">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">G</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="n">C</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">S</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Directional shear modulus.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    h : numpy.ndarray of shape (...,3)</span>
+<span class="sd">        Unit vector(s) normal to the shear plane.</span>
+<span class="sd">    u : numpy.ndarray of shape (...,3)</span>
+<span class="sd">        Unit vector(s) in the shear direction. Must be orthogonal to</span>
+<span class="sd">        ``h``.</span>
+<span class="sd">    C : numpy.ndarray of shape (...,6,6), optional</span>
+<span class="sd">        Stiffness matrix in Voigt notation.</span>
+<span class="sd">    S : numpy.ndarray of shape (...,6,6), optional</span>
+<span class="sd">        Compliance matrix in Voigt notation.</span>
+<span class="sd">    normalize : bool, optional</span>
+<span class="sd">        Normalize ``h`` and ``u`` to unit length before evaluation.</span>
+<span class="sd">        Defaults to False, in which case non-unit vectors raise</span>
+<span class="sd">        ``ValueError``. Orthogonality is always checked.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    G : numpy.ndarray</span>
+<span class="sd">        Shear modulus for the plane/direction pair ``(h, u)``.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    .. math::</span>
+
+<span class="sd">        G(\mathbf{h},\mathbf{u}) =</span>
+<span class="sd">        \frac{1}{4 S_{ijkl} h_i u_j h_k u_l}</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    https://mtex-toolbox.github.io/stiffnessTensor.shearModulus.html</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">arg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">S</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;missing keyord argument &quot;C&quot; or &quot;S&quot;&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">S</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">S</span> <span class="o">=</span> <span class="n">_np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+    <span class="n">h</span><span class="p">,</span><span class="n">u</span> <span class="o">=</span> <span class="n">_prepare_directions</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">,</span><span class="n">orthogonal</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="mf">.25</span><span class="o">/</span><span class="n">_np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;...ijkl,...i,...j,...k,...l&#39;</span><span class="p">,</span><span class="n">_Voigt</span><span class="o">.</span><span class="n">to_3x3x3x3_compliance</span><span class="p">(</span><span class="n">S</span><span class="p">),</span><span class="n">h</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">u</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="nu">
+<a class="viewcode-back" href="../../index.html#skel.Hooke.nu">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">nu</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="o">*</span><span class="p">,</span><span class="n">C</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">S</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Directional Poisson ratio.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : numpy.ndarray of shape (...,3)</span>
+<span class="sd">        Unit vector(s) along the loading direction.</span>
+<span class="sd">    y : numpy.ndarray of shape (...,3)</span>
+<span class="sd">        Unit vector(s) along the transverse direction. Must be</span>
+<span class="sd">        orthogonal to ``x``.</span>
+<span class="sd">    C : numpy.ndarray of shape (...,6,6), optional</span>
+<span class="sd">        Stiffness matrix in Voigt notation.</span>
+<span class="sd">    S : numpy.ndarray of shape (...,6,6), optional</span>
+<span class="sd">        Compliance matrix in Voigt notation.</span>
+<span class="sd">    normalize : bool, optional</span>
+<span class="sd">        Normalize ``x`` and ``y`` to unit length before evaluation.</span>
+<span class="sd">        Defaults to False, in which case non-unit vectors raise</span>
+<span class="sd">        ``ValueError``. Orthogonality is always checked.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    nu : numpy.ndarray</span>
+<span class="sd">        Poisson ratio for loading along ``x`` and transverse direction</span>
+<span class="sd">        ``y``.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \nu(\mathbf{x},\mathbf{y}) =</span>
+<span class="sd">        -\frac{S_{ijkl} x_i x_j y_k y_l}</span>
+<span class="sd">               {S_{mnop} x_m x_n x_o x_p}</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    https://mtex-toolbox.github.io/stiffnessTensor.PoissonRatio.html</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">arg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">S</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;missing keyord argument &quot;C&quot; or &quot;S&quot;&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">S</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">S</span> <span class="o">=</span> <span class="n">_np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+    <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">_prepare_directions</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">,</span><span class="n">orthogonal</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">S_</span> <span class="o">=</span> <span class="n">_Voigt</span><span class="o">.</span><span class="n">to_3x3x3x3_compliance</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">_np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;...ijkl,...i,...j,...k,...l&#39;</span><span class="p">,</span><span class="n">S_</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">/</span> \
+            <span class="n">_np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;...mnop,...m,...n,...o,...p&#39;</span><span class="p">,</span><span class="n">S_</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="K_V">
+<a class="viewcode-back" href="../../index.html#skel.Hooke.K_V">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">K_V</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">C</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">S</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Equivalent isotropic bulk modulus (isostrain/Voigt assumption).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    C : numpy.ndarray of shape (...,6,6), optional</span>
+<span class="sd">        Stiffness matrix in Voigt notation.</span>
+<span class="sd">    S : numpy.ndarray of shape (...,6,6), optional</span>
+<span class="sd">        Compliance matrix in Voigt notation.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    K_V : numpy.ndarray</span>
+<span class="sd">        Voigt bulk modulus.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    .. math::</span>
+
+<span class="sd">        K_V = \frac{C_{11}+C_{22}+C_{33}</span>
+<span class="sd">                     +2(C_{12}+C_{13}+C_{23})}{9}</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    W. Voigt, Abhandlungen der Königlichen Gesellschaft der Wissenschaften in Göttingen: Mathematische Classe 34:3-52, 1887</span>
+<span class="sd">    https://gdz.sub.uni-goettingen.de/id/PPN250442582_0034</span>
+
+<span class="sd">    R. Hill, Proceedings of the Physical Society. Section A 66:349-354, 1952</span>
+<span class="sd">    https://doi.org/10.1088/0370-1298/65/5/307</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">arg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">S</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;missing keyord argument &quot;C&quot; or &quot;S&quot;&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">C</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">_np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">((</span><span class="n">C</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">C</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">C</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span><span class="mf">2.</span><span class="o">*</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">C</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">C</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span><span class="o">/</span><span class="mf">9.</span></div>
+
+
+<div class="viewcode-block" id="K_R">
+<a class="viewcode-back" href="../../index.html#skel.Hooke.K_R">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">K_R</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">C</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">S</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Equivalent isotropic bulk modulus (isostress/Reuss assumption).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    C : numpy.ndarray of shape (...,6,6), optional</span>
+<span class="sd">        Stiffness matrix in Voigt notation.</span>
+<span class="sd">    S : numpy.ndarray of shape (...,6,6), optional</span>
+<span class="sd">        Compliance matrix in Voigt notation.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    K_R : numpy.ndarray</span>
+<span class="sd">        Reuss bulk modulus.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    .. math::</span>
+
+<span class="sd">        K_R = \frac{1}{S_{11}+S_{22}+S_{33}</span>
+<span class="sd">                          +2(S_{12}+S_{13}+S_{23})}</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    A. Reuss, Zeitschrift für Angewandte Mathematik und Mechanik 9(1):49-53, 1929</span>
+<span class="sd">    https://doi.org/10.1002/zamm.19290090104</span>
+
+<span class="sd">    R. Hill, Proceedings of the Physical Society. Section A 66:349-354, 1952</span>
+<span class="sd">    https://doi.org/10.1088/0370-1298/65/5/307</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">arg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">S</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;missing keyord argument &quot;C&quot; or &quot;S&quot;&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">S</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">S</span> <span class="o">=</span> <span class="n">_np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">S</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">S</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span><span class="mf">2.</span><span class="o">*</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">S</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">S</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span></div>
+
+
+
+<div class="viewcode-block" id="G_V">
+<a class="viewcode-back" href="../../index.html#skel.Hooke.G_V">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">G_V</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">C</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">S</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Equivalent isotropic shear modulus (isostrain/Voigt assumption).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    C : numpy.ndarray of shape (...,6,6), optional</span>
+<span class="sd">        Stiffness matrix in Voigt notation.</span>
+<span class="sd">    S : numpy.ndarray of shape (...,6,6), optional</span>
+<span class="sd">        Compliance matrix in Voigt notation.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    G_V : numpy.ndarray</span>
+<span class="sd">        Voigt shear modulus.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    .. math::</span>
+
+<span class="sd">        G_V = \frac{C_{11}+C_{22}+C_{33}</span>
+<span class="sd">                     -(C_{12}+C_{13}+C_{23})</span>
+<span class="sd">                     +3(C_{44}+C_{55}+C_{66})}{15}</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    W. Voigt, Abhandlungen der Königlichen Gesellschaft der Wissenschaften in Göttingen: Mathematische Classe 34:3-52, 1887</span>
+<span class="sd">    https://gdz.sub.uni-goettingen.de/id/PPN250442582_0034</span>
+
+<span class="sd">    R. Hill, Proceedings of the Physical Society. Section A 66:349-354, 1952</span>
+<span class="sd">    https://doi.org/10.1088/0370-1298/65/5/307</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">arg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">S</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;missing keyord argument &quot;C&quot; or &quot;S&quot;&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">C</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">C</span> <span class="o">=</span> <span class="n">_np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span>     <span class="n">C</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">C</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">C</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
+               <span class="o">-</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">C</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">C</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+            <span class="o">+</span><span class="mf">3.</span><span class="o">*</span><span class="p">(</span><span class="n">C</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">+</span><span class="n">C</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span><span class="o">+</span><span class="n">C</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">]))</span><span class="o">/</span><span class="mf">15.</span></div>
+
+
+<div class="viewcode-block" id="G_R">
+<a class="viewcode-back" href="../../index.html#skel.Hooke.G_R">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">G_R</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">C</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">S</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Equivalent isotropic shear modulus (isostress/Reuss assumption).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    C : numpy.ndarray of shape (...,6,6), optional</span>
+<span class="sd">        Stiffness matrix in Voigt notation.</span>
+<span class="sd">    S : numpy.ndarray of shape (...,6,6), optional</span>
+<span class="sd">        Compliance matrix in Voigt notation.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    G_R : numpy.ndarray</span>
+<span class="sd">        Reuss shear modulus.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    .. math::</span>
+
+<span class="sd">        G_R = \frac{15}{4(S_{11}+S_{22}+S_{33})</span>
+<span class="sd">                        -4(S_{12}+S_{13}+S_{23})</span>
+<span class="sd">                        +3(S_{44}+S_{55}+S_{66})}</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    A. Reuss, Zeitschrift für Angewandte Mathematik und Mechanik 9(1):49-53, 1929</span>
+<span class="sd">    https://doi.org/10.1002/zamm.19290090104</span>
+
+<span class="sd">    R. Hill, Proceedings of the Physical Society. Section A 66:349-354, 1952</span>
+<span class="sd">    https://doi.org/10.1088/0370-1298/65/5/307</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">arg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">S</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;missing keyord argument &quot;C&quot; or &quot;S&quot;&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">S</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">S</span> <span class="o">=</span> <span class="n">_np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="mf">15.</span><span class="o">/</span><span class="p">(</span> <span class="mf">4.</span><span class="o">*</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">S</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">S</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+                <span class="o">-</span><span class="mf">4.</span><span class="o">*</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">S</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">S</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+                <span class="o">+</span><span class="mf">3.</span><span class="o">*</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">+</span><span class="n">S</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span><span class="o">+</span><span class="n">S</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">]))</span></div>
+
+
+
+<div class="viewcode-block" id="A_u">
+<a class="viewcode-back" href="../../index.html#skel.Hooke.A_u">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">A_u</span><span class="p">(</span><span class="o">*</span><span class="p">,</span><span class="n">C</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">S</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Universal anisotropy index.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    C : numpy.ndarray of shape (...,6,6), optional</span>
+<span class="sd">        Stiffness matrix in Voigt notation.</span>
+<span class="sd">    S : numpy.ndarray of shape (...,6,6), optional</span>
+<span class="sd">        Compliance matrix in Voigt notation.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    A_u : numpy.ndarray</span>
+<span class="sd">        Universal anisotropy index.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    .. math::</span>
+
+<span class="sd">        A^U = 5\frac{G_V}{G_R} + \frac{K_V}{K_R} - 6</span>
+
+<span class="sd">    The index is zero for isotropic elasticity and positive otherwise.</span>
+<span class="sd">    It is defined for any elastic tensor and therefore requires no</span>
+<span class="sd">    crystal-system argument.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    S. I. Ranganathan and M. Ostoja-Starzewski, Physical Review Letters 101:055504, 2008</span>
+<span class="sd">    https://doi.org/10.1103/PhysRevLett.101.055504</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">arg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="p">(</span><span class="n">C</span><span class="p">,</span><span class="n">S</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;missing keyord argument &quot;C&quot; or &quot;S&quot;&#39;</span><span class="p">)</span>
+    <span class="n">C_</span> <span class="o">=</span> <span class="n">C</span> <span class="k">if</span> <span class="n">C</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">_np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+    <span class="n">S_</span> <span class="o">=</span> <span class="n">S</span> <span class="k">if</span> <span class="n">S</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">_np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mf">5.</span><span class="o">*</span><span class="n">G_V</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="n">C_</span><span class="p">)</span><span class="o">/</span><span class="n">G_R</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="n">S_</span><span class="p">)</span> <span class="o">+</span> <span class="n">K_V</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="n">C_</span><span class="p">)</span><span class="o">/</span><span class="n">K_R</span><span class="p">(</span><span class="n">S</span><span class="o">=</span><span class="n">S_</span><span class="p">)</span> <span class="o">-</span> <span class="mf">6.</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025-2026, Martin Diehl.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.2.0.
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
