@@ -10,7 +10,7 @@ All functionality is implemented in "vectorized" form, i.e. multidimensional arr
 Hence, despite being a pure Python library (if the dependency on NumPy and SciPy is ignored), it is suitable for large scale calculations.
 
 ### Homogenization
-Calculation of effective stiffness and compliance from either elastic stiffness or compliance and a list of orientations.
+Calculation of effective stiffness and compliance from a set of orientations and either elastic stiffness or compliance.
 Inputs and outputs are plain NumPy arrays in Mandel notation.
 The orientation input must be a one-dimensional `damask.Rotation`.
 Hill-type estimates are available through `C_Hill` and `S_Hill`; select the scheme with `method=` (`super_hill` by default, also `arithmetic_stiffness`, `arithmetic_compliance`, `geometric_log`, or `geometric_affine`).
@@ -55,7 +55,8 @@ for label,C in zip(['Fe','Al','Cu','Mg'],C_all):
     with np.printoptions(precision=1,suppress=True):
         print('Reuss\n',skel.homogenization.C_Reuss(O,C=C)/1e9)
         print('Voigt\n',skel.homogenization.C_Voigt(O,C=C)/1e9)
-        print('superHill\n',skel.homogenization.C_Hill(O,C=C)/1e9)
+        print('Super Hill\n',skel.homogenization.C_Hill(O,C=C)/1e9)
+        print('Geometric mean\n',skel.homogenization.C_geo(O,C=C)/1e9)
         print('Self-consistent\n',skel.homogenization.C_sc(O,C=C)/1e9)
 
 # https://www.sciencedirect.com/science/article/abs/pii/0956715195901698 (fig 6)

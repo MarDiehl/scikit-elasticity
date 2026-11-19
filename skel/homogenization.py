@@ -67,12 +67,8 @@ def _C_super_hill(C_rotated,S_rotated,tol,maxiter):
     raise RuntimeError('super_hill did not converge')
 
 def _C_geo(C_rotated):
-    try:
-        lnC = linalg.logm(C_rotated)
-    except ValueError:
-        # Older SciPy versions do not support batched matrix logarithms.
-        eigenvalues, eigenvectors = np.linalg.eigh(C_rotated)
-        lnC = (eigenvectors*np.log(eigenvalues)[...,None,:])@np.swapaxes(eigenvectors,-1,-2)
+    eigenvalues, eigenvectors = np.linalg.eigh(C_rotated)
+    lnC = (eigenvectors*np.log(eigenvalues)[...,None,:])@np.swapaxes(eigenvectors,-1,-2)
     return linalg.expm(np.average(lnC,axis=0))
 
 
@@ -145,7 +141,7 @@ def S_Reuss(r,*,C=None,S=None):
 
     References
     ----------
-    A. Reuss, ZAMM 9(1):49-58
+    A. Reuss, Zeitschrift für Angewandte Mathematik und Mechanik 9(1):49-58
     https://doi.org/10.1002/zamm.19290090104
     """
     if (C is None) == (S is None):
@@ -172,7 +168,7 @@ def C_Reuss(r,*,C=None,S=None):
 
     References
     ----------
-    A. Reuss, ZAMM 9(1):49-58
+    A. Reuss, Zeitschrift für Angewandte Mathematik und Mechanik 9(1):49-58
     https://doi.org/10.1002/zamm.19290090104
     """
     return np.linalg.inv(S_Reuss(r,C=C,S=S))
@@ -219,17 +215,17 @@ def C_Hill(r,*,C=None,S=None,method='super_hill',tol=1e-10,maxiter=100):
     K. S. Aleksandrov and L. A. Aizenberg, Doklady Akademii Nauk SSSR 167(5):1028-1031, 1966 (in Russian)
     https://geodesic.mathdoc.fr/item/DAN_1966_167_5_a17/
 
+    S. Matthies and M. Humbert, Journal of Applied Crystallography 28(3):254-266, 1995
+    https://doi.org/10.1107/S0021889894009623
+
     W. Pusz and S. L. Woronowicz, Reports on Mathematical Physics 8(2):159-170, 1975
     https://doi.org/10.1016/0034-4877(75)90061-0
 
     F. Kubo and T. Ando, Mathematische Annalen 246(3):205-224, 1980
     https://doi.org/10.1007/BF01371042
 
-    S. Matthies and M. Humbert, Journal of Applied Crystallography 28(3):254-266, 1995
-    https://doi.org/10.1107/S0021889894009623
-
-    V. Arsigny et al., Magnetic Resonance in Medicine 56(2):411-421, 2006
-    https://doi.org/10.1002/mrm.20965
+    V. Arsigny et al., SIAM Journal on Matrix Analysis and Applications 29:328-347, 2007
+    https://doi.org/10.1137/050637996
     """
     methods = ('arithmetic_stiffness','arithmetic_compliance',
                'geometric_log','geometric_affine','super_hill')
@@ -297,17 +293,17 @@ def S_Hill(r,*,C=None,S=None,method='super_hill',tol=1e-10,maxiter=100):
     K. S. Aleksandrov and L. A. Aizenberg, Doklady Akademii Nauk SSSR 167(5):1028-1031, 1966 (in Russian)
     https://geodesic.mathdoc.fr/item/DAN_1966_167_5_a17/
 
+    S. Matthies and M. Humbert, Journal of Applied Crystallography 28(3):254-266, 1995
+    https://doi.org/10.1107/S0021889894009623
+
     W. Pusz and S. L. Woronowicz, Reports on Mathematical Physics 8(2):159-170, 1975
     https://doi.org/10.1016/0034-4877(75)90061-0
 
     F. Kubo and T. Ando, Mathematische Annalen 246(3):205-224, 1980
     https://doi.org/10.1007/BF01371042
 
-    S. Matthies and M. Humbert, Journal of Applied Crystallography 28(3):254-266, 1995
-    https://doi.org/10.1107/S0021889894009623
-
-    V. Arsigny et al., Magnetic Resonance in Medicine 56(2):411-421, 2006
-    https://doi.org/10.1002/mrm.20965
+    V. Arsigny et al., SIAM Journal on Matrix Analysis and Applications 29:328-347, 2007
+    https://doi.org/10.1137/050637996
     """
     return np.linalg.inv(C_Hill(r,C=C,S=S,method=method,tol=tol,maxiter=maxiter))
 
