@@ -32,4 +32,4 @@ from . import Mandel
 from . import natural
 from . import Hooke
 from . import Eshelby
-from ._volumeelement import VolumeElement
+from . import homogenization
